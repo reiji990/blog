@@ -1,5 +1,5 @@
 ---
-title: 'Preview Mode for Static Generation'
+title: '記法テスト'
 coverImage: ''
 date: '2020-03-16T05:35:07.322Z'
 
@@ -7,10 +7,89 @@ ogImage:
   url: ''
 ---
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Praesent elementum facilisis leo vel fringilla est ullamcorper eget. At imperdiet dui accumsan sit amet nulla facilities morbi tempus. Praesent elementum facilisis leo vel fringilla. Congue mauris rhoncus aenean vel. Egestas sed tempus urna et pharetra pharetra massa massa ultricies.
+- Hello!
+- Hola!
+  - Bonjour!
+  * Hi!
 
-Venenatis cras sed felis eget velit. Consectetur libero id faucibus nisl tincidunt. Gravida in fermentum et sollicitudin ac orci phasellus egestas tellus. Volutpat consequat mauris nunc congue nisi vitae. Id aliquet risus feugiat in ante metus dictum at tempor. Sed blandit libero volutpat sed cras. Sed odio morbi quis commodo odio aenean sed adipiscing. Velit euismod in pellentesque massa placerat. Mi bibendum neque egestas congue quisque egestas diam in arcu. Nisi lacus sed viverra tellus in. Nibh cras pulvinar mattis nunc sed. Luctus accumsan tortor posuere ac ut consequat semper viverra. Fringilla ut morbi tincidunt augue interdum velit euismod.
+1. First
+2. Second
+1. third
 
-## Lorem Ipsum
+| Head | Head | Head |
+| ---- | ---- | ---- |
+| Text | Text | Text |
+| Text | Text | Text |
 
-Tristique senectus et netus et malesuada fames ac turpis. Ridiculous mus mauris vitae ultricies leo integer malesuada nunc vel. In mollis nunc sed id semper. Egestas tellus rutrum tellus pellentesque. Phasellus vestibulum lorem sed risus ultricies tristique nulla. Quis blandit turpis cursus in hac habitasse platea dictumst quisque. Eros donec ac odio tempor orci dapibus ultrices. Aliquam sem et tortor consequat id porta nibh. Adipiscing elit duis tristique sollicitudin nibh sit amet commodo nulla. Diam vulputate ut pharetra sit amet. Ut tellus elementum sagittis vitae et leo. Arcu non odio euismod lacinia at quis risus sed vulputate.
+
+```py:csv to md
+import csv
+import os
+
+folder_path = '/Users/satoureiji/Library/CloudStorage/GoogleDrive-kasyarudaora@gmail.com/マイドライブ/dev/Life/List'
+input_file = os.path.join(folder_path, "レストランリスト.csv")
+output_file = os.path.join(folder_path, "レストランリスト.md")
+
+# Open the CSV file for reading
+with open(input_file, 'r', encoding="utf_8_sig") as csv_file:
+    reader = csv.reader(csv_file)
+    data = list(reader)
+
+# Open the markdown file for writing
+with open(output_file, 'w') as md_file:
+    # Write the table header
+    md_file.write('|' + '|'.join(data[0]) + '|\n')
+    md_file.write('|' + '|'.join(['---' for _ in range(len(data[0]))]) + '|\n')
+
+    # Write each row of data as a row in the table
+    for row in data[1:]:
+        md_file.write('|' + '|'.join(row) + '|\n')
+
+```
+
+$$
+e^{i\theta} = \cos\theta + i\sin\theta
+$$
+
+-----
+
+*イタリック*
+**太字**
+~~打ち消し線~~
+インラインで`code`を挿入する
+
+<!-- TODO: ◯◯について追記する -->
+
+:::message
+メッセージをここに
+:::
+
+:::message alert
+警告メッセージをここに
+:::
+
+:::details タイトル
+表示したい内容
+:::
+
+::::details タイトル
+:::message
+ネストされた要素
+:::
+::::
+
+https://zenn.dev/zenn/articles/markdown-guide
+
+https://twitter.com/jack/status/20
+
+https://github.com/octocat/Hello-World/blob/master/README
+
+https://github.com/octocat/Spoon-Knife/blob/main/README.md#L1-L3
+
+```mermaid
+graph TB
+    A[Hard edge] -->|Link text| B(Round edge)
+    B --> C{Decision}
+    C -->|One| D[Result one]
+    C -->|Two| E[Result two]
+```

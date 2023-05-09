@@ -8,8 +8,12 @@
     ],
     "rewrites": [
       {
-        "source": "/posts/**",
-        "destination": "/posts/[slug].html"
+        "source": "/posts/:slug",
+        "destination": "/posts/:slug/index.html"
+      },
+      {
+        "source": "**",
+        "destination": "/index.html"
       }
     ]
   }

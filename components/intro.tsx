@@ -6,8 +6,6 @@ const Intro = () => {
       </h1>
       <h4 className="text-center md:text-left text-lg mt-5 md:pl-8">
       テック・アニメ・音楽について
-      
-      公開しといてなんですが、まだ作成中なので見なかったことにしてくださいな
       </h4>
     </section>
   )

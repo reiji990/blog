@@ -1,7 +1,6 @@
 body {
     color: white;
-    padding: 0;
-    margin: 0;
+    background-color: #192030;
 }
 
 thead, tbody {
@@ -10,5 +9,5 @@ thead, tbody {
 
 
 blockquote {
-    color: white !important;
+    color: #cccccc !important;
 }

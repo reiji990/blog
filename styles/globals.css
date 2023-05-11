@@ -1,15 +1,13 @@
 body {
     color: white;
+    padding: 0;
+    margin: 0;
 }
 
 thead, tbody {
     color: black !important;
-    border: 1px solid white !important;
 }
 
-table {
-    border: 1px solid white !important;
-}
 
 blockquote {
     color: white !important;

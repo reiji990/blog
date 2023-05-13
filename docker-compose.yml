@@ -9,6 +9,7 @@ services:
       - "9005:9005"
     volumes:
       - .:/home/app
+      - /home/app/node_modules
     tty: true
     stdin_open: true
     command: yarn dev

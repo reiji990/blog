@@ -1,0 +1,13 @@
+body {
+    color: white;
+    background-color: #192030;
+}
+
+thead, tbody {
+    color: black !important;
+}
+
+
+blockquote {
+    color: #cccccc !important;
+}

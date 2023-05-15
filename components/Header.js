@@ -11,9 +11,7 @@ const Header = () => {
         <Link href="/" aria-label={siteMetadata.headerTitle}>
           <div className="flex items-center justify-between">
             {typeof siteMetadata.headerTitle === 'string' ? (
-              <div className="hidden h-6 text-2xl font-semibold sm:block">
-                Home
-              </div>
+              <div className="hidden h-6 text-2xl font-semibold sm:block">Home</div>
             ) : (
               siteMetadata.headerTitle
             )}
@@ -22,7 +20,7 @@ const Header = () => {
       </div>
       <div className="flex items-center text-base leading-5">
         <div className="hidden sm:block">
-          {headerNavLinks.map((link) => (            
+          {headerNavLinks.map((link) => (
             <Link
               key={link.title}
               href={link.href}

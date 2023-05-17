@@ -9,7 +9,8 @@ import ScrollTopAndComment from '@/components/ScrollTopAndComment'
 const editUrl = (path) => `${siteMetadata.siteRepo}/blob/master/data/${path}`
 const discussUrl = (path) =>
   `https://mobile.twitter.com/search?q=${encodeURIComponent(`${siteMetadata.siteUrl}/${path}`)}`
-const postDateTemplate = {
+const shareUrl = (path) => '${encodeURIComponent(`${siteMetadata.siteUrl}/${path}`)}'
+  const postDateTemplate = {
   weekday: 'long',
   year: 'numeric',
   month: 'long',
@@ -83,6 +84,8 @@ export default function PostLayout({ content, authorDetails, next, prev, childre
                 <Link href={discussUrl(path)} rel="nofollow">
                   Discuss on Twitter
                 </Link>
+                {` • `}
+                <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-text="text" data-url={shareUrl(path)} data-via="reiji990" data-show-count="false">Share on Twitter</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
                 {` • `}
                 <Link href={editUrl(filePath)}>View on GitHub</Link>
               </div>

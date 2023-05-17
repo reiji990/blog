@@ -6,10 +6,9 @@ import Image from '@/components/Image'
 import Tag from '@/components/Tag'
 import siteMetadata from '@/data/siteMetadata'
 import ScrollTopAndComment from '@/components/ScrollTopAndComment'
-import { TwitterShareButton, FacebookShareButton, LineShareButton, HatenaShareButton, TwitterIcon, FacebookIcon, LineIcon, HatenaIcon } from "react-share";
 const editUrl = (path) => `${siteMetadata.siteRepo}/blob/master/data/${path}`
-const discussUrl = (path) =>
-  `https://mobile.twitter.com/search?q=${encodeURIComponent(`${siteMetadata.siteUrl}/${path}`)}`
+const shareUrl = (path) =>
+  `https://twitter.com/intent/tweet?text=${encodeURIComponent(`${siteMetadata.siteUrl + path}`)}`
 const postDateTemplate = {
   weekday: 'long',
   year: 'numeric',
@@ -81,17 +80,9 @@ export default function PostLayout({ content, authorDetails, next, prev, childre
             <div className="divide-y divide-gray-200 dark:divide-gray-700 xl:col-span-3 xl:row-span-2 xl:pb-0">
               <div className="prose max-w-none pb-8 pt-10 dark:prose-dark">{children}</div>
               <div className="pb-6 pt-6 text-sm text-gray-700 dark:text-gray-300">
-                <Link href={discussUrl(path)} rel="nofollow">
-                  Discuss on Twitter
+                <Link href={shareUrl(path)} rel="nofollow">
+                  Tweet
                 </Link>
-                {` • `}
-                <TwitterShareButton url={siteMetadata.siteUrl + path} title={title} via='reiji990'>
-                <TwitterIcon size={30} round={true} />
-                </TwitterShareButton>
-                {` • `}
-                <a class="twitter-share-button"
-  href="https://twitter.com/intent/tweet?text=hello">
-Tweet</a>
                 {` • `}
                 <Link href={editUrl(filePath)}>View on GitHub</Link>
               </div>

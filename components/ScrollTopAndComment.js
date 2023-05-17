@@ -1,4 +1,3 @@
-import siteMetadata from '@/data/siteMetadata'
 import { useEffect, useState } from 'react'
 const ScrollTopAndComment = () => {
   const [show, setShow] = useState(false)
@@ -14,9 +13,6 @@ const ScrollTopAndComment = () => {
     window.scrollTo({
       top: 0,
     })
-  }
-  const handleScrollToComment = () => {
-    document.getElementById('comment').scrollIntoView()
   }
   return (
     <div

@@ -8,17 +8,6 @@ const Header = () => {
   return (
     <header className="flex items-center justify-between py-10">
       <div>
-        <Link href="/" aria-label={siteMetadata.headerTitle}>
-          <div className="flex items-center justify-between">
-            {typeof siteMetadata.headerTitle === 'string' ? (
-              <div className="hidden h-6 text-2xl font-semibold sm:block">
-                {siteMetadata.headerTitle}
-              </div>
-            ) : (
-              siteMetadata.headerTitle
-            )}
-          </div>
-        </Link>
       </div>
       <div className="flex items-center text-base leading-5">
         <div className="hidden sm:block">

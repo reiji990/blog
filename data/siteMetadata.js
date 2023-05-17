@@ -2,9 +2,9 @@
 
 /** @type {import("pliny/config").PlinyConfig } */
 const siteMetadata = {
-  title: '',
+  title: 'Web log.(仮)',
   author: 'reiji990',
-  headerTitle: 'Web log.(仮)',
+  headerTitle: '',
   description: 'テックとアニメと映画について',
   language: 'en-us',
   theme: 'system', // system, dark or light

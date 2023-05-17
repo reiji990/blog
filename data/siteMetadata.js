@@ -2,10 +2,10 @@
 
 /** @type {import("pliny/config").PlinyConfig } */
 const siteMetadata = {
-  title: 'Web log.(仮)',
+  title: '',
   author: 'reiji990',
   headerTitle: 'Web log.(仮)',
-  description: 'テックとアニメと音楽について',
+  description: 'テックとアニメと映画について',
   language: 'en-us',
   theme: 'system', // system, dark or light
   siteUrl: 'https://tailwind-nextjs-starter-blog.vercel.app',

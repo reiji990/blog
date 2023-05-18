@@ -16,7 +16,7 @@ export default function PostLayout({ content, authorDetails, next, prev, childre
   const { filePath, path, date, title, tags } = content
   const shareUrl = (path) =>
     `https://twitter.com/intent/tweet?text=${title}｜${siteMetadata.title}%20${
-    siteMetadata.siteUrl + path
+      siteMetadata.siteUrl + path
     }%20@${siteMetadata.author}`
   const editUrl = (path) => `${siteMetadata.siteRepo}/blob/master/data/${path}`
   const basePath = path.split('/')[0]

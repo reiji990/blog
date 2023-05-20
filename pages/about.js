@@ -1,23 +1,21 @@
-// import { MDXLayoutRenderer } from '@/components/MDXComponents'
+import { MDXLayoutRenderer } from '@/components/MDXComponents'
+import { getFileBySlug } from '@/lib/mdx'
 
-import { allAuthors } from 'contentlayer/generated'
-import { MDXLayoutRenderer } from 'pliny/mdx-components'
-import { MDXComponents } from '@/components/MDXComponents'
 const DEFAULT_LAYOUT = 'AuthorLayout'
-export const getStaticProps = async () => {
-  const author = allAuthors.find((p) => p.slug === 'default')
-  return {
-    props: {
-      author,
-    },
-  }
+
+export async function getStaticProps() {
+  const authorDetails = await getFileBySlug('authors', ['default'])
+  return { props: { authorDetails } }
 }
-export default function About({ author }) {
+
+export default function About({ authorDetails }) {
+  const { mdxSource, frontMatter } = authorDetails
+
   return (
     <MDXLayoutRenderer
-      layout={author.layout || DEFAULT_LAYOUT}
-      content={author}
-      MDXComponents={MDXComponents}
+      layout={frontMatter.layout || DEFAULT_LAYOUT}
+      mdxSource={mdxSource}
+      frontMatter={frontMatter}
     />
   )
 }

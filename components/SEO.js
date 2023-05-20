@@ -1,6 +1,7 @@
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 import siteMetadata from '@/data/siteMetadata'
+
 const CommonSEO = ({ title, description, ogType, ogImage, twImage, canonicalUrl }) => {
   const router = useRouter()
   return (
@@ -13,7 +14,7 @@ const CommonSEO = ({ title, description, ogType, ogImage, twImage, canonicalUrl 
       <meta property="og:site_name" content={siteMetadata.title} />
       <meta property="og:description" content={description} />
       <meta property="og:title" content={title} />
-      {Array.isArray(ogImage) ? (
+      {ogImage.constructor.name === 'Array' ? (
         ogImage.map(({ url }) => <meta property="og:image" content={url} key={url} />)
       ) : (
         <meta property="og:image" content={ogImage} key={ogImage} />
@@ -30,6 +31,7 @@ const CommonSEO = ({ title, description, ogType, ogImage, twImage, canonicalUrl 
     </Head>
   )
 }
+
 export const PageSEO = ({ title, description }) => {
   const ogImageUrl = siteMetadata.siteUrl + siteMetadata.socialBanner
   const twImageUrl = siteMetadata.siteUrl + siteMetadata.socialBanner
@@ -43,6 +45,7 @@ export const PageSEO = ({ title, description }) => {
     />
   )
 }
+
 export const TagSEO = ({ title, description }) => {
   const ogImageUrl = siteMetadata.siteUrl + siteMetadata.socialBanner
   const twImageUrl = siteMetadata.siteUrl + siteMetadata.socialBanner
@@ -67,6 +70,7 @@ export const TagSEO = ({ title, description }) => {
     </>
   )
 }
+
 export const BlogSEO = ({
   authorDetails,
   title,
@@ -77,20 +81,23 @@ export const BlogSEO = ({
   images = [],
   canonicalUrl,
 }) => {
+  const router = useRouter()
   const publishedAt = new Date(date).toISOString()
   const modifiedAt = new Date(lastmod || date).toISOString()
-  const imagesArr =
+  let imagesArr =
     images.length === 0
       ? [siteMetadata.socialBanner]
       : typeof images === 'string'
       ? [images]
       : images
+
   const featuredImages = imagesArr.map((img) => {
     return {
       '@type': 'ImageObject',
       url: img.includes('http') ? img : siteMetadata.siteUrl + img,
     }
   })
+
   let authorList
   if (authorDetails) {
     authorList = authorDetails.map((author) => {
@@ -105,6 +112,7 @@ export const BlogSEO = ({
       name: siteMetadata.author,
     }
   }
+
   const structuredData = {
     '@context': 'https://schema.org',
     '@type': 'Article',
@@ -127,7 +135,9 @@ export const BlogSEO = ({
     },
     description: summary,
   }
+
   const twImageUrl = featuredImages[0].url
+
   return (
     <>
       <CommonSEO

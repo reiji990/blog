@@ -1,8 +1,10 @@
 import SocialIcon from '@/components/social-icons'
 import Image from '@/components/Image'
 import { PageSEO } from '@/components/SEO'
-export default function AuthorLayout({ children, content }) {
-  const { name, avatar, occupation, company, email, twitter, linkedin, github } = content
+
+export default function AuthorLayout({ children, frontMatter }) {
+  const { name, avatar, occupation, company, email, twitter, linkedin, github } = frontMatter
+
   return (
     <>
       <PageSEO title={`About - ${name}`} description={`About me - ${name}`} />
@@ -13,12 +15,12 @@ export default function AuthorLayout({ children, content }) {
           </h1>
         </div>
         <div className="items-start space-y-2 xl:grid xl:grid-cols-3 xl:gap-x-8 xl:space-y-0">
-          <div className="flex flex-col items-center space-x-2 pt-8">
+          <div className="flex flex-col items-center pt-8">
             <Image
               src={avatar}
               alt="avatar"
-              width={192}
-              height={192}
+              width="192px"
+              height="192px"
               className="h-48 w-48 rounded-full"
             />
             <h3 className="pb-2 pt-4 text-2xl font-bold leading-8 tracking-tight">{name}</h3>

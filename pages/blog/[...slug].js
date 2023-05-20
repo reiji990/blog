@@ -1,46 +1,64 @@
-import { MDXLayoutRenderer } from 'pliny/mdx-components'
+import fs from 'fs'
 import PageTitle from '@/components/PageTitle'
-import { MDXComponents } from '@/components/MDXComponents'
-import { sortedBlogPost, coreContent } from 'pliny/utils/contentlayer'
-import { allBlogs, allAuthors } from 'contentlayer/generated'
+import generateRss from '@/lib/generate-rss'
+import { MDXLayoutRenderer } from '@/components/MDXComponents'
+import { formatSlug, getAllFilesFrontMatter, getFileBySlug, getFiles } from '@/lib/mdx'
+
 const DEFAULT_LAYOUT = 'PostLayout'
+
 export async function getStaticPaths() {
+  const posts = getFiles('blog')
   return {
-    paths: allBlogs.map((p) => ({
+    paths: posts.map((p) => ({
       params: {
-        slug: p.slug.split('/'),
+        slug: formatSlug(p).split('/'),
       },
     })),
     fallback: false,
   }
 }
-export const getStaticProps = async ({ params }) => {
-  const slug = params.slug.join('/')
-  const sortedPosts = sortedBlogPost(allBlogs)
-  const postIndex = sortedPosts.findIndex((p) => p.slug === slug)
-  const prevContent = sortedPosts[postIndex + 1] || null
-  const prev = prevContent ? coreContent(prevContent) : null
-  const nextContent = sortedPosts[postIndex - 1] || null
-  const next = nextContent ? coreContent(nextContent) : null
-  const post = sortedPosts.find((p) => p.slug === slug)
-  const authorList = post.authors || ['default']
-  const authorDetails = authorList.map((author) => {
-    const authorResults = allAuthors.find((p) => p.slug === author)
-    return coreContent(authorResults)
+
+export async function getStaticProps({ params }) {
+  const allPosts = await getAllFilesFrontMatter('blog')
+  const postIndex = allPosts.findIndex((post) => formatSlug(post.slug) === params.slug.join('/'))
+  const prev = allPosts[postIndex + 1] || null
+  const next = allPosts[postIndex - 1] || null
+  const post = await getFileBySlug('blog', params.slug.join('/'))
+  const authorList = Array.isArray(post.frontMatter.authors)
+    ? post.frontMatter.authors
+    : ['default']
+
+  const authorPromise = authorList.map(async (author) => {
+    const authorResults = await getFileBySlug('authors', [author])
+    return authorResults.frontMatter
   })
-  return {
-    props: {
-      post,
-      authorDetails,
-      prev,
-      next,
-    },
+  const authorDetails = await Promise.all(authorPromise)
+
+  // rss
+  if (allPosts.length > 0) {
+    const rss = generateRss(allPosts)
+    fs.writeFileSync('./public/feed.xml', rss)
   }
+
+  return { props: { post, authorDetails, prev, next } }
 }
-export default function BlogPostPage({ post, authorDetails, prev, next }) {
+
+export default function Blog({ post, authorDetails, prev, next }) {
+  const { mdxSource, toc, frontMatter } = post
+
   return (
     <>
-      {'draft' in post && post.draft === true ? (
+      {frontMatter.draft !== true ? (
+        <MDXLayoutRenderer
+          layout={frontMatter.layout || DEFAULT_LAYOUT}
+          toc={toc}
+          mdxSource={mdxSource}
+          frontMatter={frontMatter}
+          authorDetails={authorDetails}
+          prev={prev}
+          next={next}
+        />
+      ) : (
         <div className="mt-24 text-center">
           <PageTitle>
             Under Construction{' '}
@@ -49,16 +67,6 @@ export default function BlogPostPage({ post, authorDetails, prev, next }) {
             </span>
           </PageTitle>
         </div>
-      ) : (
-        <MDXLayoutRenderer
-          layout={post.layout || DEFAULT_LAYOUT}
-          content={post}
-          MDXComponents={MDXComponents}
-          toc={post.toc}
-          authorDetails={authorDetails}
-          prev={prev}
-          next={next}
-        />
       )}
     </>
   )

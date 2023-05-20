@@ -2,17 +2,15 @@ import Link from '@/components/Link'
 import { PageSEO } from '@/components/SEO'
 import Tag from '@/components/Tag'
 import siteMetadata from '@/data/siteMetadata'
-import { kebabCase } from 'pliny/utils/kebabCase'
-import { getAllTags } from 'pliny/utils/contentlayer'
-import { allBlogs } from 'contentlayer/generated'
-export const getStaticProps = async () => {
-  const tags = await getAllTags(allBlogs)
-  return {
-    props: {
-      tags,
-    },
-  }
+import { getAllTags } from '@/lib/tags'
+import kebabCase from '@/lib/utils/kebabCase'
+
+export async function getStaticProps() {
+  const tags = await getAllTags('blog')
+
+  return { props: { tags } }
 }
+
 export default function Tags({ tags }) {
   const sortedTags = Object.keys(tags).sort((a, b) => tags[b] - tags[a])
   return (
@@ -33,7 +31,6 @@ export default function Tags({ tags }) {
                 <Link
                   href={`/tags/${kebabCase(t)}`}
                   className="-ml-2 text-sm font-semibold uppercase text-gray-600 dark:text-gray-300"
-                  aria-label={`View posts tagged ${t}`}
                 >
                   {` (${tags[t]})`}
                 </Link>

@@ -1,4 +1,4 @@
-import { formatDate } from 'pliny/utils/formatDate'
+import { formatDate } from 'lib/utils/formatDate'
 import Link from '@/components/Link'
 import PageTitle from '@/components/PageTitle'
 import SectionContainer from '@/components/SectionContainer'

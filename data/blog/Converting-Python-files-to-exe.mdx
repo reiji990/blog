@@ -1,0 +1,98 @@
+---
+title: 'Pythonファイルの.exe化'
+date: '2010-03-18'
+lastmod: ''
+tags: ['tech', 'Python', 'exe', 'Pipenv', 'PyInstaller']
+draft: true
+---
+
+## 始めに
+
+Python で作成したプログラムを Python 実行環境のない人でも扱えるよう.exe にビルドした。
+
+ネット上に転がっている手順そのままではうまくいかなかったので、自分の環境で成功した手順のメモを残す。
+
+## この文書内で実行する内容
+
+- pipenv で PC 内に仮想環境構築
+- 仮想環境下で python のバージョン、仕様ライブラリを指定し、pyinstaller でビルド
+
+### 仮想環境下でビルドするメリット
+
+- python の ver. を指定可能
+- 必要最低限のライブラリのみインポートするため、容量が削減される
+
+## 参考
+
+[Pyinstaller で Python プログラムを exe 化する手順書（Windows 編）](https://qiita.com/nal_dal_dere/items/95e173068af399e61981)
+
+## 作業環境
+
+| 名称       | 詳細                            |
+| ---------- | ------------------------------- |
+| OS 名      | Microsoft Windows 10 Enterprise |
+| バージョン | 10.0.19044 ビルド 19044         |
+| Python     | Python 3.11.2                   |
+| pip        | 23.0.1                          |
+| pipenv     | 2023.2.18                       |
+
+## 使用するツール
+
+- python
+- pip
+- pipenv
+
+(下記は仮想環境下で都度インストール)
+
+- pipenv
+- pyinstaller
+- Python ファイルに使用している標準ライブラリ以外のライブラリ
+
+## 手順
+
+### 仮想環境有効化まで
+
+カレントディレクトリを設定、仮想環境下の python ver. を指定し、仮想環境を有効化
+
+```
+
+cd [フォルダパス]
+
+python -m pipenv --python 3.11.2
+
+python -m pipenv shell
+
+```
+
+### 仮想環境下
+
+仮想環境下で再度 pipenv と pyinstaller、ライブラリをインストール、pyinstaller でビルド。
+
+```
+
+pip install pipenv
+
+pip install pyinstaller
+
+pipenv install [Pythonファイルに使用している標準ライブラリ以外のライブラリ]
+
+pyinstaller --onefile [.exe化したいpyファイル名]
+
+```
+
+### 終了後
+
+仮想環境の無効化、削除
+
+```
+
+exit
+
+python -m pipenv --rm
+
+```
+
+## ポイント
+
+- pipenv は python モジュールとして実行しないと認識しない。
+- exe 化の際、"--onefile"を記述するとファイル数が少なく済む。

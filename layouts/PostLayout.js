@@ -2,7 +2,7 @@ import Link from '@/components/Link'
 import PageTitle from '@/components/PageTitle'
 import SectionContainer from '@/components/SectionContainer'
 import { BlogSEO } from '@/components/SEO'
-import Image from '@/components/Image'
+import Image from 'next/image'
 import Tag from '@/components/Tag'
 import siteMetadata from '@/data/siteMetadata'
 import Comments from '@/components/comments'
@@ -21,7 +21,7 @@ export default function PostLayout({ frontMatter, authorDetails, next, prev, chi
     `https://twitter.com/intent/tweet?text=${title}｜${siteMetadata.title}%20${
       siteMetadata.siteUrl + path
     }%20@${siteMetadata.author}`
-  const editUrl = (path) => `${siteMetadata.siteRepo}/blob/master/data/blog/${path}`
+  const editUrl = (path) => `${siteMetadata.siteRepo}/blob/master/data/${path}`
   return (
     <SectionContainer>
       <BlogSEO

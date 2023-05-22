@@ -18,10 +18,8 @@ const postDateTemplate = { weekday: 'long', year: 'numeric', month: 'long', day:
 export default function PostLayout({ frontMatter, authorDetails, next, prev, children }) {
   const { slug, path, fileName, date, title, images, tags } = frontMatter
   const shareUrl = (path) =>
-    `https://twitter.com/intent/tweet?text=${title}｜${siteMetadata.title}%20${
-      siteMetadata.siteUrl + path
-    }%20@${siteMetadata.author}`
-  const editUrl = (path) => `${siteMetadata.siteRepo}/blob/master/data/${path}`
+    `https://twitter.com/intent/tweet?text=${title}｜${siteMetadata.title}%20${siteMetadata.siteUrl}blog/${slug}%20@${siteMetadata.author}`
+  const editUrl = (path) => `${siteMetadata.siteRepo}/blob/master/data/blog/${path}`
   return (
     <SectionContainer>
       <BlogSEO

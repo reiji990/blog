@@ -3,7 +3,7 @@ name: Sync README
 on:
   push:
     paths:
-      - 'data/blog/how-to-create-a-blog.mdx.md'
+      - 'data/blog/how-to-create-a-blog.mdx'
 
 jobs:
   build:
@@ -14,8 +14,8 @@ jobs:
 
     - name: Sync README.md
       run: |
-        cp data/blog/how-to-create-a-blog.mdx.md README.md
+        cp data/blog/how-to-create-a-blog.mdx README.md
         git config --local user.email "action@github.com"
         git config --local user.name "GitHub Action"
-        git commit -m "Update README.md from data/blog/how-to-create-a-blog.mdx.md" README.md
+        git commit -m "Update README.md from data/blog/how-to-create-a-blog.mdx" README.md
         git push

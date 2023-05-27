@@ -1,0 +1,21 @@
+name: Sync README
+
+on:
+  push:
+    paths:
+      - '/Users/satoureiji/Documents/blog/data/blog/how-to-create-a-blog.mdx.md'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Sync README.md
+      run: |
+        cp /Users/satoureiji/Documents/blog/data/blog/how-to-create-a-blog.mdx.md README.md
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+        git commit -m "Update README.md from /Users/satoureiji/Documents/blog/data/blog/how-to-create-a-blog.mdx.md" README.md
+        git push

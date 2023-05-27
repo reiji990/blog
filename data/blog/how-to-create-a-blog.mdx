@@ -2,8 +2,8 @@
 title: '本ブログの作成方法'
 date: '2023-05-28'
 lastmod: ''
-tags: ['Tech', 'Docker', 'GitHub', 'Next.js', 'Vercel']
-draft: true
+tags: ['Tech', 'Next.js']
+draft: false
 summary: ''
 ---
 
@@ -22,13 +22,13 @@ Docker 上で開発するので作業環境はあまり重要ではありませ�
 
 全て無料で使用できることを前提に選定しています。
 
-| 種別         | 詳細                                                                                          | 選定基準                                                                                        |
-| ------------ | --------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------- |
-| コード管理   | GitHub                                                                                        | デファクトスタンダード                                                                          |
-| 開発環境     | Docker                                                                                        | デファクトスタンダード                                                                          |
-| ホスティング | Vercel                                                                                        | Next.js で作成した Web アプリを GitHub からデプロイすることが極めて簡単に設定できる             |
-| ブログ機能   | Next.js                                                                                       | パフォーマンス、開発効率、SEO などの面で優れている                                              |
-| テンプレート | [timlrx/tailwind-nextjs-starter-blog](https://github.com/timlrx/tailwind-nextjs-starter-blog) | 検索機能、タグ機能、Markdown 記法、背景色の切替等、ブログに欲しい機能がはじめから実装されている |
+| 種別         | 詳細                                                                                          |
+| ------------ | --------------------------------------------------------------------------------------------- |
+| コード管理   | GitHub                                                                                        |
+| 開発環境     | Docker                                                                                        |
+| ホスティング | Vercel                                                                                        |
+| ブログ機能   | Next.js                                                                                       |
+| テンプレート | [timlrx/tailwind-nextjs-starter-blog](https://github.com/timlrx/tailwind-nextjs-starter-blog) |
 
 ## 参考
 
@@ -51,7 +51,7 @@ Docker 上で開発する環境整備と、Vercel にデプロイするまでの
 
 ### インストール
 
-cd をブログ用のフォルダを作成するディレクトリに移動し、コマンドを実行します。
+cd をブログ用のフォルダを作成するディレクトリに移動し、下記コマンドを実行します。
 
 コマンド末尾の`blog`はディレクトリ内に新たに作成するフォルダ名となります。
 
@@ -66,7 +66,7 @@ cd blog
 docker run --rm -it -v $PWD:/home/app -w /home/app -p 3000:3000 node yarn dev
 ```
 
-[デモページ](https://tailwind-nextjs-starter-blog.vercel.app)と同じ内容が[localhost:3000](http://localhost:3000)に表示されるはずです。
+[デモページ](https://tailwind-nextjs-starter-blog.vercel.app)と同じ内容が http://localhost:3000 に表示されるはずです。
 
 ### Docker の設定
 
@@ -103,7 +103,7 @@ docker compose build --no-cache
 docker compose up
 ```
 
-これで、今後は`docker compose up`で localhost にデモページと同じ内容が表示されるはずです。
+これで、今後は`docker compose up`で http://localhost:3000 にデモページと同じ内容が表示されるはずです。
 
 ### GitHub のリポジトリ作成
 
@@ -125,4 +125,4 @@ Add Existing Repository から、ローカルパスに先ほどの blog ディ�
 
 ブログの作成方法は以上となります。デザインの変更方法は Next.js の公式ドキュメント等をご参照の上で実施いただければと思います。
 
-私もこれからもこのテンプレートを元にブログデザインを変更していきますので、その中で手間取った変更があれば記事にしようかと思います。
+まだブログのデザインや使用技術に満足したわけではなく、これからも変更を加えていきますので、その中で手間取った変更があれば記事にしようかと思います。

@@ -4,11 +4,23 @@ date: '2023-05-28'
 lastmod: ''
 tags: ['Tech', 'Next.js']
 draft: false
-summary: ''
+summary: 'このブログの作成方法。'
 ---
 
 このブログの作成方法のメモを残します。
-
+import projectsData from '@/data/projectsData'
+import Card from '@/components/Card'
+          <div className="-m-4 flex flex-wrap">
+            {projectsData.map((d) => (
+              <Card
+                key={d.title}
+                title={d.title}
+                description={d.description}
+                imgSrc={d.imgSrc}
+                href={d.href}
+              />
+            ))}
+          </div>
 ## 作業環境
 
 | 種別 | 詳細       |
@@ -34,8 +46,8 @@ Docker 上で開発するので作業環境はあまり重要ではありませ�
 
 [エンジニアなら自分でブログを作れ！① 導入編](https://zenn.dev/miketako3/articles/9b2b1a9ec13901)
 
-Next.js のデモページと同じ内容を実装できれば良い場合は、リンク先の記事の手段の方が良いと思います。理由は下記になります。
-- Next.jsデモページを実装してブログを作成している人は多いので、後から編集したい場合に情報を見つけ易い
+Next.js のデモページと同じ内容を実装できれば良い場合は、リンク先の記事の手段の方が良いです。理由は下記になります。
+- Next.jsデモページを実装してブログを作成している人は多いので、後からデザイン変更したい場合に情報を見つけ易い
 - ホスティング先にFirebaseを採用しており、商用利用が可能
 
 ただ、Next.js のテンプレートはシンプル過ぎて、デザインをはじめから作る必要があるため、今回はもう少し完成度の高いテンプレートを使用します。

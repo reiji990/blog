@@ -1,7 +1,7 @@
 const projectsData = [
     {
         title: 'reiji990/blog',
-        description: ``,
+        description: 'このブログのリポジトリです。', 
         imgSrc: '/static/images/GitHub_Logo.pdf',
         href: 'https://github.com/reiji990/blog',
       },

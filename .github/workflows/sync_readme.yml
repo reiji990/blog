@@ -2,6 +2,8 @@ name: Sync README
 
 on:
   push:
+    branches:
+      - main
     paths:
       - 'data/blog/how-to-create-a-blog.mdx'
 

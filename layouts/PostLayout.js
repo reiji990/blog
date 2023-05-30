@@ -41,12 +41,11 @@ export default function PostLayout({ frontMatter, authorDetails, next, prev, chi
                     </time>
                     {lastmod !== '' && (
                       <div>
-                        {'Last Modified: '}
-                        {
+                        {'Last Modified: '}{
                           new Date(lastmod).toLocaleDateString(
-                            siteMetadata.locale,
-                            postDateTemplate
-                          )
+                          siteMetadata.locale,
+                          postDateTemplate
+                        )
                         }
                       </div>
                     )}

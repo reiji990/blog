@@ -45,8 +45,7 @@ export default function PostLayout({ frontMatter, authorDetails, next, prev, chi
                         {new Date(lastmod).toLocaleDateString(
                           siteMetadata.locale,
                           postDateTemplate
-                        )
-                        }
+                        )}
                       </div>
                     )}
                   </dd>

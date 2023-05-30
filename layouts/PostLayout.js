@@ -44,7 +44,8 @@ export default function PostLayout({ frontMatter, authorDetails, next, prev, chi
                         {'Last Modified: '}
                         {new Date(lastmod).toLocaleDateString(
                           siteMetadata.locale,
-                          postDateTemplate)
+                          postDateTemplate
+                        )
                         }
                       </div>
                     )}

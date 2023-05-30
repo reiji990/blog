@@ -39,9 +39,17 @@ export default function PostLayout({ frontMatter, authorDetails, next, prev, chi
                     <time dateTime={date}>
                       {new Date(date).toLocaleDateString(siteMetadata.locale, postDateTemplate)}
                     </time>
-                      {lastmod !== "" && 
-                      <div>Last Modified:{" "}
-                      {new Date(lastmod).toLocaleDateString(siteMetadata.locale, postDateTemplate)}</div>}
+                    {lastmod !== '' && (
+                      <div>
+                        {'Last Modified: '}
+                        {
+                          new Date(lastmod).toLocaleDateString(
+                            siteMetadata.locale,
+                            postDateTemplate
+                          )
+                        }
+                      </div>
+                    )}
                   </dd>
                 </div>
               </dl>

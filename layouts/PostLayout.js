@@ -16,7 +16,7 @@ const discussUrl = (slug) =>
 const postDateTemplate = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }
 
 export default function PostLayout({ frontMatter, authorDetails, next, prev, children }) {
-  const { slug, path, fileName, date, title, images, tags } = frontMatter
+  const { slug, path, fileName, date, title, images, tags, lastmod } = frontMatter
   const shareUrl = (path) =>
     `https://twitter.com/intent/tweet?text=${title}｜${siteMetadata.title}%20${siteMetadata.siteUrl}blog/${slug}%20@${siteMetadata.author}`
   const editUrl = (path) => `${siteMetadata.siteRepo}/blob/master/data/blog/${path}`
@@ -39,6 +39,15 @@ export default function PostLayout({ frontMatter, authorDetails, next, prev, chi
                     <time dateTime={date}>
                       {new Date(date).toLocaleDateString(siteMetadata.locale, postDateTemplate)}
                     </time>
+                    {lastmod !== '' && (
+                      <div>
+                        {'Last Modified: '}
+                        {new Date(lastmod).toLocaleDateString(
+                          siteMetadata.locale,
+                          postDateTemplate
+                        )}
+                      </div>
+                    )}
                   </dd>
                 </div>
               </dl>

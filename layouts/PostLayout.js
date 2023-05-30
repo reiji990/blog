@@ -37,11 +37,11 @@ export default function PostLayout({ frontMatter, authorDetails, next, prev, chi
                   <dt className="sr-only">Published on</dt>
                   <dd className="text-base font-medium leading-6 text-gray-500 dark:text-gray-400">
                     <time dateTime={date}>
-                      <div>{new Date(date).toLocaleDateString(siteMetadata.locale, postDateTemplate)}</div>
+                      {new Date(date).toLocaleDateString(siteMetadata.locale, postDateTemplate)}
+                    </time>
                       {lastmod !== "" && 
                       <div>Last Modified:{" "}
                       {new Date(lastmod).toLocaleDateString(siteMetadata.locale, postDateTemplate)}</div>}
-                    </time>
                   </dd>
                 </div>
               </dl>

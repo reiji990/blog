@@ -6,12 +6,12 @@ const withBundleAnalyzer = require('@next/bundle-analyzer')({
 const ContentSecurityPolicy = `
   default-src 'self';
   script-src 'self' 'unsafe-eval' 'unsafe-inline' giscus.app;
-  style-src 'self' 'unsafe-inline';
+  style-src 'self' 'unsafe-inline' 'https://www.youtube.com';
   img-src * blob: data:;
   media-src 'none';
   connect-src *;
   font-src 'self';
-  frame-src giscus.app
+  frame-src 'giscus.app' 'https://www.youtube.com';
 `
 
 const securityHeaders = [

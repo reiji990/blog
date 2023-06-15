@@ -5,15 +5,11 @@ const Tweet = ({ id }) => {
 
   useEffect(() => {
     window.twttr?.widgets?.load(ref.current)
-  }, [id]);
+  }, [id])
 
-  return (
-    <div
-      dangerouslySetInnerHTML={{ __html: generateEmbedHtml(id) }}
-      ref={ref}
+  return <div dangerouslySetInnerHTML={{ __html: generateEmbedHtml(id) }} ref={ref}
     />
-  );
-};
+}
 
 const generateEmbedHtml = (id) => {
   if (!/^\d+$/u.test(id)) {

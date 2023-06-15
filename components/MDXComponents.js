@@ -35,4 +35,4 @@ export const components = {
 
     return <code>{children}</code>
   },
-};
+}

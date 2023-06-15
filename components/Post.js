@@ -7,5 +7,5 @@ export default function Post({ source }) {
     <MDXProvider components={components}>
       <PostContent source={source} />
     </MDXProvider>
-  );
+  )
 }

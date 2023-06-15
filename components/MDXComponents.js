@@ -29,10 +29,10 @@ export const MDXLayoutRenderer = ({ layout, mdxSource, ...rest }) => {
 export const components = {
   inlineCode: ({ children }) => {
     if (children.startsWith('tweet:')) {
-      const id = children.split(':')[1];
-      return <Tweet id={id} />;
+      const id = children.split(':')[1]
+      return <Tweet id={id} />
     }
 
-    return <code>{children}</code>;
+    return <code>{children}</code>
   },
 };

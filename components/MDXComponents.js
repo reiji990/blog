@@ -6,6 +6,7 @@ import CustomLink from './Link'
 import TOCInline from './TOCInline'
 import Pre from './Pre'
 import { BlogNewsletterForm } from './NewsletterForm'
+import Tweet from './Tweet'
 
 export const MDXComponents = {
   Image,
@@ -24,3 +25,14 @@ export const MDXLayoutRenderer = ({ layout, mdxSource, ...rest }) => {
 
   return <MDXLayout layout={layout} components={MDXComponents} {...rest} />
 }
+
+export const components = {
+  inlineCode: ({ children }) => {
+    if (children.startsWith('tweet:')) {
+      const id = children.split(':')[1];
+      return <Tweet id={id} />;
+    }
+
+    return <code>{children}</code>;
+  },
+};

@@ -7,8 +7,7 @@ const Tweet = ({ id }) => {
     window.twttr?.widgets?.load(ref.current)
   }, [id])
 
-  return <div dangerouslySetInnerHTML={{ __html: generateEmbedHtml(id) }} ref={ref}
-    />
+  return <div dangerouslySetInnerHTML={{ __html: generateEmbedHtml(id) }} ref={ref} />
 }
 
 const generateEmbedHtml = (id) => {

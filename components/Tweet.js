@@ -15,7 +15,7 @@ const generateEmbedHtml = (id) => {
     throw new Error(`Invalid tweet ID: ${id}`)
   }
 
-  return `<blockquote class="twitter-tweet"><a href="https://twitter.com/i/status/${id}"></a></blockquote>`
+  return `<blockquote class="twitter-tweet" data-theme="dark"><a href="https://twitter.com/i/status/${id}"></a></blockquote>`
 }
 
 export default Tweet

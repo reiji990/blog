@@ -5892,7 +5892,7 @@ react-is@^16.13.1:
 
 "react-twitter-embed@https://github.com/reiji990/react-twitter-embed-dark":
   version "4.0.5"
-  resolved "https://github.com/reiji990/react-twitter-embed-dark#d69ce7bad53c04f7d1b0810ceb77e6e739fad5ea"
+  resolved "https://github.com/reiji990/react-twitter-embed-dark#0579ec3f79cb17cc83b66d1826e4e1a5d9d5fa0e"
   dependencies:
     scriptjs "^2.5.9"
 

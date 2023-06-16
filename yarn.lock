@@ -5890,10 +5890,9 @@ react-is@^16.13.1:
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.13.1.tgz#789729a4dc36de2999dc156dd6c1d9c18cea56a4"
   integrity sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==
 
-react-twitter-embed@^4.0.4:
-  version "4.0.4"
-  resolved "https://registry.yarnpkg.com/react-twitter-embed/-/react-twitter-embed-4.0.4.tgz#4a6b8354acc266876ff1110b9f648518ea20db6d"
-  integrity sha512-2JIL7qF+U62zRzpsh6SZDXNI3hRNVYf5vOZ1WRcMvwKouw+xC00PuFaD0aEp2wlyGaZ+f4x2VvX+uDadFQ3HVA==
+"react-twitter-embed@https://github.com/reiji990/react-twitter-embed-dark":
+  version "4.0.5"
+  resolved "https://github.com/reiji990/react-twitter-embed-dark#d69ce7bad53c04f7d1b0810ceb77e6e739fad5ea"
   dependencies:
     scriptjs "^2.5.9"
 

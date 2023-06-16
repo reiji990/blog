@@ -5,14 +5,14 @@ const withBundleAnalyzer = require('@next/bundle-analyzer')({
 // You might need to insert additional domains in script-src if you are using external services
 const ContentSecurityPolicy = `
   default-src 'self';
-  script-src 'self' 'unsafe-eval' 'unsafe-inline' giscus.app 'https://twitter.com' 'https://platform.twitter.com' 'https://publish.twitter.com' 'https://www.nicovideo.jp' 'https://open.spotify.com';
-  style-src 'self' 'unsafe-inline' 'https://www.youtube.com' 'https://twitter.com' 'https://platform.twitter.com' 'https://publish.twitter.com' 'https://www.nicovideo.jp' 'https://open.spotify.com';
+  script-src 'self' 'unsafe-eval' https: 'unsafe-inline' giscus.app 'https://twitter.com' 'https://*.twitter.com' 'https://www.nicovideo.jp' 'https://open.spotify.com';
+  style-src 'self' 'unsafe-inline' 'https://www.youtube.com' 'https://twitter.com' 'https://*.twitter.com' 'https://www.nicovideo.jp' 'https://open.spotify.com';
   img-src * blob: data:;
   media-src 'none';
   connect-src *;
   font-src 'self';
-  frame-src giscus.app https://www.youtube.com https://twitter.com https://platform.twitter.com https://publish.twitter.com https://www.nicovideo.jp https://ext.nicovideo.jp https://open.spotify.com;
-  child-src https://www.youtube.com https://twitter.com https://platform.twitter.com https://publish.twitter.com https://www.nicovideo.jp https://ext.nicovideo.jp https://open.spotify.com;
+  frame-src giscus.app https://www.youtube.com https://twitter.com https://*.twitter.com https://www.nicovideo.jp https://ext.nicovideo.jp https://open.spotify.com;
+  child-src https://www.youtube.com https://twitter.com https://*.twitter.com https://www.nicovideo.jp https://ext.nicovideo.jp https://open.spotify.com;
 `
 
 const securityHeaders = [

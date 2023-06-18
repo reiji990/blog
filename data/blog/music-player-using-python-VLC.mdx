@@ -1,42 +1,42 @@
 ---
 title: python-VLCを使用したミュージックプレイヤー
-tags: ['Tech', 'Python', 'VLC', 'music']
+tags: ['Tech', 'Python']
 date: '2023-02-05'
 lastmod: ''
 draft: true
 summary: ''
 ---
 
-## music-player-using-python-VLC 
+## music-player-using-python-VLC
 
 https://github.com/reiji990/music-player-using-python-VLC
 
-Python-VLCを使った.flacファイル用のミュージックプレイヤーです。  
-GUI部分もPythonで書いており、Tkinterを使用しています。  
-MacOS用に作成したものですが、Windowsでも動作します。
-始めにアーティスト名、アルバム名を入力すると、Musicフォルダ内でワードが部分一致したアルバム内の.flacファイルを再生します。  
+Python-VLC を使った.flac ファイル用のミュージックプレイヤーです。  
+GUI 部分も Python で書いており、Tkinter を使用しています。  
+MacOS 用に作成したものですが、Windows でも動作します。
+始めにアーティスト名、アルバム名を入力すると、Music フォルダ内でワードが部分一致したアルバム内の.flac ファイルを再生します。
 
 ![画面収録 2023-03-18 21 27 23](https://user-images.githubusercontent.com/101491438/226106478-b50e9510-fbc7-43fe-a426-54de8e486a00.gif)
 
 ## 事前準備
 
-- Python実行環境
-- VLCのインストール
-- python-VLCの導入
-- Musicフォルダの準備  
-  Musicフォルダは、CDリッピング等で作成される下記構成の物をご準備ください。  
-  Music/アーティスト名/アルバム名/.flacファイル  
+- Python 実行環境
+- VLC のインストール
+- python-VLC の導入
+- Music フォルダの準備  
+  Music フォルダは、CD リッピング等で作成される下記構成の物をご準備ください。  
+  Music/アーティスト名/アルバム名/.flac ファイル
 
 ## インストール後の作業
 
-musicfolderpath.txtに再生するMusicフォルダのpathを入力してください。  
-例:/Users/ユーザー名/Music  
+musicfolderpath.txt に再生する Music フォルダの path を入力してください。  
+例:/Users/ユーザー名/Music
 
 ## 操作
 
 一般的なミュージックプレイヤーと異なる挙動の説明です。
 
-- music player.pyを実行し、アーティスト名、アルバム名を入力すると、Musicフォルダ内でワードが部分一致したアルバム内の.flacファイルを再生します。  
+- music player.py を実行し、アーティスト名、アルバム名を入力すると、Music フォルダ内でワードが部分一致したアルバム内の.flac ファイルを再生します。
 - 「Album」「Playlist」ボタン押下で再生中のアルバムリスト、プレイリストが表示されます。他のボタン操作で表示が消えます。
 - トラック移動は「{'<<'}」「{'>>'}」ボタンの他、テキストボックスに数字を入力して「Select」ボタン押下で指定のトラックに移動できます。
 - 「Return」ボタン押下で入力フレームに戻ります。

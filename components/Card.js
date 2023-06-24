@@ -36,7 +36,7 @@ const Card = ({ title, subtitle, description, imgSrc, href }) => (
               {title} {subtitle}
             </Link>
           ) : (
-            subtitle
+            `${title} ${subtitle}`
           )}
         </h2>
         <p className="prose mb-3 max-w-none text-gray-500 dark:text-gray-400">{description}</p>

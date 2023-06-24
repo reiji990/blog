@@ -2,8 +2,9 @@ import Head from 'next/head'
 import { useRouter } from 'next/router'
 import siteMetadata from '@/data/siteMetadata'
 
-const CommonSEO = ({ title, subtitle, description, ogType, ogImage, twImage, canonicalUrl }) => {
+const CommonSEO = ({ frontMatter, title, description, ogType, ogImage, twImage, canonicalUrl }) => {
   const router = useRouter()
+  const subtitle = frontMatter
   return (
     <Head>
       <title>{`${title} ${subtitle}`}</title>

@@ -1,5 +1,5 @@
 # Dockerfile
-FROM node:19
+FROM node
 
 RUN yarn global add firebase-tools
 

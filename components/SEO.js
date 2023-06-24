@@ -6,7 +6,9 @@ const CommonSEO = ({ title, subtitle, description, ogType, ogImage, twImage, can
   const router = useRouter()
   return (
     <Head>
-      <title>{title}</title>
+      <title>
+        '${title} ${subtitle}'
+      </title>
       <meta name="robots" content="follow, index" />
       <meta name="description" content={description} />
       <meta property="og:url" content={`${siteMetadata.siteUrl}${router.asPath}`} />

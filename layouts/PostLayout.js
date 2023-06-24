@@ -1,5 +1,6 @@
 import Link from '@/components/Link'
 import PageTitle from '@/components/PageTitle'
+import PageSubTitle from '@/components/PageSubTitle'
 import SectionContainer from '@/components/SectionContainer'
 import { BlogSEO } from '@/components/SEO'
 import Image from 'next/image'
@@ -16,9 +17,9 @@ const discussUrl = (slug) =>
 const postDateTemplate = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }
 
 export default function PostLayout({ frontMatter, authorDetails, next, prev, children }) {
-  const { slug, path, fileName, date, title, images, tags, lastmod } = frontMatter
+  const { slug, path, fileName, date, title, subtitle, images, tags, lastmod } = frontMatter
   const shareUrl = (path) =>
-    `https://twitter.com/intent/tweet?text=${title}｜${siteMetadata.title}%20${siteMetadata.siteUrl}blog/${slug}%20@${siteMetadata.author}`
+    `https://twitter.com/intent/tweet?text=${title} ${subtitle}｜${siteMetadata.title}%20${siteMetadata.siteUrl}blog/${slug}%20@${siteMetadata.author}`
   const editUrl = (path) => `${siteMetadata.siteRepo}/blob/master/data/blog/${path}`
   return (
     <SectionContainer>
@@ -53,6 +54,7 @@ export default function PostLayout({ frontMatter, authorDetails, next, prev, chi
               </dl>
               <div>
                 <PageTitle>{title}</PageTitle>
+                <PageSubTitle>{subtitle}</PageSubTitle>
               </div>
             </div>
           </header>

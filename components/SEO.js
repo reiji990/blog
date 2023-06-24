@@ -4,17 +4,16 @@ import siteMetadata from '@/data/siteMetadata'
 
 const CommonSEO = ({ frontMatter, title, description, ogType, ogImage, twImage, canonicalUrl }) => {
   const router = useRouter()
-  const subtitle = frontMatter
   return (
     <Head>
-      <title>{`${title} ${subtitle}`}</title>
+      <title>{title}</title>
       <meta name="robots" content="follow, index" />
       <meta name="description" content={description} />
       <meta property="og:url" content={`${siteMetadata.siteUrl}${router.asPath}`} />
       <meta property="og:type" content={ogType} />
       <meta property="og:site_name" content={siteMetadata.title} />
       <meta property="og:description" content={description} />
-      <meta property="og:title" content={`${title} ${subtitle}`} />
+      <meta property="og:title" content={title} />
       {ogImage.constructor.name === 'Array' ? (
         ogImage.map(({ url }) => <meta property="og:image" content={url} key={url} />)
       ) : (
@@ -22,7 +21,7 @@ const CommonSEO = ({ frontMatter, title, description, ogType, ogImage, twImage, 
       )}
       <meta name="twitter:card" content="summary_large_image" />
       <meta name="twitter:site" content={siteMetadata.twitter} />
-      <meta name="twitter:title" content={`${title} ${subtitle}`} />
+      <meta name="twitter:title" content={title} />
       <meta name="twitter:description" content={description} />
       <meta name="twitter:image" content={twImage} />
       <link
@@ -33,14 +32,12 @@ const CommonSEO = ({ frontMatter, title, description, ogType, ogImage, twImage, 
   )
 }
 
-export const PageSEO = ({ frontMatter, title, description }) => {
+export const PageSEO = ({ title, description }) => {
   const ogImageUrl = siteMetadata.siteUrl + siteMetadata.socialBanner
   const twImageUrl = siteMetadata.siteUrl + siteMetadata.socialBanner
-  const subtitle = frontMatter
   return (
     <CommonSEO
       title={title}
-      subtitle={subtitle}
       description={description}
       ogType="website"
       ogImage={ogImageUrl}
@@ -49,16 +46,14 @@ export const PageSEO = ({ frontMatter, title, description }) => {
   )
 }
 
-export const TagSEO = ({ frontMatter, title, description }) => {
+export const TagSEO = ({ title, description }) => {
   const ogImageUrl = siteMetadata.siteUrl + siteMetadata.socialBanner
   const twImageUrl = siteMetadata.siteUrl + siteMetadata.socialBanner
   const router = useRouter()
-  const subtitle = frontMatter
   return (
     <>
       <CommonSEO
         title={title}
-        subtitle={subtitle}
         description={description}
         ogType="website"
         ogImage={ogImageUrl}
@@ -79,6 +74,7 @@ export const TagSEO = ({ frontMatter, title, description }) => {
 export const BlogSEO = ({
   authorDetails,
   title,
+  subtitle,
   summary,
   date,
   lastmod,
@@ -125,7 +121,7 @@ export const BlogSEO = ({
       '@type': 'WebPage',
       '@id': url,
     },
-    headline: title,
+    headline: `${title} ${subtitle}`,
     image: featuredImages,
     datePublished: publishedAt,
     dateModified: modifiedAt,
@@ -146,7 +142,7 @@ export const BlogSEO = ({
   return (
     <>
       <CommonSEO
-        title={title}
+        title={`${title} ${subtitle}`}
         description={summary}
         ogType="article"
         ogImage={featuredImages}

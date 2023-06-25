@@ -130,7 +130,9 @@ export default function PostLayout({ frontMatter, authorDetails, next, prev, chi
                           Previous Article
                         </h2>
                         <div className="text-primary-500 hover:text-primary-600 dark:hover:text-primary-400">
-                          <Link href={`/blog/${prev.slug}`}>{prev.title}</Link>
+                          <Link href={`/blog/${prev.slug}`}>
+                            {prev.title} {prev.subtitle}
+                          </Link>
                         </div>
                       </div>
                     )}
@@ -140,7 +142,9 @@ export default function PostLayout({ frontMatter, authorDetails, next, prev, chi
                           Next Article
                         </h2>
                         <div className="text-primary-500 hover:text-primary-600 dark:hover:text-primary-400">
-                          <Link href={`/blog/${next.slug}`}>{next.title}</Link>
+                          <Link href={`/blog/${next.slug}`}>
+                            {next.title} {next.subtitle}
+                          </Link>
                         </div>
                       </div>
                     )}

@@ -6,6 +6,8 @@ import CustomLink from './Link'
 import TOCInline from './TOCInline'
 import Pre from './Pre'
 import { BlogNewsletterForm } from './NewsletterForm'
+import Source from '@/components/Source'
+import Caption from '@/components/Caption'
 
 export const MDXComponents = {
   Image,
@@ -17,6 +19,8 @@ export const MDXComponents = {
     const Layout = require(`../layouts/${layout}`).default
     return <Layout {...rest} />
   },
+  Source,
+  Caption,
 }
 
 export const MDXLayoutRenderer = ({ layout, mdxSource, ...rest }) => {

@@ -74,6 +74,7 @@ export const TagSEO = ({ title, description }) => {
 export const BlogSEO = ({
   authorDetails,
   title,
+  subtitle,
   summary,
   date,
   lastmod,
@@ -82,6 +83,7 @@ export const BlogSEO = ({
   canonicalUrl,
 }) => {
   const router = useRouter()
+  const fulltitle = subtitle ? `${title} ${subtitle}` : title
   const publishedAt = new Date(date).toISOString()
   const modifiedAt = new Date(lastmod || date).toISOString()
   let imagesArr =
@@ -120,7 +122,7 @@ export const BlogSEO = ({
       '@type': 'WebPage',
       '@id': url,
     },
-    headline: title,
+    headline: fulltitle,
     image: featuredImages,
     datePublished: publishedAt,
     dateModified: modifiedAt,
@@ -141,7 +143,7 @@ export const BlogSEO = ({
   return (
     <>
       <CommonSEO
-        title={title}
+        title={fulltitle}
         description={summary}
         ogType="article"
         ogImage={featuredImages}

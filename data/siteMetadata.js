@@ -5,9 +5,9 @@ const siteMetadata = {
   title: 'Web log.(仮)',
   author: 'reiji990',
   headerTitle: '',
-  description: 'テックとアニメと映画について',
+  description: 'テックとアニメと音楽について',
   language: 'en-us',
-  theme: 'system', // system, dark or light
+  theme: 'dark', // system, dark or light
   siteUrl: 'https://blog-reiji990.vercel.app/',
   siteRepo: 'https://github.com/reiji990/blog',
   siteLogo: '',

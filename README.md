@@ -1,7 +1,7 @@
 ---
 title: '本ブログの作成方法'
 date: '2023-05-28'
-lastmod: ''
+lastmod: '2023-05-30'
 tags: ['Tech', 'Next.js']
 draft: false
 summary: 'このブログの作成方法。'
@@ -16,7 +16,7 @@ summary: 'このブログの作成方法。'
 | OS   | MacOS 13.4 |
 | CPU  | Apple M1   |
 
-Docker 上で開発するので作業環境はあまり重要ではありませんが、一応書いておきます。
+Windowsの場合、インストール時のコマンドが少し異なります。そちらも併記しています。
 
 ## 使用サービス
 
@@ -34,7 +34,7 @@ Docker 上で開発するので作業環境はあまり重要ではありませ�
 
 [エンジニアなら自分でブログを作れ！① 導入編](https://zenn.dev/miketako3/articles/9b2b1a9ec13901)
 
-Next.js のデモページと同じ内容を実装できれば良い場合は、リンク先の記事の手段の方が良いです。理由は下記になります。
+[Next.js のデモページ](https://next-blog-starter.vercel.app/)と同じ内容を実装できれば良い場合は、リンク先の記事の手段の方が良いです。理由は下記になります。
 - Next.jsデモページを実装してブログを作成している人は多いので、後からデザイン変更したい場合に情報を見つけ易い
 - ホスティング先にFirebaseを採用しており、商用利用が可能
 
@@ -62,10 +62,23 @@ docker run --rm -it -v $PWD:/home/app -w /home/app node yarn create next-app --e
 cd blog
 ```
 
+Windowsの場合はこちら(PowerShellで実行)
+
+```
+docker run --rm -it -v ${PWD}:/home/app -w /home/app node yarn create next-app --example https://github.com/timlrx/tailwind-nextjs-starter-blog blog
+cd blog
+```
+
 インストール終了後、localhost で確認してみます。
 
 ```
 docker run --rm -it -v $PWD:/home/app -w /home/app -p 3000:3000 node yarn dev
+```
+
+Windowsの場合はこちら(PowerShellで実行)
+
+```
+ docker run --rm -it -v ${PWD}:/home/app -w /home/app -p 3000:3000 node yarn dev
 ```
 
 [デモページ](https://tailwind-nextjs-starter-blog.vercel.app)と同じ内容が http://localhost:3000 に表示されるはずです。

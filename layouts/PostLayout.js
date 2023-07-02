@@ -1,3 +1,4 @@
+import { useState, ReactNode } from 'react'
 import Link from '@/components/Link'
 import PageTitle from '@/components/PageTitle'
 import PageSubTitle from '@/components/PageSubTitle'
@@ -9,11 +10,6 @@ import siteMetadata from '@/data/siteMetadata'
 import Comments from '@/components/comments'
 import ScrollTopAndComment from '@/components/ScrollTopAndComment'
 
-const discussUrl = (slug) =>
-  `https://mobile.twitter.com/search?q=${encodeURIComponent(
-    `${siteMetadata.siteUrl}/blog/${slug}`
-  )}`
-
 const postDateTemplate = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }
 
 export default function PostLayout({ frontMatter, authorDetails, next, prev, children }) {
@@ -21,6 +17,8 @@ export default function PostLayout({ frontMatter, authorDetails, next, prev, chi
   const shareUrl = (path) =>
     `https://twitter.com/intent/tweet?text=${title} ${subtitle}｜${siteMetadata.title}%20${siteMetadata.siteUrl}blog/${slug}%20@${siteMetadata.author}`
   const editUrl = (path) => `${siteMetadata.siteRepo}/blob/master/data/blog/${path}`
+  const [loadComments, setLoadComments] = useState(false)
+
   return (
     <SectionContainer>
       <BlogSEO

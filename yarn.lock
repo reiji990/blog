@@ -5851,15 +5851,8 @@ react-is@^16.13.1:
   resolved "https://registry.npmjs.org/react-is/-/react-is-16.13.1.tgz"
   integrity sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==
 
-"react-twitter-embed@https://github.com/reiji990/react-twitter-embed-dark":
-  version "4.0.5"
-  resolved "https://github.com/reiji990/react-twitter-embed-dark#bd7387ba3fa4a19b3d9e96964d67096252d7a680"
-  dependencies:
-    scriptjs "^2.5.9"
-
 "react-twitter-embed@https://github.com/reiji990/react-twitter-embed-darkmode":
   version "4.0.5"
-  uid bd7387ba3fa4a19b3d9e96964d67096252d7a680
   resolved "https://github.com/reiji990/react-twitter-embed-darkmode#bd7387ba3fa4a19b3d9e96964d67096252d7a680"
   dependencies:
     scriptjs "^2.5.9"

@@ -47,7 +47,7 @@ const siteMetadata = {
       repo: 'reiji990/blog',
       repositoryId: 'R_kgDOJf790w',
       category: 'Comments',
-      categoryId: 'comments',
+      categoryId: 'DIC_kwDOJf79084CXnJb',
       mapping: 'pathname', // supported options: pathname, url, title
       reactions: '1', // Emoji reactions: 1 = enable / 0 = disable
       // Send discussion metadata periodically to the parent window: 1 = enable / 0 = disable

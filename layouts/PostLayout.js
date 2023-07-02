@@ -1,3 +1,4 @@
+import { useState, ReactNode } from 'react'
 import Link from '@/components/Link'
 import PageTitle from '@/components/PageTitle'
 import PageSubTitle from '@/components/PageSubTitle'
@@ -21,6 +22,8 @@ export default function PostLayout({ frontMatter, authorDetails, next, prev, chi
   const shareUrl = (path) =>
     `https://twitter.com/intent/tweet?text=${title} ${subtitle}｜${siteMetadata.title}%20${siteMetadata.siteUrl}blog/${slug}%20@${siteMetadata.author}`
   const editUrl = (path) => `${siteMetadata.siteRepo}/blob/master/data/blog/${path}`
+  const [loadComments, setLoadComments] = useState(false)
+
   return (
     <SectionContainer>
       <BlogSEO
@@ -106,6 +109,17 @@ export default function PostLayout({ frontMatter, authorDetails, next, prev, chi
                 {` • `}
                 <Link href={editUrl(fileName)}>{'View on GitHub'}</Link>
               </div>
+              {siteMetadata.comments && (
+                <div
+                  className="pt-6 pb-6 text-center text-gray-700 dark:text-gray-300"
+                  id="comment"
+                >
+                  {!loadComments && (
+                    <button onClick={() => setLoadComments(true)}>Load Comments</button>
+                  )}
+                  {loadComments && <Comments commentsConfig={siteMetadata.comments} slug={slug} />}
+                </div>
+              )}
               <Comments frontMatter={frontMatter} />
             </div>
             <footer>

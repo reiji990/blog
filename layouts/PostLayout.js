@@ -10,11 +10,6 @@ import siteMetadata from '@/data/siteMetadata'
 import Comments from '@/components/comments'
 import ScrollTopAndComment from '@/components/ScrollTopAndComment'
 
-const discussUrl = (slug) =>
-  `https://mobile.twitter.com/search?q=${encodeURIComponent(
-    `${siteMetadata.siteUrl}/blog/${slug}`
-  )}`
-
 const postDateTemplate = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }
 
 export default function PostLayout({ frontMatter, authorDetails, next, prev, children }) {
@@ -109,17 +104,6 @@ export default function PostLayout({ frontMatter, authorDetails, next, prev, chi
                 {` • `}
                 <Link href={editUrl(fileName)}>{'View on GitHub'}</Link>
               </div>
-              {siteMetadata.comments && (
-                <div
-                  className="pt-6 pb-6 text-center text-gray-700 dark:text-gray-300"
-                  id="comment"
-                >
-                  {!loadComments && (
-                    <button onClick={() => setLoadComments(true)}>Load Comments</button>
-                  )}
-                  {loadComments && <Comments commentsConfig={siteMetadata.comments} slug={slug} />}
-                </div>
-              )}
               <Comments frontMatter={frontMatter} />
             </div>
             <footer>

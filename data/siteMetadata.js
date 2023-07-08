@@ -10,7 +10,7 @@ const siteMetadata = {
   theme: 'dark', // system, dark or light
   siteUrl: 'https://blog-reiji990.vercel.app/',
   siteRepo: 'https://github.com/reiji990/blog',
-  siteLogo: '',
+  siteLogo: '/static/images/ikuyo.png',
   image: '/static/images/avatar.jpeg',
   socialBanner: '/static/images/twitter-card.png',
   email: 'address@yoursite.com',

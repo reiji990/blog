@@ -78,14 +78,14 @@ export default function PostLayout({ frontMatter, authorDetails, next, prev, chi
                       <dl className="whitespace-nowrap text-sm font-medium leading-5">
                         <dt className="sr-only">Name</dt>
                         <dd className="text-gray-900 dark:text-gray-100">{author.name}</dd>
-                        <dt className="sr-only">Twitter</dt>
+                        <dt className="sr-only">X</dt>
                         <dd>
-                          {author.twitter && (
+                          {author.X && (
                             <Link
-                              href={author.twitter}
+                              href={author.X}
                               className="text-primary-500 hover:text-primary-600 dark:hover:text-primary-400"
                             >
-                              {author.twitter.replace('https://twitter.com/', '@')}
+                              {author.X.replace('https://twitter.com/', '@')}
                             </Link>
                           )}
                         </dd>
@@ -99,7 +99,7 @@ export default function PostLayout({ frontMatter, authorDetails, next, prev, chi
               <div className="prose max-w-none pb-8 pt-10 dark:prose-dark">{children}</div>
               <div className="pb-6 pt-6 text-sm text-gray-700 dark:text-gray-300">
                 <Link href={shareUrl(path)} rel="nofollow">
-                  Tweet
+                  Post to 𝕏
                 </Link>
                 {` • `}
                 <Link href={editUrl(fileName)}>{'View on GitHub'}</Link>

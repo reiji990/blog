@@ -112,8 +112,8 @@ var Authors = defineDocumentType(() => ({
     email: {
       type: "string"
     },
-    twitter: {
-      type: "string"
+    X: {
+      type: 'string',
     },
     linkedin: {
       type: "string"

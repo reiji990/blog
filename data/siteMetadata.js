@@ -17,6 +17,7 @@ const siteMetadata = {
   github: 'https://github.com/reiji990',
   X: 'https://twitter.com/reiji990',
   facebook: 'https://facebook.com',
+  instagram: 'https://www.instagram.com/meta_reiji990/',
   youtube: 'https://youtube.com',
   linkedin: 'https://www.linkedin.com',
   locale: 'en-US',

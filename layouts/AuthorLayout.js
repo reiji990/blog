@@ -3,7 +3,7 @@ import Image from 'next/image'
 import { PageSEO } from '@/components/SEO'
 
 export default function AuthorLayout({ children, frontMatter }) {
-  const { name, avatar, occupation, company, email, X, linkedin, github } = frontMatter
+  const { name, avatar, occupation, company, email, X, linkedin, github, instagram } = frontMatter
 
   return (
     <>
@@ -31,6 +31,7 @@ export default function AuthorLayout({ children, frontMatter }) {
               <SocialIcon kind="github" href={github} />
               <SocialIcon kind="linkedin" href={linkedin} />
               <SocialIcon kind="X" href={X} />
+              <SocialIcon kind="Instagram" href={instagram} />
             </div>
           </div>
           <div className="prose max-w-none pb-8 pt-8 dark:prose-dark xl:col-span-2">{children}</div>

@@ -4,6 +4,7 @@ import Facebook from './facebook.svg'
 import Youtube from './youtube.svg'
 import Linkedin from './linkedin.svg'
 import X from './X.svg'
+import Instagram from './Instagram.svg'
 
 // Icons taken from: https://simpleicons.org/
 
@@ -14,6 +15,7 @@ const components = {
   youtube: Youtube,
   linkedin: Linkedin,
   X: X,
+  Instagram: Instagram,
 }
 
 const SocialIcon = ({ kind, href, size = 8 }) => {

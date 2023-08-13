@@ -14,8 +14,10 @@ const postDateTemplate = { weekday: 'long', year: 'numeric', month: 'long', day:
 
 export default function PostLayout({ frontMatter, authorDetails, next, prev, children }) {
   const { slug, path, fileName, date, title, subtitle, images, tags, lastmod } = frontMatter
-  const shareUrl = (path) =>
-    `https://twitter.com/intent/tweet?text=${title} ${subtitle}｜${siteMetadata.title}%20${siteMetadata.siteUrl}blog/${slug}%20@${siteMetadata.author}`
+  const shareUrl = (path) => {
+    const fulltitle = subtitle ? `${title} ${subtitle}` : title
+    return `https://twitter.com/intent/tweet?text=${fulltitle}｜${siteMetadata.title}%20${siteMetadata.siteUrl}blog/${slug}%20@${siteMetadata.author}`
+  }
   const editUrl = (path) => `${siteMetadata.siteRepo}/blob/master/data/blog/${path}`
   const [loadComments, setLoadComments] = useState(false)
 

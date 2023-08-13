@@ -2,11 +2,12 @@ import Head from 'next/head'
 import { useRouter } from 'next/router'
 import siteMetadata from '@/data/siteMetadata'
 
-const CommonSEO = ({ title, description, ogType, ogImage, twImage, canonicalUrl }) => {
+const CommonSEO = ({ title, subtitle, description, ogType, ogImage, twImage, canonicalUrl }) => {
   const router = useRouter()
+  const fulltitle = subtitle ? `${title} ${subtitle}` : title
   return (
     <Head>
-      <title>{title}</title>
+      <title>{fulltitle}</title>
       <meta name="robots" content="follow, index" />
       <meta name="description" content={description} />
       <meta property="og:url" content={`${siteMetadata.siteUrl}${router.asPath}`} />
@@ -32,12 +33,13 @@ const CommonSEO = ({ title, description, ogType, ogImage, twImage, canonicalUrl 
   )
 }
 
-export const PageSEO = ({ title, description }) => {
+export const PageSEO = ({ title, subtitle, description }) => {
   const ogImageUrl = siteMetadata.siteUrl + siteMetadata.socialBanner
   const twImageUrl = siteMetadata.siteUrl + siteMetadata.socialBanner
+  const fulltitle = subtitle ? `${title} ${subtitle}` : title
   return (
     <CommonSEO
-      title={title}
+      title={fulltitle}
       description={description}
       ogType="website"
       ogImage={ogImageUrl}
@@ -46,14 +48,15 @@ export const PageSEO = ({ title, description }) => {
   )
 }
 
-export const TagSEO = ({ title, description }) => {
+export const TagSEO = ({ title, subtitle, description }) => {
   const ogImageUrl = siteMetadata.siteUrl + siteMetadata.socialBanner
   const twImageUrl = siteMetadata.siteUrl + siteMetadata.socialBanner
   const router = useRouter()
+  const fulltitle = subtitle ? `${title} ${subtitle}` : title
   return (
     <>
       <CommonSEO
-        title={title}
+        title={fulltitle}
         description={description}
         ogType="website"
         ogImage={ogImageUrl}

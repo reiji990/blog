@@ -99,7 +99,7 @@ export default function PostLayout({ frontMatter, authorDetails, next, prev, chi
             </dl>
             <div className="divide-y divide-gray-200 dark:divide-gray-700 xl:col-span-3 xl:row-span-2 xl:pb-0">
               <div className="prose max-w-none pb-8 pt-10 dark:prose-dark">{children}</div>
-              <div className="pb-6 pt-6 text-sm text-gray-700 dark:text-gray-300">
+              <div className="pb-6 pt-6 text-center text-sm text-gray-700 dark:text-gray-300">
                 <Link href={shareUrl(path)} rel="nofollow">
                   Post to 𝕏
                 </Link>

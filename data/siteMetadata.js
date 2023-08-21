@@ -1,48 +1,42 @@
+// @ts-check
+
 /** @type {import("pliny/config").PlinyConfig } */
 const siteMetadata = {
-  title: 'Next.js Starter Blog',
-  author: 'Tails Azimuth',
-  headerTitle: 'TailwindBlog',
-  description: 'A blog created with Next.js and Tailwind.css',
+  title: 'Web log.(仮)',
+  author: 'reiji990',
+  headerTitle: '',
+  description: 'テックとアニメと音楽について',
   language: 'en-us',
-  theme: 'system', // system, dark or light
-  siteUrl: 'https://tailwind-nextjs-starter-blog.vercel.app',
-  siteRepo: 'https://github.com/timlrx/tailwind-nextjs-starter-blog',
+  theme: 'dark', // system, dark or light
+  siteUrl: 'https://blog-reiji990.vercel.app/',
+  siteRepo: 'https://github.com/reiji990/blog',
   siteLogo: '/static/images/logo.png',
+  image: '/static/images/avatar.jpeg',
   socialBanner: '/static/images/twitter-card.png',
-  mastodon: 'https://mastodon.social/@mastodonuser',
   email: 'address@yoursite.com',
-  github: 'https://github.com',
-  twitter: 'https://twitter.com/Twitter',
+  github: 'https://github.com/reiji990',
+  X: 'https://twitter.com/reiji990',
   facebook: 'https://facebook.com',
+  instagram: 'https://www.instagram.com/meta_reiji990/',
   youtube: 'https://youtube.com',
   linkedin: 'https://www.linkedin.com',
   locale: 'en-US',
   analytics: {
     // If you want to use an analytics provider you have to add it to the
     // content security policy in the `next.config.js` file.
-    // supports Plausible, Simple Analytics, Umami, Posthog or Google Analytics.
-    umamiAnalytics: {
-      // We use an env variable for this site to avoid other users cloning our analytics ID
-      umamiWebsiteId: process.env.NEXT_UMAMI_ID, // e.g. 123e4567-e89b-12d3-a456-426614174000
-    },
-    // plausibleAnalytics: {
-    //   plausibleDataDomain: '', // e.g. tailwind-nextjs-starter-blog.vercel.app
-    // },
-    // simpleAnalytics: {},
-    // posthogAnalytics: {
-    //   posthogProjectApiKey: '', // e.g. 123e4567-e89b-12d3-a456-426614174000
-    // },
-    // googleAnalytics: {
-    //   googleAnalyticsId: '', // e.g. G-XXXXXXX
-    // },
+    // supports plausible, simpleAnalytics, umami or googleAnalytics
+    plausibleDataDomain: '', // e.g. tailwind-nextjs-starter-blog.vercel.app
+    simpleAnalytics: false, // true or false
+    umamiWebsiteId: '', // e.g. 123e4567-e89b-12d3-a456-426614174000
+    posthogProjectApiKey: '', // e.g. AhnJK8392ndPOav87as450xd
+    googleAnalyticsId: '', // e.g. UA-000000-2 or G-XXXXXXX
   },
   newsletter: {
     // supports mailchimp, buttondown, convertkit, klaviyo, revue, emailoctopus
     // Please add your .env file and modify it according to your selection
     provider: 'buttondown',
   },
-  comments: {
+  comment: {
     // If you want to use an analytics provider you have to add it to the
     // content security policy in the `next.config.js` file.
     // Select a provider and use the environment variables associated to it
@@ -51,10 +45,10 @@ const siteMetadata = {
     giscusConfig: {
       // Visit the link below, and follow the steps in the 'configuration' section
       // https://giscus.app/
-      repo: process.env.NEXT_PUBLIC_GISCUS_REPO,
-      repositoryId: process.env.NEXT_PUBLIC_GISCUS_REPOSITORY_ID,
-      category: process.env.NEXT_PUBLIC_GISCUS_CATEGORY,
-      categoryId: process.env.NEXT_PUBLIC_GISCUS_CATEGORY_ID,
+      repo: 'reiji990/blog',
+      repositoryId: 'R_kgDOJf790w',
+      category: 'Comments',
+      categoryId: 'DIC_kwDOJf79084CXnJb',
       mapping: 'pathname', // supported options: pathname, url, title
       reactions: '1', // Emoji reactions: 1 = enable / 0 = disable
       // Send discussion metadata periodically to the parent window: 1 = enable / 0 = disable
@@ -72,20 +66,20 @@ const siteMetadata = {
       lang: 'en',
     },
   },
-  search: {
-    provider: 'kbar', // kbar or algolia
-    kbarConfig: {
-      searchDocumentsPath: 'search.json', // path to load documents to search
-    },
-    // provider: 'algolia',
-    // algoliaConfig: {
-    //   // The application ID provided by Algolia
-    //   appId: 'R2IYF7ETH7',
-    //   // Public API key: it is safe to commit it
-    //   apiKey: '599cec31baffa4868cae4e79f180729b',
-    //   indexName: 'docsearch',
-    // },
-  },
+  // search: {
+  //   provider: 'kbar', // kbar or algolia
+  //   kbarConfig: {
+  //     searchDocumentsPath: 'search.json', // path to load documents to search
+  //   },
+  //   provider: 'algolia',
+  //   algoliaConfig: {
+  //     // The application ID provided by Algolia
+  //     appId: 'R2IYF7ETH7',
+  //     // Public API key: it is safe to commit it
+  //     apiKey: '599cec31baffa4868cae4e79f180729b',
+  //     indexName: 'docsearch',
+  //   },
+  // },
 }
 
 module.exports = siteMetadata

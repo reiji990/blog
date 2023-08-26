@@ -155,7 +155,7 @@ export default function PostLayout({ content, authorDetails, next, prev, childre
                         </h2>
                         <div className="text-primary-500 hover:text-primary-600 dark:hover:text-primary-400">
                           <Link href={`/${next.path}`}>
-                            {next.title} {prev.subtitle}
+                            {next.title} {next.subtitle}
                           </Link>
                         </div>
                       </div>

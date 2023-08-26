@@ -9266,13 +9266,13 @@ __metadata:
 
 "react-twitter-embed@https://github.com/reiji990/react-twitter-embed-darkmode":
   version: 4.0.5
-  resolution: "react-twitter-embed@https://github.com/reiji990/react-twitter-embed-darkmode.git#commit=bd7387ba3fa4a19b3d9e96964d67096252d7a680"
+  resolution: "react-twitter-embed@https://github.com/reiji990/react-twitter-embed-darkmode.git#commit=ef929c8fd03c84cfb758f106da38f3570e47db6c"
   dependencies:
     scriptjs: ^2.5.9
   peerDependencies:
     react: ^16.0.0 || ^17.0.0 || ^18.0.0
     react-dom: ^16.0.0 || ^17.0.0 || ^18.0.0
-  checksum: de70df6f2af02fa03e068c9ca281059750cab1e6b7f7faf1c315cf17e94a9ab623a313a4f256650664ab1bb356ab5dc82132de1344bf4ceb9afbcc633181258c
+  checksum: 414bbc414a5cb170edeb9fc9797f1056a5e51d91c16fdee7440263de8375c48f0b250078ee8a2ed585f340ae552e846ffaff3098b8ac9157f1de72c53ee4efb3
   languageName: node
   linkType: hard
 

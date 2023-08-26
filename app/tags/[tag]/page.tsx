@@ -39,5 +39,5 @@ export default function TagPage({ params }: { params: { tag: string } }) {
       (post) => post.draft !== true && post.tags && post.tags.map((t) => slug(t)).includes(tag)
     )
   )
-  return <ListLayout posts={filteredPosts} title={title} />
+  return <ListLayout posts={filteredPosts} title={title} subtitle="" />
 }

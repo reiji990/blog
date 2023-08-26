@@ -4,15 +4,12 @@ import type { Blog, Authors } from 'contentlayer/generated'
 import Comments from '@/components/Comments'
 import Link from '@/components/Link'
 import PageTitle from '@/components/PageTitle'
+import PageSubTitle from '@/components/PageSubTitle'
 import SectionContainer from '@/components/SectionContainer'
 import Image from '@/components/Image'
 import Tag from '@/components/Tag'
 import siteMetadata from '@/data/siteMetadata'
 import ScrollTopAndComment from '@/components/ScrollTopAndComment'
-
-const editUrl = (path) => `${siteMetadata.siteRepo}/blob/main/data/${path}`
-const discussUrl = (path) =>
-  `https://mobile.twitter.com/search?q=${encodeURIComponent(`${siteMetadata.siteUrl}/${path}`)}`
 
 const postDateTemplate: Intl.DateTimeFormatOptions = {
   weekday: 'long',
@@ -30,9 +27,13 @@ interface LayoutProps {
 }
 
 export default function PostLayout({ content, authorDetails, next, prev, children }: LayoutProps) {
-  const { filePath, path, slug, date, title, tags } = content
+  const { filePath, path, slug, date, title, subtitle, tags, lastmod } = content
   const basePath = path.split('/')[0]
-
+  const editUrl = (path) => `${siteMetadata.siteRepo}/blob/main/data/${path}`
+  const shareUrl = (path) => {
+    const fulltitle = subtitle ? `${title} ${subtitle}` : title
+    return `https://twitter.com/intent/tweet?text=${fulltitle}｜${siteMetadata.title}%20${siteMetadata.siteUrl}blog/${slug}%20@${siteMetadata.author}`
+  }
   return (
     <SectionContainer>
       <ScrollTopAndComment />
@@ -47,11 +48,21 @@ export default function PostLayout({ content, authorDetails, next, prev, childre
                     <time dateTime={date}>
                       {new Date(date).toLocaleDateString(siteMetadata.locale, postDateTemplate)}
                     </time>
+                    {lastmod && (
+                      <div>
+                        {'Last Modified: '}
+                        {new Date(lastmod).toLocaleDateString(
+                          siteMetadata.locale,
+                          postDateTemplate
+                        )}
+                      </div>
+                    )}
                   </dd>
                 </div>
               </dl>
               <div>
                 <PageTitle>{title}</PageTitle>
+                <PageSubTitle>{subtitle}</PageSubTitle>
               </div>
             </div>
           </header>
@@ -93,9 +104,9 @@ export default function PostLayout({ content, authorDetails, next, prev, childre
             </dl>
             <div className="divide-y divide-gray-200 dark:divide-gray-700 xl:col-span-3 xl:row-span-2 xl:pb-0">
               <div className="prose max-w-none pb-8 pt-10 dark:prose-invert">{children}</div>
-              <div className="pb-6 pt-6 text-sm text-gray-700 dark:text-gray-300">
-                <Link href={discussUrl(path)} rel="nofollow">
-                  Discuss on Twitter
+              <div className="pb-6 pt-6 text-center text-sm text-gray-700 dark:text-gray-300">
+                <Link href={shareUrl(path)} rel="nofollow">
+                  Post to 𝕏
                 </Link>
                 {` • `}
                 <Link href={editUrl(filePath)}>View on GitHub</Link>
@@ -131,7 +142,9 @@ export default function PostLayout({ content, authorDetails, next, prev, childre
                           Previous Article
                         </h2>
                         <div className="text-primary-500 hover:text-primary-600 dark:hover:text-primary-400">
-                          <Link href={`/${prev.path}`}>{prev.title}</Link>
+                          <Link href={`/${prev.path}`}>
+                            {prev.title} {prev.subtitle}
+                          </Link>
                         </div>
                       </div>
                     )}
@@ -141,7 +154,9 @@ export default function PostLayout({ content, authorDetails, next, prev, childre
                           Next Article
                         </h2>
                         <div className="text-primary-500 hover:text-primary-600 dark:hover:text-primary-400">
-                          <Link href={`/${next.path}`}>{next.title}</Link>
+                          <Link href={`/${next.path}`}>
+                            {next.title} {prev.subtitle}
+                          </Link>
                         </div>
                       </div>
                     )}

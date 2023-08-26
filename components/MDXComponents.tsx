@@ -4,6 +4,8 @@ import BlogNewsletterForm from 'pliny/ui/BlogNewsletterForm'
 import type { MDXComponents } from 'mdx/types'
 import Image from './Image'
 import CustomLink from './Link'
+import Source from '@/components/Source'
+import Caption from '@/components/Caption'
 
 export const components: MDXComponents = {
   Image,
@@ -11,4 +13,6 @@ export const components: MDXComponents = {
   a: CustomLink,
   pre: Pre,
   BlogNewsletterForm,
+  Source,
+  Caption,
 }

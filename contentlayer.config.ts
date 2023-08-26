@@ -80,6 +80,7 @@ export const Blog = defineDocumentType(() => ({
   contentType: 'mdx',
   fields: {
     title: { type: 'string', required: true },
+    subtitle: { type: 'string' },
     date: { type: 'date', required: true },
     tags: { type: 'list', of: { type: 'string' }, default: [] },
     lastmod: { type: 'date' },
@@ -98,7 +99,7 @@ export const Blog = defineDocumentType(() => ({
       resolve: (doc) => ({
         '@context': 'https://schema.org',
         '@type': 'BlogPosting',
-        headline: doc.title,
+        headline: doc.title || doc.subtitle,
         datePublished: doc.date,
         dateModified: doc.lastmod || doc.date,
         description: doc.summary,
@@ -124,6 +125,7 @@ export const Authors = defineDocumentType(() => ({
     linkedin: { type: 'string' },
     github: { type: 'string' },
     layout: { type: 'string' },
+    instagram: { type: 'string' },
   },
   computedFields,
 }))

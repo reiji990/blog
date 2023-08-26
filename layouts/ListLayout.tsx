@@ -16,6 +16,7 @@ interface PaginationProps {
 interface ListLayoutProps {
   posts: CoreContent<Blog>[]
   title: string
+  subtitle: string
   initialDisplayPosts?: CoreContent<Blog>[]
   pagination?: PaginationProps
 }
@@ -63,12 +64,13 @@ function Pagination({ totalPages, currentPage }: PaginationProps) {
 export default function ListLayout({
   posts,
   title,
+  subtitle,
   initialDisplayPosts = [],
   pagination,
 }: ListLayoutProps) {
   const [searchValue, setSearchValue] = useState('')
   const filteredBlogPosts = posts.filter((post) => {
-    const searchContent = post.title + post.summary + post.tags?.join(' ')
+    const searchContent = post.title + post.subtitle + post.summary + post.tags?.join(' ')
     return searchContent.toLowerCase().includes(searchValue.toLowerCase())
   })
 
@@ -82,6 +84,8 @@ export default function ListLayout({
         <div className="space-y-2 pb-8 pt-6 md:space-y-5">
           <h1 className="text-3xl font-extrabold leading-9 tracking-tight text-gray-900 dark:text-gray-100 sm:text-4xl sm:leading-10 md:text-6xl md:leading-14">
             {title}
+            <br />
+            {subtitle}
           </h1>
           <div className="relative max-w-lg">
             <label>
@@ -113,7 +117,7 @@ export default function ListLayout({
         <ul>
           {!filteredBlogPosts.length && 'No posts found.'}
           {displayPosts.map((post) => {
-            const { path, date, title, summary, tags } = post
+            const { path, date, title, subtitle, summary, tags } = post
             return (
               <li key={path} className="py-4">
                 <article className="space-y-2 xl:grid xl:grid-cols-4 xl:items-baseline xl:space-y-0">
@@ -128,6 +132,8 @@ export default function ListLayout({
                       <h3 className="text-2xl font-bold leading-8 tracking-tight">
                         <Link href={`/${path}`} className="text-gray-900 dark:text-gray-100">
                           {title}
+                          <br />
+                          {subtitle}
                         </Link>
                       </h3>
                       <div className="flex flex-wrap">

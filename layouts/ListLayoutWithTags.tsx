@@ -18,6 +18,7 @@ interface PaginationProps {
 interface ListLayoutProps {
   posts: CoreContent<Blog>[]
   title: string
+  subtitle: string
   initialDisplayPosts?: CoreContent<Blog>[]
   pagination?: PaginationProps
 }
@@ -65,6 +66,7 @@ function Pagination({ totalPages, currentPage }: PaginationProps) {
 export default function ListLayoutWithTags({
   posts,
   title,
+  subtitle,
   initialDisplayPosts = [],
   pagination,
 }: ListLayoutProps) {
@@ -81,6 +83,8 @@ export default function ListLayoutWithTags({
         <div className="pb-6 pt-6">
           <h1 className="sm:hidden text-3xl font-extrabold leading-9 tracking-tight text-gray-900 dark:text-gray-100 sm:text-4xl sm:leading-10 md:text-6xl md:leading-14">
             {title}
+            <br />
+            {subtitle}
           </h1>
         </div>
         <div className="flex sm:space-x-24">
@@ -122,7 +126,7 @@ export default function ListLayoutWithTags({
           <div>
             <ul>
               {displayPosts.map((post) => {
-                const { path, date, title, summary, tags } = post
+                const { path, date, title, subtitle, summary, tags } = post
                 return (
                   <li key={path} className="py-5">
                     <article className="space-y-2 flex flex-col xl:space-y-0">
@@ -134,9 +138,11 @@ export default function ListLayoutWithTags({
                       </dl>
                       <div className="space-y-3">
                         <div>
-                          <h2 className="text-2xl font-bold leading-8 tracking-tight">
+                          <h2 className="text-2xl leading-8 tracking-tight">
                             <Link href={`/${path}`} className="text-gray-900 dark:text-gray-100">
                               {title}
+                              <br />
+                              {subtitle}
                             </Link>
                           </h2>
                           <div className="flex flex-wrap">

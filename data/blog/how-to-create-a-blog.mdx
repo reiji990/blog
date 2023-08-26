@@ -1,0 +1,150 @@
+---
+title: '本ブログの作成方法'
+date: '2023-05-28'
+lastmod: '2023-08-14'
+tags: ['Tech', 'Next.js']
+draft: false
+summary: 'このブログの作成方法。'
+---
+
+このブログの作成方法のメモを残します。
+
+## 作業環境
+
+| 種別 | 詳細       |
+| ---- | ---------- |
+| OS   | MacOS 13.4 |
+| CPU  | Apple M1   |
+
+Windows の場合、インストール時のコマンドが少し異なります。そちらも併記しています。
+
+## 使用サービス
+
+全て無料で使用できることを前提に選定しています。
+
+| 種別         | 詳細                                                                                          |
+| ------------ | --------------------------------------------------------------------------------------------- |
+| コード管理   | GitHub                                                                                        |
+| 開発環境     | Docker                                                                                        |
+| ホスティング | Vercel                                                                                        |
+| ブログ機能   | Next.js                                                                                       |
+| テンプレート | [timlrx/tailwind-nextjs-starter-blog](https://github.com/timlrx/tailwind-nextjs-starter-blog) |
+
+## 参考
+
+[エンジニアなら自分でブログを作れ！① 導入編](https://zenn.dev/miketako3/articles/9b2b1a9ec13901)
+
+[Next.js のデモページ](https://next-blog-starter.vercel.app/)と同じ内容を実装できれば良い場合は、リンク先の記事の手段の方が良いです。理由は以下になります。
+
+- 多くの人が Next.js デモページを使用してブログを作成しているため、後からデザイン変更したい場合に情報を見つけ易い
+- ホスティング先に Firebase を採用しており、商用利用が可能
+
+ただ、Next.js のテンプレートはシンプル過ぎて、デザインをはじめから作る必要があるため、今回はより完成度の高いテンプレートを使用します。
+
+## 事前準備
+
+- Vercel のアカウント作成
+- GitHub のアカウント作成
+- GitHub Desktop のインストール
+- Docker のインストール
+
+## 手順
+
+Docker 上で開発する環境整備と、Vercel にデプロイするまでの手順になります。
+
+### インストール
+
+cd をブログ用のフォルダを作成するディレクトリに移動し、下記コマンドを実行します。
+
+各コマンド末尾の`blog`はディレクトリ内に新たに作成するフォルダ名となります。
+
+```
+docker run --rm -it -v $PWD:/home/app -w /home/app node yarn create next-app --example https://github.com/timlrx/tailwind-nextjs-starter-blog blog
+cd blog
+```
+
+Windows の場合はこちら(PowerShell で実行)
+
+```
+docker run --rm -it -v ${PWD}:/home/app -w /home/app node yarn create next-app --example https://github.com/timlrx/tailwind-nextjs-starter-blog blog
+cd blog
+```
+
+インストール終了後、localhost で確認してみます。
+
+```
+docker run --rm -it -v $PWD:/home/app -w /home/app -p 3000:3000 node yarn dev
+```
+
+Windows の場合はこちら(PowerShell で実行)
+
+```
+docker run --rm -it -v ${PWD}:/home/app -w /home/app -p 3000:3000 node yarn dev
+```
+
+[デモページ](https://tailwind-nextjs-starter-blog.vercel.app)と同じ内容が http://localhost:3000 に表示されるはずです。
+
+### Docker の設定
+
+続いて、Docker の設定です。必要なファイルを作成します。
+
+```
+touch Dockerfile && touch docker-compose.yml
+```
+
+作成されたファイルに以下をコピペ。
+
+```:Dockerfile
+FROM node
+```
+
+```yml:docker-compose.yml
+version: '3'
+
+services:
+  app:
+    build: .
+    working_dir: /home/app
+    ports:
+      - "3000:3000"
+    volumes:
+      - .:/home/app
+    tty: true
+    stdin_open: true
+    command: yarn dev
+```
+
+Docker の設定をビルドし、実行。
+
+```
+docker compose build --no-cache
+docker compose up
+```
+
+これで、今後は`docker compose up`を実行することで http://localhost:3000 にデモページと同じ内容が表示されます。
+
+### GitHub のリポジトリ作成
+
+作成した blog ディレクトリを GitHub リポジトリに追加します。
+
+方法はいくつもありますが、一番簡単な方法は GitHub Desktop を使用することかなと思います。
+
+Add Existing Repository から、ローカルパスに先ほどの blog ディレクトリを選択、リポジトリ名を決めて作成します。
+
+![GitHub Desktop](/static/images/how-to-create-a-blog/GitHub-Desktop.png)
+
+### Vercel の設定
+
+[Vercel](https://vercel.com/dashboard)のダッシュボード画面から Create Project を選択。先ほど作成した GitHub リポジトリを選択し、import、Deploy を選択。
+
+![Vercel](/static/images/how-to-create-a-blog/Vercel.png)
+
+これで、Vercel から提供されたドメインにデモページと同じ内容が表示されるはずです。
+
+ブログデザインの変更や記事の執筆を終えた際は、GitHub の main ブランチに変更をコミットすれば変更内容が Vercel にデプロイされます。
+
+---
+
+ブログの作成方法は以上となります。デザインの変更方法は Next.js の公式ドキュメント等をご参照の上で実施いただければと思います。
+
+まだ私自身ブログのデザインや使用技術に満足したわけではなく、これからも変更を加えていきますので、その中で手間取った変更があれば記事にしようかと思います。

@@ -11,8 +11,8 @@ export default function Home({ posts }) {
     <>
       <div className="divide-y divide-gray-200 dark:divide-gray-700">
         <div className="space-y-2 pb-8 pt-6 md:space-y-5">
-          <h1 className="text-3xl font-extrabold leading-9 tracking-tight text-gray-900 dark:text-gray-100 sm:text-4xl sm:leading-10 md:text-6xl md:leading-14">
-            Latest
+          <h1 className="text-3xl leading-9 tracking-tight text-gray-900 dark:text-gray-100 sm:text-4xl sm:leading-10 md:text-6xl md:leading-14">
+            {siteMetadata.title}
           </h1>
           <p className="text-lg leading-7 text-gray-500 dark:text-gray-400">
             {siteMetadata.description}
@@ -21,7 +21,7 @@ export default function Home({ posts }) {
         <ul className="divide-y divide-gray-200 dark:divide-gray-700">
           {!posts.length && 'No posts found.'}
           {posts.slice(0, MAX_DISPLAY).map((post) => {
-            const { slug, date, title, summary, tags } = post
+            const { slug, date, title, subtitle, summary, tags } = post
             return (
               <li key={slug} className="py-12">
                 <article>
@@ -41,6 +41,8 @@ export default function Home({ posts }) {
                               className="text-gray-900 dark:text-gray-100"
                             >
                               {title}
+                              <br />
+                              {subtitle}
                             </Link>
                           </h2>
                           <div className="flex flex-wrap">
@@ -57,7 +59,7 @@ export default function Home({ posts }) {
                         <Link
                           href={`/blog/${slug}`}
                           className="text-primary-500 hover:text-primary-600 dark:hover:text-primary-400"
-                          aria-label={`Read "${title}"`}
+                          aria-label={`Read "${title} ${subtitle}"`}
                         >
                           Read more &rarr;
                         </Link>

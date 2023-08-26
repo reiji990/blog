@@ -1,19 +1,20 @@
 /** @type {import("pliny/config").PlinyConfig } */
 const siteMetadata = {
-  title: 'Next.js Starter Blog',
-  author: 'Tails Azimuth',
+  title: 'Web log.(仮)',
+  author: 'reiji990',
   headerTitle: 'TailwindBlog',
-  description: 'A blog created with Next.js and Tailwind.css',
+  description: 'テックとアニメと音楽について',
   language: 'en-us',
-  theme: 'system', // system, dark or light
-  siteUrl: 'https://tailwind-nextjs-starter-blog.vercel.app',
-  siteRepo: 'https://github.com/timlrx/tailwind-nextjs-starter-blog',
+  theme: 'dark', // system, dark or light
+  siteUrl: 'https://blog-reiji990.vercel.app/',
+  siteRepo: 'https://github.com/reiji990/blog',
   siteLogo: '/static/images/logo.png',
   socialBanner: '/static/images/twitter-card.png',
   mastodon: 'https://mastodon.social/@mastodonuser',
   email: 'address@yoursite.com',
-  github: 'https://github.com',
-  twitter: 'https://twitter.com/Twitter',
+  github: 'https://github.com/reiji990',
+  twitter: 'https://twitter.com/reiji990',
+  instagram: 'https://www.instagram.com/meta_reiji990/',
   facebook: 'https://facebook.com',
   youtube: 'https://youtube.com',
   linkedin: 'https://www.linkedin.com',

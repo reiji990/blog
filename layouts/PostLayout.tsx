@@ -119,6 +119,41 @@ export default function PostLayout({ content, authorDetails, next, prev, childre
                   <Comments slug={slug} />
                 </div>
               )}
+              <Link
+                href={`/${basePath}`}
+                className="text-primary-500 hover:text-primary-600 dark:hover:text-primary-400"
+                aria-label="Back to the blog"
+              >
+                &larr; Back to the blog
+              </Link>
+              {(next || prev) && (
+                <div className="justify-between py-4 xl:block">
+                  {prev && prev.draft === false && (
+                    <div>
+                      <h2 className="text-xs uppercase tracking-wide text-gray-500 dark:text-gray-400">
+                        Previous Article
+                      </h2>
+                      <div className="text-primary-500 hover:text-primary-600 dark:hover:text-primary-400">
+                        <Link href={`/${prev.path}`}>
+                          {prev.title} {prev.subtitle}
+                        </Link>
+                      </div>
+                    </div>
+                  )}
+                  {next && next.draft === false && (
+                    <div className="justify-between py-4 xl:block">
+                      <h2 className="text-xs uppercase tracking-wide text-gray-500 dark:text-gray-400">
+                        Next Article
+                      </h2>
+                      <div className="text-primary-500 hover:text-primary-600 dark:hover:text-primary-400">
+                        <Link href={`/${next.path}`}>
+                          {next.title} {next.subtitle}
+                        </Link>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              )}
             </div>
             <footer>
               <div className="divide-gray-200 text-sm font-medium leading-5 dark:divide-gray-700 xl:col-start-1 xl:row-start-2 xl:divide-y">
@@ -134,44 +169,8 @@ export default function PostLayout({ content, authorDetails, next, prev, childre
                     </div>
                   </div>
                 )}
-                {(next || prev) && (
-                  <div className="flex justify-between py-4 xl:block xl:space-y-8 xl:py-8">
-                    {prev && prev.draft === false && (
-                      <div>
-                        <h2 className="text-xs uppercase tracking-wide text-gray-500 dark:text-gray-400">
-                          Previous Article
-                        </h2>
-                        <div className="text-primary-500 hover:text-primary-600 dark:hover:text-primary-400">
-                          <Link href={`/${prev.path}`}>
-                            {prev.title} {prev.subtitle}
-                          </Link>
-                        </div>
-                      </div>
-                    )}
-                    {next && next.draft === false && (
-                      <div>
-                        <h2 className="text-xs uppercase tracking-wide text-gray-500 dark:text-gray-400">
-                          Next Article
-                        </h2>
-                        <div className="text-primary-500 hover:text-primary-600 dark:hover:text-primary-400">
-                          <Link href={`/${next.path}`}>
-                            {next.title} {next.subtitle}
-                          </Link>
-                        </div>
-                      </div>
-                    )}
-                  </div>
-                )}
               </div>
-              <div className="pt-4 xl:pt-8">
-                <Link
-                  href={`/${basePath}`}
-                  className="text-primary-500 hover:text-primary-600 dark:hover:text-primary-400"
-                  aria-label="Back to the blog"
-                >
-                  &larr; Back to the blog
-                </Link>
-              </div>
+              <div className="pt-4 xl:pt-8"></div>
             </footer>
           </div>
         </div>

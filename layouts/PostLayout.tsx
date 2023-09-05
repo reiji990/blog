@@ -119,13 +119,15 @@ export default function PostLayout({ content, authorDetails, next, prev, childre
                   <Comments slug={slug} />
                 </div>
               )}
-              <Link
-                href={`/${basePath}`}
-                className="text-primary-500 hover:text-primary-600 dark:hover:text-primary-400"
-                aria-label="Back to the blog"
-              >
-                &larr; Back to the blog
-              </Link>
+              <div className="justify-between py-4 xl:block">
+                <Link
+                  href={`/${basePath}`}
+                  className="text-primary-500 hover:text-primary-600 dark:hover:text-primary-400"
+                  aria-label="Back to the blog"
+                >
+                  &larr; Back to the blog
+                </Link>
+              </div>
               {(next || prev) && (
                 <div className="justify-between py-4 xl:block">
                   {prev && prev.draft === false && (

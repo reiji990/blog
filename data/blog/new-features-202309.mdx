@@ -6,13 +6,13 @@ draft: false
 summary: 'Tweet埋め込み(dark), サブタイトル追加, コンポーネンツ追加, 記事イメージ追加'
 ---
 
-最近追加した機能についてのメモになります。
+最近追加した機能についてのメモ。
 
 <TOCInline toc={props.toc} asDisclosure />
 
 ## コンテンツ埋め込み
 
-まずはじめに、CSP(Content Security Policy)を設定します。
+まずはじめに、CSP(Content Security Policy)を設定。
 
 ```diff-js:next.config.js
  const ContentSecurityPolicy = `
@@ -33,9 +33,21 @@ summary: 'Tweet埋め込み(dark), サブタイトル追加, コンポーネン�
 
 ### 𝕏
 
+検討中。
+
+検討の残骸を置いておく。
+
+[timlrx/tailwind-nextjs-starter-blog](https://github.com/timlrx/tailwind-nextjs-starter-blog)v1.x.xでは機能していたのだが、v2.0.0から機能しなくなった。クライアントサイドとサーバーサイドの操作が混ざっているため?
+
+https://github.com/reiji990/react-twitter-embed-darkmode
+
+Vercelが7月に公開した埋め込み用ライブラリ。既に𝕏からアクセスを拒否されている様子。
+
+https://github.com/vercel/react-tweet
+
 ### Youtube
 
-Youtubeは動画ページから埋め込みリンクを取得して貼るだけでOKです。
+Youtubeは動画ページから埋め込みリンクを取得して貼るだけでOK。
 
 ```tsx
 <iframe width="560" height="315" src="https://www.youtube.com/embed/1-o7fmQqSNg?si=_kuZlp4I4_I4_4u1" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
@@ -50,7 +62,7 @@ Youtubeは動画ページから埋め込みリンクを取得して貼るだけ�
 https://qiita.com/fanta_cps/items/13e0819e0c1db111186c
 
 
-作成したコンポーネント。
+作成したコンポーネント。頭の`'use client'`とか、MessageEventの型とか、[timlrx/tailwind-nextjs-starter-blog](https://github.com/timlrx/tailwind-nextjs-starter-blog)v2.0で使用するにあたり少し変更がある。
 
 https://github.com/reiji990/blog/blob/main/components/Niconico.tsx
 
@@ -62,7 +74,8 @@ https://github.com/reiji990/blog/blob/main/components/Niconico.tsx
 
 ### Spotify
 
-Spotifyは取得した埋め込みリンクを修正する必要があります。
+Spotifyは取得した埋め込みリンクを修正する必要がある。
+もしくは`style`は削除しても良い。
 
 ```diff-tsx
  <iframe
@@ -104,15 +117,21 @@ Spotifyは取得した埋め込みリンクを修正する必要があります�
   ---
 ```
 
-![](public/static/images/new-features-202309/subtitle,lastmod.png)
+<div className="-mx-2 flex flex-wrap overflow-hidden xl:-mx-2">
+  <div className="my-1 w-full overflow-hidden px-2 xl:my-1 xl:w-1/2 xl:px-2">
+    <img
+      art="サブタイトル、最終更新日"
+      src="/static/images/new-features-202309/subtitle,lastmod.png"
+    />
+  </div>
+</div>
 
-## 依存関係のアップデート
+- 変更箇所
 
-GitHubから、脆弱性のあるパッケージのリストが通知される。
+  - subtitle
 
-```
-docker compose exec app npm audit
-docker compose exec app yarn up
-```
+  https://github.com/reiji990/blog/commit/e880bd5b27626bef73ed27bf3f67e6da57fcdc0c
 
-## 記事イメージ追加
+  - lastmod
+
+  https://github.com/reiji990/blog/commit/607f33351d80b9490c4c53e0bbe4d4eacfe33a27

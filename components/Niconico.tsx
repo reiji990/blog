@@ -40,12 +40,12 @@ export default function NicovideoPlayer(props: Props) {
     ...style,
     ...styleFullScreen,
   }
-  
+
   interface MyEventData {
-    eventName: string;
+    eventName: string
     // 他のプロパティ
   }
-  
+
   useEffect(() => {
     const onMessage = (event: MessageEvent<MyEventData>) => {
       if (!iframeRef.current || event.source !== iframeRef.current.contentWindow) return

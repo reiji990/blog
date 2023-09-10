@@ -27,7 +27,6 @@
     "postcss": "^8.4.24",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "react-twitter-embed": "https://github.com/reiji990/react-twitter-embed-darkmode",
     "reading-time": "1.5.0",
     "rehype-autolink-headings": "^6.1.0",
     "rehype-citation": "^1.0.2",
@@ -38,6 +37,7 @@
     "remark": "^14.0.2",
     "remark-gfm": "^3.0.1",
     "remark-math": "^5.1.1",
+    "semver": "^6.3.1",
     "tailwindcss": "^3.3.3",
     "unist-util-visit": "^4.1.0"
   },

@@ -1,0 +1,144 @@
+---
+title: ブログに最近追加した機能など(202309)
+tags: ['Tech', 'Next.js']
+date: '2023-9-10'
+draft: false
+summary: 'テンプレートへの移行, コンテンツ埋め込み, サブタイトル・最終更新日追加'
+---
+
+最近追加した機能についてのメモ。
+
+<TOCInline toc={props.toc} asDisclosure />
+
+## 新テンプレートへの移行
+
+[Release of Tailwind Nextjs Starter Blog v2.0](https://tailwind-nextjs-starter-blog.vercel.app/blog/release-of-tailwind-nextjs-starter-blog-v2.0)
+
+移行するにあたっては、推奨されている通り新テンプレートをコピーし、これまでの編集履歴を反映し直して対応した。
+記法に変更があったり、エラーも色々発生したが、ググれば解決できるレベルなので説明は省略。
+
+検索コンポーネント(Algolia)について、現在使用しているライブラリ([plinyリポジトリ内のもの](https://github.com/timlrx/pliny))が日本語に対応していないので、検索ボタンだけ削除している。早晩対応する。
+
+## コンテンツ埋め込み
+
+まずはじめに、CSP(Content Security Policy)を設定。
+
+```diff-js:next.config.js
+ const ContentSecurityPolicy = `
+   default-src 'self';
+-  script-src 'self' 'unsafe-eval' 'unsafe-inline' giscus.app analytics.umami.is;
+-  style-src 'self' 'unsafe-inline';
++  script-src 'self' 'unsafe-eval' 'unsafe-inline' 'giscus.app' 'analytics.umami.is' 'https://twitter.com' 'https://*.twitter.com' 'https://syndication.twitter.com' 'https://www.nicovideo.jp' 'https://open.spotify.com';
++  style-src 'self' 'unsafe-inline' 'https://www.youtube.com' 'https://twitter.com' 'https://*.twitter.com' 'https://syndication.twitter.com' 'https://www.nicovideo.jp' 'https://open.spotify.com';
+   img-src * blob: data:;
+   media-src *.s3.amazonaws.com;
+   connect-src *;
+   font-src 'self';
+-  frame-src giscus.app
++  frame-src giscus.app https://www.youtube.com https://twitter.com https://*.twitter.com https://syndication.twitter.com https://www.nicovideo.jp https://ext.nicovideo.jp https://open.spotify.com;
++  child-src https://www.youtube.com https://twitter.com https://*.twitter.com https://syndication.twitter.com https://www.nicovideo.jp https://ext.nicovideo.jp https://open.spotify.com;
+ `
+```
+
+### 𝕏
+
+検討中。
+検討の残骸を置いておく。
+
+- https://github.com/reiji990/react-twitter-embed-darkmode
+
+[timlrx/tailwind-nextjs-starter-blog](https://github.com/timlrx/tailwind-nextjs-starter-blog)v1.x.xでは機能していたのだが、v2.0.0に切り替えたタイミングから機能しなくなった。[Twitter側のバグ?](https://github.com/saurabhnemade/react-twitter-embed/issues/135#issuecomment-1675434915)
+
+- https://github.com/vercel/react-tweet
+
+Vercelが7月に公開した埋め込み用ライブラリ。[既に𝕏からアクセスを拒否されている様子。](https://github.com/vercel/react-tweet/issues/134#issuecomment-1694009353)
+
+### Youtube
+
+Youtubeは動画ページから埋め込みリンクを取得して貼るだけでOK。
+
+```tsx
+<iframe width="560" height="315" src="https://www.youtube.com/embed/1-o7fmQqSNg?si=_kuZlp4I4_I4_4u1" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+```
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/1-o7fmQqSNg?si=_kuZlp4I4_I4_4u1" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+
+### ニコニコ動画
+
+ニコニコ動画の埋め込みは以下記事の方法2を参照。
+
+https://qiita.com/fanta_cps/items/13e0819e0c1db111186c
+
+- https://github.com/reiji990/blog/blob/main/components/Niconico.tsx
+
+  作成したコンポーネント。頭の`'use client'`とか、MessageEventの型とか、[timlrx/tailwind-nextjs-starter-blog](https://github.com/timlrx/tailwind-nextjs-starter-blog)v2.0で使用するにあたり少し変更がある。
+
+```
+<NicovideoPlayer id="so32488462" />
+```
+
+<NicovideoPlayer id="so32488462" />
+
+### Spotify
+
+Spotifyは取得した埋め込みリンクを修正する必要がある。
+もしくは`style`は削除しても良い。
+
+```diff-tsx
+ <iframe
+-  style="border-radius:12px" 
++  style={{ borderRadius: '12px' }}
+   src="https://open.spotify.com/embed/track/01O9MJOCJTvGj41MUZ1HGf?utm_source=generator&theme=0"
+   width="100%"
+   height="352"
+   frameBorder="0"
+   allowfullscreen=""
+   allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+   loading="lazy"
+ ><a></a></iframe>
+```
+
+<iframe
+  style={{ borderRadius: '12px' }}
+  src="https://open.spotify.com/embed/track/01O9MJOCJTvGj41MUZ1HGf?utm_source=generator&theme=0"
+  width="100%"
+  height="352"
+  frameBorder="0"
+  allowfullscreen=""
+  allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+  loading="lazy"
+><a></a></iframe>
+
+
+## サブタイトル、最終更新日追加
+
+```diff
+  ---
+  title: 記事タイトル
++ subtitle: サブタイトル
+  tags: ['test']
+  date: '1-1-1'
++ lastmod: '1-1-2'
+  draft: true
+  summary: '概要'
+  ---
+```
+
+<div className="my-1 w-full overflow-hidden px-2 xl:my-1 xl:w-1/2 xl:px-2">
+  <img
+    art="サブタイトル、最終更新日"
+    src="/static/images/new-features-202309/subtitle,lastmod.png"
+  />
+</div>
+
+- 変更箇所
+
+  他にも変更箇所はあるが散逸しているので実装初めのマージコミットだけ貼っておく。
+
+  - subtitle
+
+  https://github.com/reiji990/blog/commit/e880bd5b27626bef73ed27bf3f67e6da57fcdc0c
+
+  - lastmod
+
+  https://github.com/reiji990/blog/commit/607f33351d80b9490c4c53e0bbe4d4eacfe33a27

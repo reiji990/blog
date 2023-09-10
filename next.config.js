@@ -13,8 +13,8 @@ const ContentSecurityPolicy = `
   media-src *.s3.amazonaws.com;
   connect-src *;
   font-src 'self';
-  frame-src giscus.app https://www.youtube.com https://twitter.com https://*.twitter.com https://syndication.twitter.com https://www.nicovideo.jp https://ext.nicovideo.jp https://open.spotify.com;
-  child-src https://www.youtube.com https://twitter.com https://*.twitter.com https://syndication.twitter.com https://www.nicovideo.jp https://ext.nicovideo.jp https://open.spotify.com;
+  frame-src giscus.app https://www.youtube.com https://twitter.com https://*.twitter.com https://syndication.twitter.com https://www.nicovideo.jp https://embed.nicovideo.jp https://open.spotify.com;
+  child-src https://www.youtube.com https://twitter.com https://*.twitter.com https://syndication.twitter.com https://www.nicovideo.jp https://embed.nicovideo.jp https://open.spotify.com;
 `
 
 const securityHeaders = [

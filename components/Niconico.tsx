@@ -42,7 +42,7 @@ export default function NicovideoPlayer(props: Props) {
   }
 
   useEffect(() => {
-    const onMessage = (event: MessageEvent<any>) => {
+    const onMessage = (event: MessageEvent<string>) => {
       if (!iframeRef.current || event.source !== iframeRef.current.contentWindow) return
       if (event.data.eventName === 'enterProgrammaticFullScreen') {
         setIsFullScreen(true)

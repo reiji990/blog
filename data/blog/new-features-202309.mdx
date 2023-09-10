@@ -3,12 +3,14 @@ title: ブログに最近追加した機能など(202309)
 tags: ['Tech', 'Next.js']
 date: '2023-9-10'
 draft: false
-summary: 'テンプレートへの移行, コンテンツ埋め込み, サブタイトル・最終更新日追加'
+summary: '新テンプレートへの移行, コンテンツ埋め込み, サブタイトル・最終更新日追加'
 ---
 
 最近追加した機能についてのメモ。
 
 <TOCInline toc={props.toc} asDisclosure />
+
+<br />
 
 ## 新テンプレートへの移行
 
@@ -40,6 +42,8 @@ summary: 'テンプレートへの移行, コンテンツ埋め込み, サブタ
  `
 ```
 
+<br />
+
 ### 𝕏
 
 検討中。
@@ -53,6 +57,8 @@ summary: 'テンプレートへの移行, コンテンツ埋め込み, サブタ
 
 Vercelが7月に公開した埋め込み用ライブラリ。[既に𝕏からアクセスを拒否されている様子。](https://github.com/vercel/react-tweet/issues/134#issuecomment-1694009353)
 
+<br />
+
 ### Youtube
 
 Youtubeは動画ページから埋め込みリンクを取得して貼るだけでOK。
@@ -62,6 +68,8 @@ Youtubeは動画ページから埋め込みリンクを取得して貼るだけ�
 ```
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/1-o7fmQqSNg?si=_kuZlp4I4_I4_4u1" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+
+<br />
 
 ### ニコニコ動画
 
@@ -79,7 +87,10 @@ https://qiita.com/fanta_cps/items/13e0819e0c1db111186c
 
 <NicovideoPlayer id="so32488462" />
 
+<br />
+
 ### Spotify
+
 
 Spotifyは取得した埋め込みリンクを修正する必要がある。
 もしくは`style`は削除しても良い。
@@ -109,6 +120,7 @@ Spotifyは取得した埋め込みリンクを修正する必要がある。
   loading="lazy"
 ><a></a></iframe>
 
+<br />
 
 ## サブタイトル、最終更新日追加
 

@@ -3,12 +3,21 @@ title: 最近追加した機能(202309)
 tags: ['Tech', 'Next.js']
 date: '2023-9-10'
 draft: false
-summary: 'Tweet埋め込み(dark), サブタイトル追加, コンポーネンツ追加, 記事イメージ追加'
+summary: 'テンプレートへの移行, コンテンツ埋め込み, サブタイトル・最終更新日追加'
 ---
 
 最近追加した機能についてのメモ。
 
 <TOCInline toc={props.toc} asDisclosure />
+
+## 新テンプレートへの移行
+
+[Release of Tailwind Nextjs Starter Blog v2.0](https://tailwind-nextjs-starter-blog.vercel.app/blog/release-of-tailwind-nextjs-starter-blog-v2.0)
+
+移行するにあたり、推奨されている通り新テンプレートをコピーし、これまでの編集履歴を反映し直して対応。
+記法に変更があったり、エラーも色々発生したが、ググれば解決できるレベルなので説明は省略。
+
+検索コンポーネント(Algolia)について、現在使用しているライブラリ([plinyリポジトリ内のもの](https://github.com/timlrx/pliny))が日本語に対応していないので、検索ボタンだけ削除している。早晩対応する。
 
 ## コンテンツ埋め込み
 
@@ -34,16 +43,15 @@ summary: 'Tweet埋め込み(dark), サブタイトル追加, コンポーネン�
 ### 𝕏
 
 検討中。
-
 検討の残骸を置いておく。
 
-[timlrx/tailwind-nextjs-starter-blog](https://github.com/timlrx/tailwind-nextjs-starter-blog)v1.x.xでは機能していたのだが、v2.0.0から機能しなくなった。クライアントサイドとサーバーサイドの操作が混ざっているため?
+- https://github.com/reiji990/react-twitter-embed-darkmode
 
-https://github.com/reiji990/react-twitter-embed-darkmode
+[timlrx/tailwind-nextjs-starter-blog](https://github.com/timlrx/tailwind-nextjs-starter-blog)v1.x.xでは機能していたのだが、v2.0.0に切り替えたタイミングから機能しなくなった。[Twitter側のバグ?](https://github.com/saurabhnemade/react-twitter-embed/issues/135#issuecomment-1675434915)
 
-Vercelが7月に公開した埋め込み用ライブラリ。既に𝕏からアクセスを拒否されている様子。
+- https://github.com/vercel/react-tweet
 
-https://github.com/vercel/react-tweet
+Vercelが7月に公開した埋め込み用ライブラリ。[既に𝕏からアクセスを拒否されている様子。](https://github.com/vercel/react-tweet/issues/134#issuecomment-1694009353)
 
 ### Youtube
 
@@ -127,6 +135,8 @@ Spotifyは取得した埋め込みリンクを修正する必要がある。
 </div>
 
 - 変更箇所
+
+  他にも変更箇所はあるが散逸しているので実装初めのマージコミットを貼っておく。
 
   - subtitle
 

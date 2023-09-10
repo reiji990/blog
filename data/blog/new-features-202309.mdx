@@ -1,0 +1,118 @@
+---
+title: 最近追加した機能(202309)
+tags: ['Tech', 'Next.js']
+date: '2023-9-10'
+draft: false
+summary: 'Tweet埋め込み(dark), サブタイトル追加, コンポーネンツ追加, 記事イメージ追加'
+---
+
+最近追加した機能についてのメモになります。
+
+<TOCInline toc={props.toc} asDisclosure />
+
+## コンテンツ埋め込み
+
+まずはじめに、CSP(Content Security Policy)を設定します。
+
+```diff-js:next.config.js
+ const ContentSecurityPolicy = `
+   default-src 'self';
+-  script-src 'self' 'unsafe-eval' 'unsafe-inline' giscus.app analytics.umami.is;
+-  style-src 'self' 'unsafe-inline';
++  script-src 'self' 'unsafe-eval' 'unsafe-inline' 'giscus.app' 'analytics.umami.is' 'https://twitter.com' 'https://*.twitter.com' 'https://syndication.twitter.com' 'https://www.nicovideo.jp' 'https://open.spotify.com';
++  style-src 'self' 'unsafe-inline' 'https://www.youtube.com' 'https://twitter.com' 'https://*.twitter.com' 'https://syndication.twitter.com' 'https://www.nicovideo.jp' 'https://open.spotify.com';
+   img-src * blob: data:;
+   media-src *.s3.amazonaws.com;
+   connect-src *;
+   font-src 'self';
+-  frame-src giscus.app
++  frame-src giscus.app https://www.youtube.com https://twitter.com https://*.twitter.com https://syndication.twitter.com https://www.nicovideo.jp https://ext.nicovideo.jp https://open.spotify.com;
++  child-src https://www.youtube.com https://twitter.com https://*.twitter.com https://syndication.twitter.com https://www.nicovideo.jp https://ext.nicovideo.jp https://open.spotify.com;
+ `
+```
+
+### 𝕏
+
+### Youtube
+
+Youtubeは動画ページから埋め込みリンクを取得して貼るだけでOKです。
+
+```tsx
+<iframe width="560" height="315" src="https://www.youtube.com/embed/1-o7fmQqSNg?si=_kuZlp4I4_I4_4u1" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+```
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/1-o7fmQqSNg?si=_kuZlp4I4_I4_4u1" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+
+### ニコニコ動画
+
+ニコニコ動画の埋め込みは以下記事の方法2を参照。
+
+https://qiita.com/fanta_cps/items/13e0819e0c1db111186c
+
+
+作成したコンポーネント。
+
+https://github.com/reiji990/blog/blob/main/components/Niconico.tsx
+
+```
+<NicovideoPlayer id="so32488462" />
+```
+
+<NicovideoPlayer id="so32488462" />
+
+### Spotify
+
+Spotifyは取得した埋め込みリンクを修正する必要があります。
+
+```diff-tsx
+ <iframe
+-  style="border-radius:12px" 
++  style={{ borderRadius: '12px' }}
+   src="https://open.spotify.com/embed/track/01O9MJOCJTvGj41MUZ1HGf?utm_source=generator&theme=0"
+   width="100%"
+   height="352"
+   frameBorder="0"
+   allowfullscreen=""
+   allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+   loading="lazy"
+ ><a></a></iframe>
+```
+
+<iframe
+  style={{ borderRadius: '12px' }}
+  src="https://open.spotify.com/embed/track/01O9MJOCJTvGj41MUZ1HGf?utm_source=generator&theme=0"
+  width="100%"
+  height="352"
+  frameBorder="0"
+  allowfullscreen=""
+  allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+  loading="lazy"
+><a></a></iframe>
+
+
+## サブタイトル、最終更新日追加
+
+```diff
+  ---
+  title: 記事タイトル
++ subtitle: サブタイトル
+  tags: ['test']
+  date: '1-1-1'
++ lastmod: '1-1-2'
+  draft: true
+  summary: '概要'
+  ---
+```
+
+![](public/static/images/new-features-202309/subtitle,lastmod.png)
+
+## 依存関係のアップデート
+
+GitHubから、脆弱性のあるパッケージのリストが通知される。
+
+```
+docker compose exec app npm audit
+docker compose exec app yarn up
+```
+
+## 記事イメージ追加

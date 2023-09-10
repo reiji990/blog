@@ -9602,9 +9602,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-tweet@npm:^3.1.1":
-  version: 3.1.1
-  resolution: "react-tweet@npm:3.1.1"
+"react-tweet@npm:3.1.0":
+  version: 3.1.0
+  resolution: "react-tweet@npm:3.1.0"
   dependencies:
     "@swc/helpers": ^0.5.1
     clsx: ^1.2.1
@@ -9613,7 +9613,7 @@ __metadata:
   peerDependencies:
     react: ">= 18.0.0"
     react-dom: ">= 18.0.0"
-  checksum: 331ba6ccccdcfec16ab910935203f7682f6d58b27c90000b61bd693f17e60b55a097ae4b0d694739554734026ee5bfe1fa0e15f4c5015c22a90e24b11e94795f
+  checksum: 31e32946eb3e9f3dcf89bd88269968e8e71bcb1ff26f2d9f0b76d80ab394e201c01d44764e01917e09c5ed338479a61adaa6ffd01d3cc1d55db6c8e94b7afdc9
   languageName: node
   linkType: hard
 
@@ -11087,7 +11087,7 @@ __metadata:
     prettier-plugin-tailwindcss: ^0.4.1
     react: 18.2.0
     react-dom: 18.2.0
-    react-tweet: ^3.1.1
+    react-tweet: 3.1.0
     reading-time: 1.5.0
     rehype-autolink-headings: ^6.1.0
     rehype-citation: ^1.0.2

@@ -7,7 +7,7 @@ import CustomLink from './Link'
 import Source from '@/components/Source'
 import Caption from '@/components/Caption'
 import NicovideoPlayer from '@/components/Niconico'
-import { Tweet } from 'react-tweet'
+import { Tweet, EmbeddedTweet } from 'react-tweet'
 
 export const components: MDXComponents = {
   Image,
@@ -19,4 +19,5 @@ export const components: MDXComponents = {
   Caption,
   NicovideoPlayer,
   Tweet,
+  EmbeddedTweet,
 }

@@ -48,3 +48,4 @@ yarn-error.log*
 
 # Tag-data
 /app/tag-data.json
+/app/tag-data.json

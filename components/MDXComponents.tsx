@@ -7,6 +7,7 @@ import CustomLink from './Link'
 import Source from '@/components/Source'
 import Caption from '@/components/Caption'
 import NicovideoPlayer from '@/components/Niconico'
+import YoutubevideoPlayer from '@/components/Youtube'
 
 export const components: MDXComponents = {
   Image,
@@ -17,4 +18,5 @@ export const components: MDXComponents = {
   Source,
   Caption,
   NicovideoPlayer,
+  YoutubevideoPlayer,
 }

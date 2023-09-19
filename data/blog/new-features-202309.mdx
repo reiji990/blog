@@ -2,6 +2,7 @@
 title: ブログに最近追加した機能など(202309)
 tags: ['Tech', 'Next.js']
 date: '2023-9-10'
+lastmod: '2023-9-20'
 draft: false
 summary: '新テンプレートへの移行, コンテンツ埋め込み, サブタイトル・最終更新日追加'
 ---
@@ -49,35 +50,25 @@ summary: '新テンプレートへの移行, コンテンツ埋め込み, サブ
 検討中。
 検討の残骸を置いておく。
 
-- https://github.com/reiji990/react-twitter-embed-darkmode
+- [https://github.com/reiji990/react-twitter-embed-darkmode](https://github.com/reiji990/react-twitter-embed-darkmode)
 
-[timlrx/tailwind-nextjs-starter-blog](https://github.com/timlrx/tailwind-nextjs-starter-blog)v1.x.xでは機能していたのだが、v2.0.0に切り替えたタイミングから機能しなくなった。[Twitter側のバグ?](https://github.com/saurabhnemade/react-twitter-embed/issues/135#issuecomment-1675434915)
+  [timlrx/tailwind-nextjs-starter-blog](https://github.com/timlrx/tailwind-nextjs-starter-blog)v1.x.xでは機能していたのだが、v2.0.0に切り替えたタイミングから機能しなくなった。[Twitter側のバグ?](https://github.com/saurabhnemade/react-twitter-embed/issues/135#issuecomment-1675434915)
 
-- https://github.com/vercel/react-tweet
+- [https://github.com/vercel/react-tweet](https://github.com/vercel/react-tweet)
 
-Vercelが7月に公開した埋め込み用ライブラリ。[既に𝕏からアクセスを拒否されている様子。](https://github.com/vercel/react-tweet/issues/134#issuecomment-1694009353)
-
-<br />
-
-### Youtube
-
-Youtubeは動画ページから埋め込みリンクを取得して貼るだけでOK。
-
-```tsx
-<iframe width="560" height="315" src="https://www.youtube.com/embed/1-o7fmQqSNg?si=_kuZlp4I4_I4_4u1" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-```
-
-<iframe width="560" height="315" src="https://www.youtube.com/embed/1-o7fmQqSNg?si=_kuZlp4I4_I4_4u1" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-
-<br />
+  Vercelが7月に公開した埋め込み用ライブラリ。[既に𝕏からアクセスを拒否されている様子。](https://github.com/vercel/react-tweet/issues/134#issuecomment-1694009353)
 
 ### ニコニコ動画
 
-ニコニコ動画の埋め込みは以下記事の方法2を参照。
+ニコニコ動画公式の埋め込みタグはscriptタグを使用しているが、**Next.jsではscriptタグを使えない。**
 
-https://qiita.com/fanta_cps/items/13e0819e0c1db111186c
+[Next.jsでは、HeadにScriptタグは使えません！](https://zenn.dev/hatsumihayashi/articles/3834902cf5ac4e)
 
-- https://github.com/reiji990/blog/blob/main/components/Niconico.tsx
+対応策として、今回は以下記事の方法2を採用。
+
+[Reactでニコニコ動画の埋め込みプレイヤーを使う](https://qiita.com/fanta_cps/items/13e0819e0c1db111186c)
+
+- [https://github.com/reiji990/blog/blob/main/components/Niconico.tsx](https://github.com/reiji990/blog/blob/main/components/Niconico.tsx)
 
   作成したコンポーネント。頭の`'use client'`とか、MessageEventの型とか、[timlrx/tailwind-nextjs-starter-blog](https://github.com/timlrx/tailwind-nextjs-starter-blog)v2.0で使用するにあたり少し変更がある。
 
@@ -87,7 +78,18 @@ https://qiita.com/fanta_cps/items/13e0819e0c1db111186c
 
 <NicovideoPlayer id="so32488462" />
 
-<br />
+### YouTube
+
+YouTubeは動画ページから埋め込みリンクを取得して貼るだけでも良いが、フルスクリーンにできないことと、幅固定になってしまいスマホで表示した時に表示が崩れる問題がある。
+ニコニコ動画埋め込み時のコンポーネントをURLだけ変更してYouTubeに適用する。
+
+- [https://github.com/reiji990/blog/blob/main/components/Youtube.tsx](https://github.com/reiji990/blog/blob/main/components/Youtube.tsx)
+
+```
+<YoutubevideoPlayer id="1-o7fmQqSNg" />
+```
+
+<YoutubevideoPlayer id="1-o7fmQqSNg" />
 
 ### Spotify
 
@@ -149,8 +151,8 @@ Spotifyは取得した埋め込みリンクを修正する必要がある。
 
   - subtitle
 
-  https://github.com/reiji990/blog/commit/e880bd5b27626bef73ed27bf3f67e6da57fcdc0c
+    [https://github.com/reiji990/blog/commit/e880bd5b27626bef73ed27bf3f67e6da57fcdc0c](https://github.com/reiji990/blog/commit/e880bd5b27626bef73ed27bf3f67e6da57fcdc0c)
 
   - lastmod
 
-  https://github.com/reiji990/blog/commit/607f33351d80b9490c4c53e0bbe4d4eacfe33a27
+    [https://github.com/reiji990/blog/commit/607f33351d80b9490c4c53e0bbe4d4eacfe33a27](https://github.com/reiji990/blog/commit/607f33351d80b9490c4c53e0bbe4d4eacfe33a27)

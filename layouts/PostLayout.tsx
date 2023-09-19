@@ -32,7 +32,7 @@ export default function PostLayout({ content, authorDetails, next, prev, childre
   const editUrl = (path) => `${siteMetadata.siteRepo}/blob/main/data/${path}`
   const shareUrl = (path) => {
     const fulltitle = subtitle ? `${title} ${subtitle}` : title
-    return `https://twitter.com/intent/tweet?text=${fulltitle} | ${siteMetadata.title}%20${siteMetadata.siteUrl}blog/${slug}%20@${siteMetadata.author}`
+    return `https://twitter.com/intent/tweet?text=${fulltitle}%20%7C%20${siteMetadata.title}%20${siteMetadata.siteUrl}blog/${slug}%20@${siteMetadata.author}`
   }
   return (
     <SectionContainer>

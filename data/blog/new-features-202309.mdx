@@ -70,7 +70,7 @@ summary: '新テンプレートへの移行, コンテンツ埋め込み, サブ
 
 - [Niconico.tsx](https://github.com/reiji990/blog/blob/main/components/Niconico.tsx)
 
-  作成したコンポーネント。頭の`'use client'`とか、MessageEventの型とか、[timlrx/tailwind-nextjs-starter-blog](https://github.com/timlrx/tailwind-nextjs-starter-blog)v2.0で使用するにあたり少し変更がある。
+  作成したコンポーネント。頭の`'use client'`とか、MessageEventの型とか、このブログで使用するにあたり少し変更がある。
 
 ```
 <NicovideoPlayer id="so32488462" />
@@ -81,7 +81,7 @@ summary: '新テンプレートへの移行, コンテンツ埋め込み, サブ
 ### YouTube
 
 YouTubeは動画ページから埋め込みコードを取得して貼るだけでも良いが、フルスクリーンにできないことと、幅固定になってしまいスマホで表示した時に表示が崩れる問題がある。
-ニコニコ動画埋め込み時のコンポーネントをURLだけ変更してYouTubeに適用する。
+ニコニコ動画埋め込み用のコンポーネントをURLだけ変更してYouTubeに適用する。
 
 - [Youtube.tsx](https://github.com/reiji990/blog/blob/main/components/Youtube.tsx)
 
@@ -94,8 +94,9 @@ YouTubeは動画ページから埋め込みコードを取得して貼るだけ�
 ### Spotify
 
 
-Spotifyは取得した埋め込みリンクを修正する必要がある。
+Spotifyは取得した埋め込みコードを修正する必要がある。
 もしくは`style`は削除しても良い。
+そのうちコンポーネント作るかも。
 
 ```diff-tsx
  <iframe
@@ -147,7 +148,7 @@ Spotifyは取得した埋め込みリンクを修正する必要がある。
 
 - 変更箇所
 
-  他にも変更箇所はあるが散逸しているので実装初めのマージコミットだけ貼っておく。
+  他にも変更箇所はあるがコミットが散逸しているので実装初めのマージコミットだけ貼っておく。
 
   - [subtitle](https://github.com/reiji990/blog/commit/e880bd5b27626bef73ed27bf3f67e6da57fcdc0c)
 

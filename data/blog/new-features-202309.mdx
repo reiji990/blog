@@ -60,7 +60,7 @@ summary: '新テンプレートへの移行, コンテンツ埋め込み, サブ
 
 ### ニコニコ動画
 
-ニコニコ動画公式の埋め込みタグはscriptタグを使用しているが、**Next.jsではscriptタグを使えない。**
+ニコニコ動画公式の埋め込みコードはscriptタグを使用しているが、**Next.jsではscriptタグを使えない。**
 
 [Next.jsでは、HeadにScriptタグは使えません！](https://zenn.dev/hatsumihayashi/articles/3834902cf5ac4e)
 
@@ -80,7 +80,7 @@ summary: '新テンプレートへの移行, コンテンツ埋め込み, サブ
 
 ### YouTube
 
-YouTubeは動画ページから埋め込みリンクを取得して貼るだけでも良いが、フルスクリーンにできないことと、幅固定になってしまいスマホで表示した時に表示が崩れる問題がある。
+YouTubeは動画ページから埋め込みコードを取得して貼るだけでも良いが、フルスクリーンにできないことと、幅固定になってしまいスマホで表示した時に表示が崩れる問題がある。
 ニコニコ動画埋め込み時のコンポーネントをURLだけ変更してYouTubeに適用する。
 
 - [Youtube.tsx](https://github.com/reiji990/blog/blob/main/components/Youtube.tsx)

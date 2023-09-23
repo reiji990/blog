@@ -93,35 +93,15 @@ YouTubeは動画ページから埋め込みコードを取得して貼るだけ�
 
 ### Spotify
 
+Spotifyも公式の埋め込みコードはそのままでは使えないのでコンポーネントを作成した。
 
-Spotifyは取得した埋め込みコードを修正する必要がある。
-もしくは`style`は削除しても良い。
-そのうちコンポーネント作るかも。
+- [Spotify.tsx](https://github.com/reiji990/blog/blob/main/components/Spotify.tsx)
 
-```diff-tsx
- <iframe
--  style="border-radius:12px" 
-+  style={{ borderRadius: '12px' }}
-   src="https://open.spotify.com/embed/track/01O9MJOCJTvGj41MUZ1HGf?utm_source=generator&theme=0"
-   width="100%"
-   height="352"
-   frameBorder="0"
-   allowfullscreen=""
-   allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-   loading="lazy"
- ><a></a></iframe>
+```
+<SpotifyPlayer id="7rNb5UJ9IhpTEw6Yl99FqT" />
 ```
 
-<iframe
-  style={{ borderRadius: '12px' }}
-  src="https://open.spotify.com/embed/track/01O9MJOCJTvGj41MUZ1HGf?utm_source=generator&theme=0"
-  width="100%"
-  height="352"
-  frameBorder="0"
-  allowfullscreen=""
-  allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-  loading="lazy"
-><a></a></iframe>
+<SpotifyPlayer id="7rNb5UJ9IhpTEw6Yl99FqT" />
 
 <br />
 

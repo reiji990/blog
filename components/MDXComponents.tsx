@@ -8,6 +8,7 @@ import Source from '@/components/Source'
 import Caption from '@/components/Caption'
 import NicovideoPlayer from '@/components/Niconico'
 import YoutubevideoPlayer from '@/components/Youtube'
+import SpotifyPlayer from '@/components/Spotify'
 
 export const components: MDXComponents = {
   Image,
@@ -19,4 +20,5 @@ export const components: MDXComponents = {
   Caption,
   NicovideoPlayer,
   YoutubevideoPlayer,
+  SpotifyPlayer,
 }

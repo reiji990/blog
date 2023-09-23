@@ -1,11 +1,10 @@
 import { ReactNode } from 'react'
 
 interface Props {
-  children: ReactNode
+  id: string
 }
 
-export default function SpotifyPlayer(props: Props) {
-  const {id} = props
+export default function SpotifyPlayer({ id }: Props) {
 
   return (
     <iframe

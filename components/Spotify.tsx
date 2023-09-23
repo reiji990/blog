@@ -5,7 +5,7 @@ interface Props {
 }
 
 export default function SpotifyPlayer(props: Props) {
-  const { id } = props
+  const id = props
 
   return (
     <iframe

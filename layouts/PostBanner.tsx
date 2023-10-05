@@ -56,7 +56,7 @@ export default function PostMinimal({ content, next, prev, children }: LayoutPro
                   {lastmod && (
                     <div>
                       {'最終更新日: '}
-                      {new Date(lastmod).toLocaleDateString(siteMetadata.locale,postDateTemplate)}
+                      {new Date(lastmod).toLocaleDateString(siteMetadata.locale, postDateTemplate)}
                     </div>
                   )}
                 </dd>

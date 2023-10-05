@@ -4,7 +4,7 @@ const siteMetadata = {
   author: 'reiji990',
   headerTitle: 'TailwindBlog',
   description: 'テックとアニメと音楽について',
-  language: 'en-us',
+  language: 'ja-JP',
   theme: 'dark', // system, dark or light
   siteUrl: 'https://www.reiji990.blog/',
   siteRepo: 'https://github.com/reiji990/blog',
@@ -18,7 +18,7 @@ const siteMetadata = {
   facebook: 'https://facebook.com',
   youtube: 'https://youtube.com',
   linkedin: 'https://www.linkedin.com',
-  locale: 'en-US',
+  locale: 'ja-JP',
   analytics: {
     // If you want to use an analytics provider you have to add it to the
     // content security policy in the `next.config.js` file.

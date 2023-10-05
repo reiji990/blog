@@ -6,7 +6,7 @@ const siteMetadata = {
   description: 'テックとアニメと音楽について',
   language: 'en-us',
   theme: 'dark', // system, dark or light
-  siteUrl: 'https://blog-reiji990.vercel.app/',
+  siteUrl: 'https://www.reiji990.blog/',
   siteRepo: 'https://github.com/reiji990/blog',
   siteLogo: '/static/images/logo.png',
   socialBanner: '/static/images/twitter-card.png',

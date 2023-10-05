@@ -32,10 +32,10 @@ export default function PostMinimal({ content, next, prev, children }: LayoutPro
     images && images.length > 0 ? images[0] : 'https://picsum.photos/seed/picsum/800/400'
   const basePath = path.split('/')[0]
   const editUrl = (path) => `${siteMetadata.siteRepo}/blob/main/data/${path}`
-    const shareUrl = (path) => {
-      const fulltitle = subtitle ? `${title} ${subtitle}` : title
-      return `https://twitter.com/intent/tweet?text=${fulltitle}%20%7C%20${siteMetadata.title}%20${siteMetadata.siteUrl}blog/${slug}%20@${siteMetadata.author}`
-    }
+  const shareUrl = (path) => {
+    const fulltitle = subtitle ? `${title} ${subtitle}` : title
+    return `https://twitter.com/intent/tweet?text=${fulltitle}%20%7C%20${siteMetadata.title}%20${siteMetadata.siteUrl}blog/${slug}%20@${siteMetadata.author}`
+  }
   return (
     <SectionContainer>
       <ScrollTopAndComment />
@@ -56,10 +56,7 @@ export default function PostMinimal({ content, next, prev, children }: LayoutPro
                   {lastmod && (
                     <div>
                       {'Last Modified: '}
-                      {new Date(lastmod).toLocaleDateString(
-                        siteMetadata.locale,
-                        postDateTemplate
-                      )}
+                      {new Date(lastmod).toLocaleDateString(siteMetadata.localepostDateTemplate)}
                     </div>
                   )}
                 </dd>
@@ -128,7 +125,7 @@ export default function PostMinimal({ content, next, prev, children }: LayoutPro
                                 {tags && (
                   <div className="py-4 xl:py-8">
                     <h2 className="text-xs uppercase tracking-wide text-gray-500 dark:text-gray-400">
-                      Tags
+      Tags
                     </h2>
                     <div className="flex flex-wrap">
                       {tags.map((tag) => (

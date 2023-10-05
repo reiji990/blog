@@ -16,7 +16,6 @@ export function genPageMetadata({
   image,
   ...rest
 }: PageSEOProps): Metadata {
-
   return {
     title,
     openGraph: {

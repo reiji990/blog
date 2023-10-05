@@ -27,7 +27,7 @@ interface LayoutProps {
 }
 
 export default function PostMinimal({ content, next, prev, children }: LayoutProps) {
-  const { filePath, path, slug, date, title, subtitle, tags, lastmod, images } = content
+  const { filePath, path, slug, date, title, subtitle, tags, lastmod, images, summary } = content
   const displayImage =
     images && images.length > 0 ? images[0] : 'https://picsum.photos/seed/picsum/800/400'
   const basePath = path.split('/')[0]
@@ -55,8 +55,8 @@ export default function PostMinimal({ content, next, prev, children }: LayoutPro
                   </time>
                   {lastmod && (
                     <div>
-                      {'Last Modified: '}
-                      {new Date(lastmod).toLocaleDateString(siteMetadata.localepostDateTemplate)}
+                      {'最終更新日: '}
+                      {new Date(lastmod).toLocaleDateString(siteMetadata.locale,postDateTemplate)}
                     </div>
                   )}
                 </dd>
@@ -66,6 +66,9 @@ export default function PostMinimal({ content, next, prev, children }: LayoutPro
               <PageTitle>{title}</PageTitle>
               <PageSubTitle>{subtitle}</PageSubTitle>
             </div>
+            <dd className="text-base font-medium leading-6 text-gray-500 dark:text-gray-400">
+              {summary}
+            </dd>
           </div>
           <div className="divide-y divide-gray-200 dark:divide-gray-700 xl:col-span-3 xl:row-span-2 xl:pb-0">
             <div className="prose max-w-none py-4 dark:prose-invert">{children}</div>

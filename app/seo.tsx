@@ -16,7 +16,6 @@ export function genPageMetadata({
   image,
   ...rest
 }: PageSEOProps): Metadata {
-  const fulltitle = subtitle ? `${title} ${subtitle}` : title
 
   return {
     title,

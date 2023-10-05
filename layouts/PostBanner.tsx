@@ -122,10 +122,10 @@ export default function PostMinimal({ content, next, prev, children }: LayoutPro
                 )}
               </div>
               <div className="divide-gray-200 text-sm font-medium leading-5 dark:divide-gray-700 xl:col-start-1 xl:row-start-2 xl:divide-y">
-                                {tags && (
+                {tags && (
                   <div className="py-4 xl:py-8">
                     <h2 className="text-xs uppercase tracking-wide text-gray-500 dark:text-gray-400">
-      Tags
+                      Tags
                     </h2>
                     <div className="flex flex-wrap">
                       {tags.map((tag) => (

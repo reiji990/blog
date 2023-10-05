@@ -12,7 +12,7 @@ import siteMetadata from '@/data/siteMetadata'
 import ScrollTopAndComment from '@/components/ScrollTopAndComment'
 
 const postDateTemplate: Intl.DateTimeFormatOptions = {
-  weekday: 'long',
+  weekday: 'short',
   year: 'numeric',
   month: 'long',
   day: 'numeric',
@@ -27,7 +27,7 @@ interface LayoutProps {
 }
 
 export default function PostLayout({ content, authorDetails, next, prev, children }: LayoutProps) {
-  const { filePath, path, slug, date, title, subtitle, tags, lastmod } = content
+  const { filePath, path, slug, date, title, subtitle, tags, lastmod, summary } = content
   const basePath = path.split('/')[0]
   const editUrl = (path) => `${siteMetadata.siteRepo}/blob/main/data/${path}`
   const shareUrl = (path) => {
@@ -50,7 +50,7 @@ export default function PostLayout({ content, authorDetails, next, prev, childre
                     </time>
                     {lastmod && (
                       <div>
-                        {'Last Modified: '}
+                        {'最終更新日: '}
                         {new Date(lastmod).toLocaleDateString(
                           siteMetadata.locale,
                           postDateTemplate
@@ -64,6 +64,9 @@ export default function PostLayout({ content, authorDetails, next, prev, childre
                 <PageTitle>{title}</PageTitle>
                 <PageSubTitle>{subtitle}</PageSubTitle>
               </div>
+              <dd className="text-base font-medium leading-6 text-gray-500 dark:text-gray-400">
+                {summary}
+              </dd>
             </div>
           </header>
           <div className="grid-rows-[auto_1fr] divide-y divide-gray-200 pb-8 dark:divide-gray-700 xl:grid xl:grid-cols-4 xl:gap-x-6 xl:divide-y-0">

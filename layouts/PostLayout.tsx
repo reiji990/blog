@@ -62,9 +62,9 @@ export default function PostLayout({ content, authorDetails, next, prev, childre
               </dl>
               <div>
                 <PageTitle>{title}</PageTitle>
-                <PageSubTitle>{subtitle}</PageSubTitle>
+<PageSubTitle>{subtitle}</PageSubTitle>
               </div>
-              <dd className="text-base font-medium leading-6 text-gray-500 dark:text-gray-400">
+<dd className="text-base font-medium leading-6 text-gray-500 dark:text-gray-400">
                 {summary}
               </dd>
             </div>
@@ -122,7 +122,7 @@ export default function PostLayout({ content, authorDetails, next, prev, childre
                   <Comments slug={slug} />
                 </div>
               )}
-              <div className="justify-between py-4 xl:block">
+<div className="justify-between py-4 xl:block">
                 <Link
                   href={`/${basePath}`}
                   className="text-primary-500 hover:text-primary-600 dark:hover:text-primary-400"
@@ -174,8 +174,7 @@ export default function PostLayout({ content, authorDetails, next, prev, childre
                     </div>
                   </div>
                 )}
-              </div>
-              <div className="pt-4 xl:pt-8"></div>
+                              </div>
             </footer>
           </div>
         </div>

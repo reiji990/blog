@@ -9,7 +9,13 @@ interface PageSEOProps {
   [key: string]: any
 }
 
-export function genPageMetadata({ title, subtitle, description, image, ...rest }: PageSEOProps): Metadata {
+export function genPageMetadata({
+  title,
+  subtitle,
+  description,
+  image,
+  ...rest
+}: PageSEOProps): Metadata {
   return {
     title,
     openGraph: {

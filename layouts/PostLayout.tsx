@@ -175,7 +175,6 @@ export default function PostLayout({ content, authorDetails, next, prev, childre
                   </div>
                 )}
               </div>
-              <div className="pt-4 xl:pt-8"></div>
             </footer>
           </div>
         </div>

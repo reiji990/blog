@@ -19,7 +19,7 @@ export function genPageMetadata({
   return {
     title,
     openGraph: {
-      title: `${title} | ${siteMetadata.fulltitle}`,
+      title: `${title} | ${siteMetadata.title}`,
       description: description || siteMetadata.description,
       url: './',
       siteName: siteMetadata.title,
@@ -29,7 +29,7 @@ export function genPageMetadata({
     },
     twitter: {
       title: `${title} | ${siteMetadata.title}`,
-      card: 'summary_large_image',
+      card: 'summary',
       images: image ? [image] : [siteMetadata.socialBanner],
     },
     ...rest,

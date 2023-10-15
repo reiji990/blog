@@ -29,12 +29,12 @@ export default function Home({ posts }) {
                       <dt className="sr-only">Published on</dt>
                       <dd className="text-base font-medium leading-6 text-gray-500 dark:text-gray-400">
                         <time dateTime={date}>{formatDate(date, siteMetadata.locale)}</time>
-                          {lastmod && (
-                            <div>
-                              {'最終更新日: '}
-                              <time dateTime={date}>{formatDate(lastmod, siteMetadata.locale)}</time>
-                            </div>
-                          )}
+                        {lastmod && (
+                          <div>
+                            {'最終更新日: '}
+                            <time dateTime={date}>{formatDate(lastmod, siteMetadata.locale)}</time>
+                          </div>
+                        )}
                       </dd>
                     </dl>
                     <div className="space-y-5 xl:col-span-3">

@@ -126,7 +126,7 @@ export default function ListLayoutWithTags({
           <div>
             <ul>
               {displayPosts.map((post) => {
-                const { path, date, title, subtitle, summary, tags } = post
+                const { path, date, lastmod, title, subtitle, summary, tags } = post
                 return (
                   <li key={path} className="py-5">
                     <article className="space-y-2 flex flex-col xl:space-y-0">
@@ -134,6 +134,12 @@ export default function ListLayoutWithTags({
                         <dt className="sr-only">Published on</dt>
                         <dd className="text-base font-medium leading-6 text-gray-500 dark:text-gray-400">
                           <time dateTime={date}>{formatDate(date, siteMetadata.locale)}</time>
+                          {lastmod && (
+                            <div>
+                              {'最終更新日: '}
+                              <time dateTime={date}>{formatDate(lastmod, siteMetadata.locale)}</time>
+                            </div>
+                          )}
                         </dd>
                       </dl>
                       <div className="space-y-3">

@@ -4,7 +4,7 @@ const siteMetadata = {
   author: 'reiji990',
   headerTitle: 'TailwindBlog',
   description: 'テックとアニメと音楽について',
-  language: 'ja-JP',
+  language: 'en-US',
   theme: 'dark', // system, dark or light
   siteUrl: 'https://www.reiji990.blog/',
   siteRepo: 'https://github.com/reiji990/blog',

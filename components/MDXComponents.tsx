@@ -10,12 +10,14 @@ import NicovideoPlayer from '@/components/Niconico'
 import YoutubevideoPlayer from '@/components/Youtube'
 import SpotifyPlayer from '@/components/Spotify'
 import { Tweet } from 'react-tweet'
+import TableWrapper from './TableWrapper'
 
 export const components: MDXComponents = {
   Image,
   TOCInline,
   a: CustomLink,
   pre: Pre,
+  table: TableWrapper,
   BlogNewsletterForm,
   Source,
   Caption,

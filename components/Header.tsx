@@ -2,6 +2,7 @@ import headerNavLinks from '@/data/headerNavLinks'
 import Link from './Link'
 import MobileNav from './MobileNav'
 import ThemeSwitch from './ThemeSwitch'
+import SearchButton from './SearchButton'
 
 const Header = () => {
   return (
@@ -19,6 +20,7 @@ const Header = () => {
               {link.title}
             </Link>
           ))}
+        <SearchButton />
         <ThemeSwitch />
         <MobileNav />
       </div>

@@ -2,6 +2,7 @@ import { ReactNode } from 'react'
 import type { Authors } from 'contentlayer/generated'
 import SocialIcon from '@/components/social-icons'
 import Image from '@/components/Image'
+import siteMetadata from '@/data/siteMetadata'
 
 interface Props {
   children: ReactNode
@@ -9,7 +10,20 @@ interface Props {
 }
 
 export default function AuthorLayout({ children, content }: Props) {
-  const { name, avatar, occupation, company, email, twitter, linkedin, github, instagram } = content
+  const {
+    name,
+    avatar,
+    occupation,
+    company,
+    email,
+    twitter,
+    linkedin,
+    github,
+    instagram,
+    youtube,
+    mastodon,
+    facebook,
+  } = content
 
   return (
     <>
@@ -34,11 +48,14 @@ export default function AuthorLayout({ children, content }: Props) {
             <div className="text-gray-500 dark:text-gray-400">{occupation}</div>
             <div className="text-gray-500 dark:text-gray-400">{company}</div>
             <div className="flex space-x-3 pt-6">
-              <SocialIcon kind="mail" href={`mailto:${email}`} />
-              <SocialIcon kind="github" href={github} />
-              <SocialIcon kind="linkedin" href={linkedin} />
-              <SocialIcon kind="twitter" href={twitter} />
-              <SocialIcon kind="instagram" href={instagram} />
+              <SocialIcon kind="mail" href={`mailto:${siteMetadata.email}`} />
+              <SocialIcon kind="github" href={siteMetadata.github} />
+              <SocialIcon kind="linkedin" href={siteMetadata.linkedin} />
+              <SocialIcon kind="twitter" href={siteMetadata.twitter} />
+              <SocialIcon kind="instagram" href={siteMetadata.instagram} />
+              <SocialIcon kind="youtube" href={siteMetadata.youtube} />
+              <SocialIcon kind="facebook" href={siteMetadata.facebook} />
+              <SocialIcon kind="mastodon" href={siteMetadata.mastodon} />
             </div>
           </div>
           <div className="prose max-w-none pb-8 pt-8 dark:prose-invert xl:col-span-2">

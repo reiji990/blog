@@ -1,0 +1,362 @@
+---
+title: Macセットアップ手順
+subtitle: 
+date: '2024-2-12'
+tags: ['tech']
+draft: false
+summary: ''
+---
+
+先月Macを新調した。
+
+Macは2021年にMacbook Airを購入してから3機目で、移行手順が確立できてきたのでメモを放流する。というか、移行手順をネット上で公開してコマンドもコピペできるようにしておくというのが一番楽な方法だった。
+
+この記事では更新後の初動対応に絞り、アプリ、パッケージのインストール、キーボード、トラックボールのカスタマイズ、Safari、Alfredの設定を最速で済ませることを目指す。
+
+<TOCInline toc={props.toc} asDisclosure />
+
+## アプリ、パッケージのインストール
+
+「Homebrewあれ」
+
+```:Terminal.app
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+```
+
+インストール後の<ruby>Next steps<rt>PATHへの追加</rt></ruby>も忘れずに。
+
+<br/>
+
+可及的速やかに[Warp](https://www.warp.dev)を導入し、以降はこれを使用する。
+Karabiner-Elementsは次項で使用するためこれも優先的にインストールする。
+
+```:Terminal.app
+brew install --cask warp
+brew install --cask Karabiner-Elements
+```
+
+以下コマンドをコピペしインストール開始。
+[Homebrew Bundle](https://github.com/Homebrew/homebrew-bundle)も考えたが、この記事からコマンドをコピペした方が圧倒的に早いのだった。
+コマンドは`brew bundle dump`で作成したBrewfileの行頭に"brew install"を付けて作成。**更新作業直前に作り直すこと。**
+
+時間がかかるのでコマンド実行後は待たずに次項の作業を実施して良い。
+
+<ul>
+    <details close>
+        <summary>コピペ用コマンド</summary>
+
+```:Warp.app
+brew install "ffmpeg"
+brew install "git"
+brew install "mas"
+brew install "node"
+brew install "php"
+brew install "python"
+brew install --cask "adobe-acrobat-reader"
+brew install --cask "alfred"
+brew install --cask "deepl"
+brew install --cask "docker"
+brew install --cask "firefox"
+brew install --cask "github"
+brew install --cask "google-chrome"
+brew install --cask "google-drive"
+brew install --cask "iterm2"
+brew install --cask "karabiner-elements"
+brew install --cask "libreoffice"
+brew install --cask "microsoft-edge"
+brew install --cask "obs"
+brew install --cask "utm"
+brew install --cask "visual-studio-code"
+brew install --cask "vlc"
+brew install --cask "wacom-tablet"
+brew install --cask "warp"
+brew install --cask "zoom"
+brew install --mas "AdGuard for Safari", id: 1440147259
+brew install --mas "Colibri", id: 1178295426
+brew install --mas "Dark Reader for Safari", id: 1438243180
+brew install --mas "GarageBand", id: 682658836
+brew install --mas "iMovie", id: 408981434
+brew install --mas "Keepa - Price Tracker", id: 1533805339
+brew install --mas "Keynote", id: 409183694
+brew install --mas "Kindle", id: 302584613
+brew install --mas "LINE", id: 539883307
+brew install --mas "Macgo Blu-ray Player Pro", id: 1403952861
+brew install --mas "Magnet", id: 441258766
+brew install --mas "Numbers", id: 409203825
+brew install --mas "Pages", id: 409201541
+brew install --mas "PixelFinder", id: 1512540355
+brew install --mas "Xcode", id: 497799835
+brew install --mas "デスクトップ時計", id: 894760156
+brew install --mas "辞書 by 物書堂", id: 1380563956
+```
+
+    </details>
+</ul>
+
+## キーボード、トラックボールの設定
+
+### トラックボール(Kensington Slimblade)
+
+[KensingtonWorks.app](https://www.kensington.com/software/kensingtonworks/)を手動インストール。
+
+設定は画像を参照。
+**バック・フォワードはWebブラウザタブのものを使用すること。**
+
+![KensingtonWorks設定画面](https://cdn-ak.f.st-hatena.com/images/fotolife/R/ReijiE/20240211/20240211170532.png)
+
+### キーボード
+
+Karabiner-Elements.appの"complex modifications"に以下ルールを追加。
+
+<ul>
+    <details close>
+        <summary>コマンドキーを単体で押したときに、英数・かなキーを送信する。（左コマンドキーは英数、右コマンドキーはかな）(UTM実行中は無効化する)</summary>
+
+```
+{
+    "description": "コマンドキーを単体で押したときに、英数・かなキーを送信する。（左コマンドキーは英数、右コマンドキーはかな）(UTM実行中は無効化する) (rev 3)",
+    "manipulators": [
+        {
+            "conditions": [
+                {
+                    "bundle_identifiers": [
+                        "^com\\.utmapp\\.UTM$"
+                    ],
+                    "file_paths": [
+                        "/Applications/UTM.app/Contents/MacOS/UTM"
+                    ],
+                    "type": "frontmost_application_unless"
+                }
+            ],
+            "from": {
+                "key_code": "left_command",
+                "modifiers": {
+                    "optional": [
+                        "any"
+                    ]
+                }
+            },
+            "parameters": {
+                "basic.to_if_held_down_threshold_milliseconds": 100
+            },
+            "to": [
+                {
+                    "key_code": "left_command",
+                    "lazy": true
+                }
+            ],
+            "to_if_alone": [
+                {
+                    "key_code": "japanese_eisuu"
+                }
+            ],
+            "to_if_held_down": [
+                {
+                    "key_code": "left_command"
+                }
+            ],
+            "type": "basic"
+        },
+        {
+            "conditions": [
+                {
+                    "bundle_identifiers": [
+                        "^com\\.utmapp\\.UTM$"
+                    ],
+                    "file_paths": [
+                        "/Applications/UTM.app/Contents/MacOS/UTM"
+                    ],
+                    "type": "frontmost_application_unless"
+                }
+            ],
+            "from": {
+                "key_code": "right_command",
+                "modifiers": {
+                    "optional": [
+                        "any"
+                    ]
+                }
+            },
+            "parameters": {
+                "basic.to_if_held_down_threshold_milliseconds": 100
+            },
+            "to": [
+                {
+                    "key_code": "right_command",
+                    "lazy": true
+                }
+            ],
+            "to_if_alone": [
+                {
+                    "key_code": "japanese_kana"
+                }
+            ],
+            "to_if_held_down": [
+                {
+                    "key_code": "right_command"
+                }
+            ],
+            "type": "basic"
+        }
+    ]
+}
+```
+
+    </details>
+</ul>
+
+<ul>
+    <details close>
+        <summary>シフトキーを単体で押したときに、alfredを実行する(UTM実行中は無効化する)</summary>
+
+
+```
+{
+    "description": "シフトキーを単体で押したときに、alfredを実行する(UTM実行中は無効化する)",
+    "manipulators": [
+        {
+            "conditions": [
+                {
+                    "bundle_identifiers": [
+                        "^com\\.utmapp\\.UTM$"
+                    ],
+                    "file_paths": [
+                        "/Applications/UTM.app/Contents/MacOS/UTM"
+                    ],
+                    "type": "frontmost_application_unless"
+                }
+            ],
+            "from": {
+                "key_code": "left_shift",
+                "modifiers": {
+                    "optional": [
+                        "any"
+                    ]
+                }
+            },
+            "parameters": {
+                "basic.to_if_held_down_threshold_milliseconds": 100
+            },
+            "to": [
+                {
+                    "key_code": "left_shift",
+                    "lazy": true
+                }
+            ],
+            "to_if_alone": [
+                {
+                    "key_code": "spacebar",
+                    "modifiers": [
+                        "command"
+                    ]
+                }
+            ],
+            "to_if_held_down": [
+                {
+                    "key_code": "left_shift"
+                }
+            ],
+            "type": "basic"
+        },
+        {
+            "conditions": [
+                {
+                    "bundle_identifiers": [
+                        "^com\\.utmapp\\.UTM$"
+                    ],
+                    "file_paths": [
+                        "/Applications/UTM.app/Contents/MacOS/UTM"
+                    ],
+                    "type": "frontmost_application_unless"
+                }
+            ],
+            "from": {
+                "key_code": "right_shift",
+                "modifiers": {
+                    "optional": [
+                        "any"
+                    ]
+                }
+            },
+            "parameters": {
+                "basic.to_if_held_down_threshold_milliseconds": 100
+            },
+            "to": [
+                {
+                    "key_code": "right_shift",
+                    "lazy": true
+                }
+            ],
+            "to_if_alone": [
+                {
+                    "key_code": "spacebar",
+                    "modifiers": [
+                        "command"
+                    ]
+                }
+            ],
+            "to_if_held_down": [
+                {
+                    "key_code": "right_shift"
+                }
+            ],
+            "type": "basic"
+        }
+    ]
+}
+```
+
+    </details>
+</ul>
+
+## アプリ設定
+
+### Safariのローカル拡張機能追加
+
+Xcodeで拡張機能のプロジェクトファイルを実行する。
+(下２つは[Google Chromeの拡張機能を変換](https://developer.apple.com/jp/news/?id=qiz0arxc)したもの。ローカルリポジトリで管理している)
+
+- [Auto Copy](https://github.com/reiji990/Safari-Auto-Copy-extension)
+- [AutoScroll](https://github.com/reiji990/Life/tree/main/code/AutoScroll)
+- [TWP](https://github.com/reiji990/Life/tree/main/code/TWP%20-%20Translate%20Web%20Pages%202)
+
+### Alfredの設定
+- Powerpackの認証
+- Hotkeyを⌘+Spaceに
+- 検索範囲の設定
+- Workflowの追加
+  - Search Apple Music
+  - Search Notes
+  - Shortcuts
+- Web searchの追加
+- デフォルト検索候補の設定(Default ResultsのSetup fallback resultsより)
+
+### その他、初日に済ませないと不便すぎて終わるタイプのアプリ設定作業
+
+- Dictionaries.appの購入済み辞書のインストール
+- Music.appのデバイス承認
+- Message.appのサインイン
+- Reminders.appのサインイン
+- Mail.appのサインイン
+- Calendar.appのサインイン
+
+## コマンド、スクリプトでの設定
+
+- [【Mac】隠しファイル・隠しフォルダを表示する方法](https://qiita.com/TsukasaHasegawa/items/fa8e783a556dc1a08f51)
+- [macOS Sonomaでテキストカーソル横にIMEモードが出るようになった](https://zenn.dev/nemolize/articles/a6ee70078051e3)
+- [macのスクリーンショット体験を改善するためにやったこと。](https://zenn.dev/masaaania/articles/fabfe969f4f0e3)
+
+```:Warp.app
+defaults write com.apple.finder AppleShowAllFiles TRUE
+killall Finder
+sudo mkdir -p /Library/Preferences/FeatureFlags/Domain
+sudo /usr/libexec/PlistBuddy -c "Add 'redesigned_text_cursor:Enabled' bool false" /Library/Preferences/FeatureFlags/Domain/UIKit.plist
+defaults write com.apple.screencapture name ""
+```
+
+```:Automator.app
+on run {input, parameters}
+	set filePath to item 1 of input as text
+	set the clipboard to (read (filePath as alias) as TIFF picture)
+end run
+```

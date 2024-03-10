@@ -1,7 +1,7 @@
 import { defineDocumentType, ComputedFields, makeSource } from 'contentlayer/source-files'
 import { writeFileSync } from 'fs'
 import readingTime from 'reading-time'
-import GithubSlugger from 'github-slugger'
+import { slug } from 'github-slugger'
 import path from 'path'
 // Remark packages
 import remarkGfm from 'remark-gfm'
@@ -50,7 +50,7 @@ function createTagCount(allBlogs) {
   allBlogs.forEach((file) => {
     if (file.tags && (!isProduction || file.draft !== true)) {
       file.tags.forEach((tag) => {
-        const formattedTag = GithubSlugger.slug(tag)
+        const formattedTag = slug(tag)
         if (formattedTag in tagCount) {
           tagCount[formattedTag] += 1
         } else {
@@ -100,7 +100,7 @@ export const Blog = defineDocumentType(() => ({
       resolve: (doc) => ({
         '@context': 'https://schema.org',
         '@type': 'BlogPosting',
-        headline: doc.title || doc.subtitle,
+        headline: doc.title,
         datePublished: doc.date,
         dateModified: doc.lastmod || doc.date,
         description: doc.summary,

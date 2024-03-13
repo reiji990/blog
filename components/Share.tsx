@@ -29,7 +29,6 @@ const Share = ({ title, subtitle, summary, slug }: ShareProps) => {
               size={5}
               aria-label={'twittershare'}
               href={`https://twitter.com/intent/tweet?text=${fulltitle}%20%7C%20${siteMetadata.title}%20${siteMetadata.siteUrl}blog/${slug}%20@${siteMetadata.author}`}
-              // https://twitter.com/intent/tweet/?url=${siteMetadata.siteUrl}blog/${slug} &text=${title}`}
             />
           </li>
           <li className="ml-4 inline-block">
@@ -45,7 +44,7 @@ const Share = ({ title, subtitle, summary, slug }: ShareProps) => {
               kind="linkedin"
               size={5}
               aria-label={'linkedinshare'}
-              href={`https://www.linkedin.com/shareArticle?mini=true&url=${siteMetadata.siteUrl}blog/${slug}&title=${title}&summary=${summary}&source=${siteMetadata.siteUrl}`}
+              href={`https://www.linkedin.com/shareArticle?mini=true&url=${siteMetadata.siteUrl}blog/${slug}&title=${fulltitle}&summary=${summary}&source=${siteMetadata.siteUrl}`}
             />
           </li>
           <li className="ml-4 inline-block">
@@ -53,7 +52,7 @@ const Share = ({ title, subtitle, summary, slug }: ShareProps) => {
               kind="whatsapp"
               size={5}
               aria-label={'whatsappshare'}
-              href={`https://wa.me/?text=${siteMetadata.siteUrl}blog/${slug}&text=${title}`}
+              href={`https://wa.me/?text=${siteMetadata.siteUrl}blog/${slug}&text=${fulltitle}`}
             />
           </li>
           <li className="ml-4 inline-block">
@@ -61,7 +60,7 @@ const Share = ({ title, subtitle, summary, slug }: ShareProps) => {
               kind="telegram"
               size={5}
               aria-label={'telegramshare'}
-              href={`https://telegram.me/share/url?url=${siteMetadata.siteUrl}blog/${slug}&text=${title}`}
+              href={`https://telegram.me/share/url?url=${siteMetadata.siteUrl}blog/${slug}&text=${fulltitle}`}
             />
           </li>
         </ul>

@@ -49,7 +49,7 @@ export default function PostMinimal({ content, next, prev, children }: LayoutPro
                 </div>
               </Bleed>
               <div>
-                <dd className="text-base font-medium leading-6 text-gray-500 dark:text-gray-400">
+                <dd className="pt-6 text-base font-medium leading-6 text-gray-500 dark:text-gray-400">
                   <time dateTime={date}>
                     {new Date(date).toLocaleDateString(siteMetadata.locale, postDateTemplate)}
                   </time>

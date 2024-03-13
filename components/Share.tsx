@@ -10,7 +10,7 @@ interface ShareProps {
   summary: string | undefined
 }
 
-export default function Share ({ title, subtitle, slug, summary }: ShareProps) {
+export default function Share({ title, subtitle, slug, summary }: ShareProps) {
   const fulltitle = subtitle ? `${title} ${subtitle}` : title
   return (
     <div className="m-4 mt-8 flex flex-col items-center justify-center pt-4 sm:flex-row">

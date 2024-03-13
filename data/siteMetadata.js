@@ -18,6 +18,9 @@ const siteMetadata = {
   facebook: '',
   youtube: 'https://www.youtube.com/@reiji990',
   linkedin: '',
+  Whatsapp: '',
+  Telegram: '',
+  Threads: '',
   locale: 'ja-JP',
   analytics: {
     // If you want to use an analytics provider you have to add it to the

@@ -13,9 +13,7 @@ export default function Share({ title, subtitle, slug, summary }: ShareProps) {
   return (
     <div className="m-4 mt-8 flex flex-col items-center justify-center pt-4 sm:flex-row">
       <div className="mb-4 sm:mb-0">
-        <p className="mr-3">
-          share
-        </p>
+        <p className="mr-3">share</p>
       </div>
       <div>
         <ul>

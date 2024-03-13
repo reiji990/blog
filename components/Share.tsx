@@ -4,10 +4,10 @@ import { CoreContent } from 'pliny/utils/contentlayer'
 import type { Blog } from 'contentlayer/generated'
 
 interface ShareProps {
-    title: string
-    subtitle: string | undefined
-    slug: string
-    summary: string | undefined
+  title: string
+  subtitle: string | undefined
+  slug: string
+  summary: string | undefined
 }
 
 export default function Share ({ title, subtitle, slug, summary }: ShareProps) {

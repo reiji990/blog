@@ -1,15 +1,13 @@
+'use client'
+
 import siteMetadata from '@/data/siteMetadata'
 import SocialIcon from '@/components/social-icons'
 
-interface ShareProps {
-  title: string
-  subtitle: string | undefined
-  slug: string
-  summary: string | undefined
-}
+type ShareProps = { title: string; subtitle: string; summary?: string; slug: string; }
 
-export default function Share({ title, subtitle, slug, summary }: ShareProps) {
+const Share = ({ title, subtitle, summary, slug }: ShareProps) => {
   const fulltitle = subtitle ? `${title} ${subtitle}` : title
+
   return (
     <div className="m-4 mt-8 flex flex-col items-center justify-center pt-4 sm:flex-row">
       <div className="mb-4 sm:mb-0">
@@ -71,3 +69,5 @@ export default function Share({ title, subtitle, slug, summary }: ShareProps) {
     </div>
   )
 }
+
+export default Share

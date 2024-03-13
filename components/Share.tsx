@@ -3,7 +3,7 @@
 import siteMetadata from '@/data/siteMetadata'
 import SocialIcon from '@/components/social-icons'
 
-type ShareProps = { title: string; subtitle: string; summary?: string; slug: string; }
+type ShareProps = { title: string; subtitle: string | undefined; summary?: string; slug: string; }
 
 const Share = ({ title, subtitle, summary, slug }: ShareProps) => {
   const fulltitle = subtitle ? `${title} ${subtitle}` : title

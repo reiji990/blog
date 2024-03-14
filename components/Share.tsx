@@ -11,7 +11,7 @@ const Share = ({ title, subtitle, summary, slug }: ShareProps) => {
   return (
     <div className="m-4 mt-8 flex flex-col items-center justify-center pt-4 sm:flex-row">
       <div className="mb-4 sm:mb-0">
-        <p className="mr-3">Share:</p>
+        <p className="mr-3 text-gray-700 dark:text-gray-300 ">Share:</p>
       </div>
       <div>
         <ul>

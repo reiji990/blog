@@ -10,6 +10,7 @@ import Image from '@/components/Image'
 import Tag from '@/components/Tag'
 import siteMetadata from '@/data/siteMetadata'
 import ScrollTopAndComment from '@/components/ScrollTopAndComment'
+import Share from '@/components/Share'
 
 const postDateTemplate: Intl.DateTimeFormatOptions = {
   weekday: 'short',
@@ -30,10 +31,6 @@ export default function PostLayout({ content, authorDetails, next, prev, childre
   const { filePath, path, slug, date, title, subtitle, tags, lastmod, summary } = content
   const basePath = path.split('/')[0]
   const editUrl = (path) => `${siteMetadata.siteRepo}/blob/main/data/${path}`
-  const shareUrl = (path) => {
-    const fulltitle = subtitle ? `${title} ${subtitle}` : title
-    return `https://twitter.com/intent/tweet?text=${fulltitle}%20%7C%20${siteMetadata.title}%20${siteMetadata.siteUrl}blog/${slug}%20@${siteMetadata.author}`
-  }
   return (
     <SectionContainer>
       <ScrollTopAndComment />
@@ -106,13 +103,10 @@ export default function PostLayout({ content, authorDetails, next, prev, childre
             </dl>
             <div className="divide-y divide-gray-200 dark:divide-gray-700 xl:col-span-3 xl:row-span-2 xl:pb-0">
               <div className="prose max-w-none pb-8 pt-10 dark:prose-invert">{children}</div>
-              <div className="pt-6 text-center text-sm text-primary-500 hover:text-primary-600 dark:hover:text-primary-400">
-                <Link href={shareUrl(path)} rel="nofollow">
-                  Post to 𝕏
-                </Link>
-                {` • `}
+              <div className="pt-6 text-center text-gray-700 dark:text-gray-300">
                 <Link href={editUrl(filePath)}>View on GitHub</Link>
               </div>
+              <Share title={title} subtitle={subtitle} slug={slug} summary={summary} />
               {siteMetadata.comments && (
                 <div
                   className="pb-6 pt-6 text-center text-gray-700 dark:text-gray-300"

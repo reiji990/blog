@@ -11,6 +11,7 @@ import SectionContainer from '@/components/SectionContainer'
 import Tag from '@/components/Tag'
 import siteMetadata from '@/data/siteMetadata'
 import ScrollTopAndComment from '@/components/ScrollTopAndComment'
+import Share from '@/components/Share'
 
 const postDateTemplate: Intl.DateTimeFormatOptions = {
   weekday: 'short',
@@ -32,10 +33,6 @@ export default function PostMinimal({ content, next, prev, children }: LayoutPro
     images && images.length > 0 ? images[0] : 'https://picsum.photos/seed/picsum/800/400'
   const basePath = path.split('/')[0]
   const editUrl = (path) => `${siteMetadata.siteRepo}/blob/main/data/${path}`
-  const shareUrl = (path) => {
-    const fulltitle = subtitle ? `${title} ${subtitle}` : title
-    return `https://twitter.com/intent/tweet?text=${fulltitle}%20%7C%20${siteMetadata.title}%20${siteMetadata.siteUrl}blog/${slug}%20@${siteMetadata.author}`
-  }
   return (
     <SectionContainer>
       <ScrollTopAndComment />
@@ -73,11 +70,8 @@ export default function PostMinimal({ content, next, prev, children }: LayoutPro
           <div className="divide-y divide-gray-200 dark:divide-gray-700 xl:col-span-3 xl:row-span-2 xl:pb-0">
             <div className="prose max-w-none py-4 dark:prose-invert">{children}</div>
             <div className="pb-6 pt-6 text-center text-sm text-gray-700 dark:text-gray-300">
-              <Link href={shareUrl(path)} rel="nofollow">
-                Post to 𝕏
-              </Link>
-              {` • `}
               <Link href={editUrl(filePath)}>View on GitHub</Link>
+              <Share title={title} subtitle={subtitle} slug={slug} summary={summary} />
             </div>
             {siteMetadata.comments && (
               <div className="pb-6 pt-6 text-center text-gray-700 dark:text-gray-300" id="comment">

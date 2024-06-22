@@ -19,10 +19,6 @@ export default function AuthorLayout({ children, content }: Props) {
     twitter,
     linkedin,
     github,
-    instagram,
-    youtube,
-    mastodon,
-    facebook,
   } = content
 
   return (

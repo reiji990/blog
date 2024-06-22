@@ -10,11 +10,11 @@ interface PageSEOProps {
 }
 
 export function genPageMetadata({
-title,
-subtitlr,
-description,
-image,
-...rest
+  title,
+  subtitlr,
+  description,
+  image,
+  ...rest
 }: PageSEOProps): Metadata {
   return {
     title,

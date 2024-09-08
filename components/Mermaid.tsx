@@ -1,29 +1,29 @@
 'use client'
-import { useEffect, useState } from 'react'
 import mermaid from 'mermaid'
+import { useEffect } from 'react'
+import { useTheme } from 'next-themes'
 
-const Mermaid = ({ chart }) => {
-  const [theme, setTheme] = useState<'default' | 'dark'>('default')
-
-  useEffect(() => {
-    const darkModeMediaQuery = window.matchMedia('(prefers-color-scheme: dark)')
-
-    const handleThemeChange = (e) => {
-      setTheme(e.matches ? 'dark' : 'default')
-    }
-
-    setTheme(darkModeMediaQuery.matches ? 'dark' : 'default')
-    darkModeMediaQuery.addEventListener('change', handleThemeChange)
-
-    return () => {
-      darkModeMediaQuery.removeEventListener('change', handleThemeChange)
-    }
-  }, [])
+const Mermaid = ({ chart }: { chart: string }) => {
+  const { theme } = useTheme() // current theme from next-themes
 
   useEffect(() => {
-    mermaid.initialize({ theme })
+    // Define theme configurations
+    const themeConfig = {
+      light: {
+        theme: 'default', // Mermaid.js default light theme
+      },
+      dark: {
+        theme: 'dark', // Mermaid.js dark theme
+      },
+    }
+
+    // Initialize Mermaid with the current theme
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: themeConfig[theme]?.theme || 'default', // Use default if theme is undefined
+    })
     mermaid.contentLoaded()
-  }, [theme, chart])
+  }, [chart, theme]) // Re-run effect when chart or theme changes
 
   return <div className="mermaid">{chart}</div>
 }

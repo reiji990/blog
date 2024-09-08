@@ -9,18 +9,14 @@ const Mermaid = ({ chart }: { chart: string }) => {
   useEffect(() => {
     // Define theme configurations
     const themeConfig = {
-      light: {
-        theme: 'default', // Mermaid.js default light theme
-      },
-      dark: {
-        theme: 'dark', // Mermaid.js dark theme
-      },
+      light: 'default', // Mermaid.js default light theme
+      dark: 'dark', // Mermaid.js dark theme
     }
 
     // Initialize Mermaid with the current theme
     mermaid.initialize({
       startOnLoad: true,
-      theme: themeConfig[theme]?.theme || 'default', // Use default if theme is undefined
+      theme: themeConfig[theme as keyof typeof themeConfig] || 'default', // Use default if theme is undefined
     })
     mermaid.contentLoaded()
   }, [chart, theme]) // Re-run effect when chart or theme changes

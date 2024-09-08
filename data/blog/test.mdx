@@ -55,14 +55,13 @@ gantt
 
 <Mermaid chart={tantt} />
 
-export const sequenceDigram2 = `
+export const sequenceDiagram2 = `
 %%{init:{'theme':'base','themeVariables':{'primaryColor':'#6A7FAB','primaryTextColor':'#FAFBF9','primaryBorderColor':'#6A7FAB','secondaryColor':'#6A7FAB','lineColor':'#6A7FABCC','noteTextColor':'#FAFBF9','noteBkgColor':'#6A7FABBB','textColor':'#6A7FABCC','fontSize':'20px'},'themeCSS':"text.actor {font-size:24px !important;}"}}%%
 sequenceDiagram
     participant bss as boot-shim.S
     participant bsc as boot-shim.c
     participant zbi as zbi.c
     participant dt as devicetree.c
-
     Note over bss: QEMU から起動
     activate bss
     bss ->> bsc: boot_shim()

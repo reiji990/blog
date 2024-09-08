@@ -1,0 +1,118 @@
+---
+title: test
+tags: ['Test']
+date: '2024-08-05'
+draft: true
+summary: ''
+---
+
+使用するライブラリの追加
+
+```
+docker compose exec app yarn add react-chartjs-2
+docker compose exec app yarn add chart.js
+docker compose exec app yarn add mermaid
+```
+
+コンポーネント追加
+
+export const sequenceDiagram = `
+  sequenceDiagram title 平日夜の食事準備
+  participant m as まな板
+  participant p as フライパン
+  participant d as 皿
+note over m,d: 開始
+note over m,d: それぞれが清潔な状態であることを確認
+note over p: 油を入れる
+note over m: ニンジンを切る
+m-)p: 食材を入れる
+note over p: 中火
+note over m: オクラを切る
+note over m: ナスを切る
+note over m: エリンギを切る
+m-)p: 食材を入れる
+note over p: 塩、胡椒、タイム、ワインを入れる
+p-)d: 盛り付ける
+note over m: 鶏胸肉を切る
+m-)p: 食材を入れる
+note over p: 塩、胡椒、タイム、ワインを入れる
+p-)d: 盛り付ける
+`
+
+<Mermaid chart={sequenceDiagram} />
+
+export const pie = `
+pie title Pets adopted by volunteers
+    "Dogs" : 386
+    "Cats" : 85
+    "Rats" : 15
+`
+
+<Mermaid chart={pie} />
+
+export const data = {
+labels: ['Electronics', 'Groceries', 'Clothing', 'Books'],
+      datasets: [
+        {
+          label: 'Sales Distribution',
+          data: [300, 500, 100, 200], // 各カテゴリの売上
+          backgroundColor: [
+            'rgba(255, 99, 132, 0.2)',
+            'rgba(54, 162, 235, 0.2)',
+            'rgba(255, 206, 86, 0.2)',
+            'rgba(75, 192, 192, 0.2)',
+          ],
+          borderColor: [
+            'rgba(255, 99, 132, 1)',
+            'rgba(54, 162, 235, 1)',
+            'rgba(255, 206, 86, 1)',
+            'rgba(75, 192, 192, 1)',
+          ],
+      borderWidth: 1,
+    },
+  ],
+}
+
+export const options = {
+    responsive: true,
+    plugins: {
+      legend: {
+        position: 'top',
+      },
+      title: {
+        display: true,
+        text: 'Sales Distribution by Category',
+      },
+    },
+  }
+
+<DonutChart data={data} options={options} />
+
+export const data1 = {
+  labels: ['2024/01', 'February', 'March', 'April', 'May', 'June', 'July'],
+  datasets: [
+    {
+      label: 'Sales Data',
+      data: [65, 59, 80, 81, 56, 55, 40],
+      fill: false,
+      backgroundColor: 'rgba(75, 192, 192, 0.2)',
+      borderColor: 'rgba(75, 192, 192, 1)',
+      tension: 0.1,
+    },
+  ],
+}
+
+export const options1 = {
+  responsive: true,
+  plugins: {
+    legend: {
+      position: 'top',
+    },
+    title: {
+      display: true,
+      text: 'Monthly Sales Data',
+    },
+  },
+}
+
+<LineChart data={data1} options={options1} />

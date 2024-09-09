@@ -1,29 +1,16 @@
 'use client'
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import mermaid from 'mermaid'
+import { useTheme } from 'next-themes'
 
 const Mermaid = ({ chart }) => {
-  const [theme, setTheme] = useState<'default' | 'dark'>('default')
+  const { theme } = useTheme() // ThemeProviderからテーマを取得
 
   useEffect(() => {
-    const darkModeMediaQuery = window.matchMedia('(prefers-color-scheme: dark)')
-
-    const handleThemeChange = (e) => {
-      setTheme(e.matches ? 'dark' : 'default')
-    }
-
-    setTheme(darkModeMediaQuery.matches ? 'dark' : 'default')
-    darkModeMediaQuery.addEventListener('change', handleThemeChange)
-
-    return () => {
-      darkModeMediaQuery.removeEventListener('change', handleThemeChange)
-    }
-  }, [])
-
-  useEffect(() => {
-    mermaid.initialize({ theme })
+    const mermaidTheme = theme === 'dark' ? 'dark' : 'default' // テーマに基づいてmermaidのテーマを選択
+    mermaid.initialize({ theme: mermaidTheme })
     mermaid.contentLoaded()
-  }, [theme, chart])
+  }, [theme, chart]) // テーマやチャートが変更されたら再レンダリング
 
   return <div className="mermaid">{chart}</div>
 }

@@ -1,32 +1,33 @@
 'use client'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import mermaid from 'mermaid'
 import { useTheme } from 'next-themes'
 
+type MermaidTheme = 'default' | 'dark' | 'forest' | 'neutral' | 'base' | null;
+
 const Mermaid = ({ chart }) => {
-  const { theme, systemTheme } = useTheme();  // テーマとシステムテーマを取得
+  const { theme, systemTheme } = useTheme();
+  const [mermaidTheme, setMermaidTheme] = useState<MermaidTheme>('default');
 
   useEffect(() => {
-    if (!theme) return;  // テーマが設定されていない場合は何もしない
+    if (!theme) return;
 
-    let mermaidTheme;
-
+    let currentTheme: MermaidTheme;
     if (theme === 'system') {
-      // システムテーマに基づいてmermaidテーマを設定
-      if (systemTheme === 'dark') {
-        mermaidTheme = 'dark';
-      } else if (systemTheme === 'light') {
-        mermaidTheme = 'default';
-      }
+      currentTheme = systemTheme === 'dark' ? 'dark' : 'default';
     } else {
-      // ユーザーが手動で選択したテーマに基づいてmermaidテーマを設定
-      mermaidTheme = theme === 'dark' ? 'dark' : 'default';
+      currentTheme = theme === 'dark' ? 'dark' : 'default';
     }
 
-    // Mermaidのテーマを設定
-    mermaid.initialize({ theme: mermaidTheme });
-    mermaid.contentLoaded();
-  }, [theme, systemTheme, chart]);  // テーマやチャートの変更を監視
+    setMermaidTheme(currentTheme);
+  }, [theme, systemTheme]);
+
+  useEffect(() => {
+    if (mermaidTheme) {
+      mermaid.initialize({ theme: mermaidTheme });
+      mermaid.contentLoaded();
+    }
+  }, [mermaidTheme, chart]);
 
   return <div className="mermaid">{chart}</div>;
 };

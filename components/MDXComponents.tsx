@@ -11,6 +11,9 @@ import YoutubevideoPlayer from '@/components/Youtube'
 import SpotifyPlayer from '@/components/Spotify'
 import { Tweet } from 'react-tweet'
 import TableWrapper from './TableWrapper'
+import DonutChart from './DonutChart'
+import LineChart from './LineChart'
+import Mermaid from './Mermaid'
 
 export const components: MDXComponents = {
   Image,
@@ -25,4 +28,7 @@ export const components: MDXComponents = {
   YoutubevideoPlayer,
   SpotifyPlayer,
   Tweet,
+  DonutChart,
+  LineChart,
+  Mermaid,
 }

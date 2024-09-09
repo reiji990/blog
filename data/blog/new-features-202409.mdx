@@ -1,0 +1,299 @@
+---
+title: ブログに最近追加した機能など(202409)
+tags: ['Tech', 'Next.js']
+date: '2024-09-09'
+draft: false
+summary: 'Next.jsアプリへMermaid.js、Chart.jsの追加'
+images: ['https://cdn-ak.f.st-hatena.com/images/fotolife/R/ReijiE/20240909/20240909131807.png']
+---
+
+Next.jsアプリへMermaid.js、Chart.jsを追加した。
+
+## コンポーネント
+
+[DonutChart.tsx](https://github.com/reiji990/blog/blob/main/components/DonutChart.tsx)
+
+[LineChart.tsx](https://github.com/reiji990/blog/blob/main/components/LineChart.tsx)
+
+[Mermaid.tsx](https://github.com/reiji990/blog/blob/main/components/Mermaid.tsx)
+
+## 実践例
+
+### Mermaid.js
+
+<ul>
+    <details close>
+        <summary>コード</summary>
+
+```
+export const sequenceDiagram = `
+  sequenceDiagram title 平日の為の作り置き
+  participant m as まな板
+  participant p as フライパン
+  participant c as 容器
+note over m,c: 開始
+note over m: ニンジンを切る
+note over p: 油を入れる
+m-)p: 食材を入れる
+note over p: 中火
+note over m: オクラを切る
+note over m: アスパラガスを切る
+note over m: ナスを切る
+note over m: エリンギを切る
+note over p: 火が通っていることを確認
+m-)p: 食材を入れる
+note over p: 塩、胡椒、タイム、ワイン、ローレルを入れる
+note over p: 沸騰後、弱火
+note over p: 10分煮込む
+note over p: 火が通っていることを確認
+p-)c: 容器へ移す
+note over m: 鶏胸肉を切る
+m-)p: 食材を入れる
+note over p: 塩、胡椒、タイム、ケーパー、黒オリーブを入れる
+note over p: 15分煮込む
+note over p: 火が通っていることを確認
+note over p: 火を消す
+p-)c: 容器へ移す
+note over m, p: 洗う
+note over c: 常温まで冷えたことを確認
+note over c: 冷蔵庫へ入れる
+note over m,c: 終了
+`
+
+<Mermaid chart={sequenceDiagram} />
+```
+
+    </details>
+</ul>
+
+export const sequenceDiagram = `
+  sequenceDiagram title 平日の為の作り置き
+  participant m as まな板
+  participant p as フライパン
+  participant c as 容器
+note over m,c: 開始
+note over m: ニンジンを切る
+note over p: 油を入れる
+m-)p: 食材を入れる
+note over p: 中火
+note over m: オクラを切る
+note over m: アスパラガスを切る
+note over m: ナスを切る
+note over m: エリンギを切る
+note over p: 火が通っていることを確認
+m-)p: 食材を入れる
+note over p: 塩、胡椒、タイム、ワイン、ローレルを入れる
+note over p: 沸騰後、弱火
+note over p: 10分煮込む
+note over p: 火が通っていることを確認
+p-)c: 容器へ移す
+note over m: 鶏胸肉を切る
+m-)p: 食材を入れる
+note over p: 塩、胡椒、タイム、ケーパー、黒オリーブを入れる
+note over p: 15分煮込む
+note over p: 火が通っていることを確認
+note over p: 火を消す
+p-)c: 容器へ移す
+note over m, p: 洗う
+note over c: 常温まで冷えたことを確認
+note over c: 冷蔵庫へ入れる
+note over m,c: 終了
+`
+
+<Mermaid chart={sequenceDiagram} />
+
+<ul>
+    <details close>
+        <summary>コード</summary>
+
+```
+export const pie = `
+pie title 平日夜の食費内訳
+    "お米" : 54.675
+    "鶏肉" : 93.312
+    "野菜" : 149.688
+    "その他" : 36.72
+`
+
+<Mermaid chart={pie} />
+```
+
+    </details>
+</ul>
+
+export const pie = `
+pie title 平日夜の食費内訳
+    "お米" : 54.675
+    "肉" : 93.312
+    "野菜" : 149.688
+    "その他" : 36.72
+`
+
+<Mermaid chart={pie} />
+
+### Chart.js
+
+<ul>
+    <details close>
+        <summary>コード</summary>
+
+```
+export const data = {
+labels: ['お米', '肉', '野菜', 'その他'],
+      datasets: [
+        {
+          label: 'Sales Distribution',
+          data: [54.675, 93.312, 149.688, 36.72],
+          backgroundColor: [
+            'rgba(255, 99, 132, 0.2)',
+            'rgba(54, 162, 235, 0.2)',
+            'rgba(255, 206, 86, 0.2)',
+            'rgba(75, 192, 192, 0.2)',
+          ],
+          borderColor: [
+            'rgba(255, 99, 132, 1)',
+            'rgba(54, 162, 235, 1)',
+            'rgba(255, 206, 86, 1)',
+            'rgba(75, 192, 192, 1)',
+          ],
+      borderWidth: 1,
+    },
+  ],
+}
+
+export const options = {
+    responsive: true,
+    plugins: {
+      legend: {
+        position: 'top',
+      },
+      title: {
+        display: true,
+        text: '平日夜の食費内訳',
+      },
+    },
+  }
+
+<DonutChart data={data} options={options} />
+```
+
+    </details>
+</ul>
+
+export const data = {
+labels: ['お米', '鶏肉', '野菜', 'その他'],
+      datasets: [
+        {
+          label: 'Sales Distribution',
+          data: [54.675, 93.312, 149.688, 36.72],
+          backgroundColor: [
+            'rgba(255, 99, 132, 0.2)',
+            'rgba(54, 162, 235, 0.2)',
+            'rgba(255, 206, 86, 0.2)',
+            'rgba(75, 192, 192, 0.2)',
+          ],
+          borderColor: [
+            'rgba(255, 99, 132, 1)',
+            'rgba(54, 162, 235, 1)',
+            'rgba(255, 206, 86, 1)',
+            'rgba(75, 192, 192, 1)',
+          ],
+      borderWidth: 1,
+    },
+  ],
+}
+
+export const options = {
+    responsive: true,
+    plugins: {
+      legend: {
+        position: 'top',
+      },
+      title: {
+        display: true,
+        text: '平日夜の食費内訳',
+      },
+    },
+  }
+
+<DonutChart data={data} options={options} />
+
+<ul>
+    <details close>
+        <summary>コード</summary>
+
+```
+export const data1 = {
+  labels: ['2024/01', '2024/02', '2024/03', '2024/04', '2024/05', '2024/06', '2024/07', '2024/08'],
+  datasets: [
+    {
+      label: 'Post数',
+      data: [3, 4, 1, 2, 3, 3, 2, 4],
+      fill: false,
+      backgroundColor: 'rgba(75, 192, 192, 0.2)',
+      borderColor: 'rgba(75, 192, 192, 1)',
+      tension: 0.1,
+    },
+  ],
+}
+
+export const options1 = {
+  responsive: true,
+  plugins: {
+    legend: {
+      position: 'top',
+    },
+    title: {
+      display: true,
+      text: '映像作品鑑賞報告Post数',
+    },
+  },
+  scales: {
+    y: {
+      beginAtZero: true,
+    },
+  },
+}
+
+<LineChart data={data1} options={options1} />
+```
+
+    </details>
+</ul>
+
+export const data1 = {
+  labels: ['2024/01', '2024/02', '2024/03', '2024/04', '2024/05', '2024/06', '2024/07', '2024/08'],
+  datasets: [
+    {
+      label: 'Post数',
+      data: [3, 4, 1, 2, 3, 3, 2, 4],
+      fill: false,
+      backgroundColor: 'rgba(75, 192, 192, 0.2)',
+      borderColor: 'rgba(75, 192, 192, 1)',
+      tension: 0.1,
+    },
+  ],
+}
+
+export const options1 = {
+  responsive: true,
+  plugins: {
+    legend: {
+      position: 'top',
+    },
+    title: {
+      display: true,
+      text: '映像作品鑑賞報告Post数',
+    },
+  },
+  scales: {
+    y: {
+      beginAtZero: true,
+    },
+  },
+}
+
+<LineChart data={data1} options={options1} />
+
+mermaid.jsは書き方が良くないのか、docker上での表示がうまくいかないため何度もデプロイして表示を確かめていた。
+dockerの立ち上げ自体にも時間がかかるようになったので、mermaid.jsに関しては使わなければ機能を消すかも。

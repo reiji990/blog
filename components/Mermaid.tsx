@@ -4,13 +4,20 @@ import mermaid from 'mermaid'
 import { useTheme } from 'next-themes'
 
 const Mermaid = ({ chart }) => {
-  const { theme } = useTheme() // ThemeProviderからテーマを取得
+  const { theme, systemTheme } = useTheme()
 
   useEffect(() => {
-    const mermaidTheme = theme === 'dark' ? 'dark' : 'default' // テーマに基づいてmermaidのテーマを選択
+    const mermaidTheme
+
+    if (theme === 'system') {
+      mermaidTheme = systemTheme === 'dark' ? 'dark' : 'default'
+    } else {
+      mermaidTheme = theme === 'dark' ? 'dark' : 'default'
+    }
+
     mermaid.initialize({ theme: mermaidTheme })
     mermaid.contentLoaded()
-  }, [theme, chart]) // テーマやチャートが変更されたら再レンダリング
+  }, [theme, systemTheme, chart])
 
   return <div className="mermaid">{chart}</div>
 }

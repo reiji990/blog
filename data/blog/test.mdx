@@ -17,6 +17,7 @@ docker compose exec app yarn add mermaid
 コンポーネント追加
 
 export const sequenceDiagram = `
+%%{init:{'theme':'base','themeVariables':{'primaryColor':'#6A7FAB','primaryTextColor':'#FAFBF9','primaryBorderColor':'#6A7FAB','secondaryColor':'#6A7FAB','lineColor':'#6A7FABCC','noteTextColor':'#FAFBF9','noteBkgColor':'#6A7FABBB','textColor':'#6A7FABCC','fontSize':'20px'},'themeCSS':"text.actor {font-size:24px !important;}"}}%%
   sequenceDiagram title 平日夜の食事準備
   participant m as まな板
   participant p as フライパン

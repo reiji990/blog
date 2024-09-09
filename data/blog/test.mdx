@@ -1,9 +1,9 @@
 ---
-title: test
-tags: ['Test']
-date: '2024-08-05'
+title: ブログに最近追加した機能など(202409)
+tags: ['Tech', 'Next.js']
+date: '2024-09-09'
 draft: false
-summary: ''
+summary: 'Next.jsへMermaid.jsとChart.jsの追加'
 ---
 
 使用するライブラリの追加
@@ -16,80 +16,140 @@ docker compose exec app yarn add mermaid
 
 コンポーネント追加
 
+[DonutChart.tsx](https://github.com/reiji990/blog/blob/main/components/DonutChart.tsx)
+
+[LineChart.tsx](https://github.com/reiji990/blog/blob/main/components/LineChart.tsx)
+
+[Mermaid.tsx](https://github.com/reiji990/blog/blob/main/components/Mermaid.tsx)
+
+以下、実践例。
+
+```
 export const sequenceDiagram = `
-  sequenceDiagram title 平日夜の食事準備
+  sequenceDiagram title 平日の為の作り置き
   participant m as まな板
   participant p as フライパン
   participant d as 皿
 note over m,d: 開始
-note over m,d: それぞれが清潔な状態であることを確認
-note over p: 油を入れる
 note over m: ニンジンを切る
+note over p: 油を入れる
 m-)p: 食材を入れる
 note over p: 中火
 note over m: オクラを切る
+note over m: アスパラガスを切る
 note over m: ナスを切る
 note over m: エリンギを切る
 m-)p: 食材を入れる
-note over p: 塩、胡椒、タイム、ワインを入れる
+note over p: 塩、胡椒、タイム、ワイン、ローレルを入れる
+note over p: 沸騰後、弱火
+note over p: 10分煮込む
 p-)d: 盛り付ける
 note over m: 鶏胸肉を切る
 m-)p: 食材を入れる
-note over p: 塩、胡椒、タイム、ワインを入れる
+note over p: 塩、胡椒、タイム、ケーパー、黒オリーブを入れる
+note over p: 15分煮込む
+p-)d: 盛り付ける
+`
+
+<Mermaid chart={sequenceDiagram} />
+```
+
+export const sequenceDiagram = `
+  sequenceDiagram title 平日の為の作り置き
+  participant m as まな板
+  participant p as フライパン
+  participant d as 皿
+note over m,d: 開始
+note over m: ニンジンを切る
+note over p: 油を入れる
+m-)p: 食材を入れる
+note over p: 中火
+note over m: オクラを切る
+note over m: アスパラガスを切る
+note over m: ナスを切る
+note over m: エリンギを切る
+m-)p: 食材を入れる
+note over p: 塩、胡椒、タイム、ワイン、ローレルを入れる
+note over p: 沸騰後、弱火
+note over p: 10分煮込む
+p-)d: 盛り付ける
+note over m: 鶏胸肉を切る
+m-)p: 食材を入れる
+note over p: 塩、胡椒、タイム、ケーパー、黒オリーブを入れる
+note over p: 15分煮込む
 p-)d: 盛り付ける
 `
 
 <Mermaid chart={sequenceDiagram} />
 
-export const gantt = `
-gantt
-  title A Gantt Diagram
-  dateFormat  YYYY-MM-DD
-  section Section
-  A task           :a1, 2014-01-01, 30d
-  Another task     :after a1  , 20d
-  section Another
-  Task in sec      :2014-01-12  , 12d
-  another task      : 24d
-`
-
-<Mermaid chart={gantt} />
-
-export const sequenceDiagram2 = `
-sequenceDiagram
-    participant bss as boot-shim.S
-    participant bsc as boot-shim.c
-    participant zbi as zbi.c
-    participant dt as devicetree.c
-    Note over bss: QEMU から起動
-    activate bss
-    bss ->> bsc: boot_shim()
-    activate bsc
-    bsc ->> dt: dt_walk()
-    bsc ->> zbi: zbi_check()
-    bsc ->> zbi: zbi_create_entry_with_payload()
-    deactivate bsc
-    deactivate bss
-    Note over bss: physboot へジャンプ
-`
-
-<Mermaid chart={sequenceDiagram2} />
-
+```
 export const pie = `
-pie title Pets adopted by volunteers
-    "Dogs" : 386
-    "Cats" : 85
-    "Rats" : 15
+pie title Sales Distribution by Category
+    "Electronics" : 300
+    "Groceries" : 500
+    "Clothing" : 100
+    "books" : 200
 `
 
 <Mermaid chart={pie} />
+```
+
+export const pie = `
+pie title Sales Distribution by Category
+    "Electronics" : 300
+    "Groceries" : 500
+    "Clothing" : 100
+    "books" : 200
+`
+
+<Mermaid chart={pie} />
+
+```
+export const data = {
+labels: ['Electronics', 'Groceries', 'Clothing', 'Books'],
+      datasets: [
+        {
+          label: 'Sales Distribution',
+          data: [300, 500, 100, 200],
+          backgroundColor: [
+            'rgba(255, 99, 132, 0.2)',
+            'rgba(54, 162, 235, 0.2)',
+            'rgba(255, 206, 86, 0.2)',
+            'rgba(75, 192, 192, 0.2)',
+          ],
+          borderColor: [
+            'rgba(255, 99, 132, 1)',
+            'rgba(54, 162, 235, 1)',
+            'rgba(255, 206, 86, 1)',
+            'rgba(75, 192, 192, 1)',
+          ],
+      borderWidth: 1,
+    },
+  ],
+}
+
+export const options = {
+    responsive: true,
+    plugins: {
+      legend: {
+        position: 'top',
+      },
+      title: {
+        display: true,
+        text: 'Sales Distribution by Category',
+      },
+    },
+  }
+
+<DonutChart data={data} options={options} />
+```
 
 export const data = {
 labels: ['Electronics', 'Groceries', 'Clothing', 'Books'],
       datasets: [
         {
           label: 'Sales Distribution',
-          data: [300, 500, 100, 200], // 各カテゴリの売上
+          data: [300, 500, 100, 200],
           backgroundColor: [
             'rgba(255, 99, 132, 0.2)',
             'rgba(54, 162, 235, 0.2)',
@@ -122,12 +182,13 @@ export const options = {
 
 <DonutChart data={data} options={options} />
 
+```
 export const data1 = {
-  labels: ['2024/01', 'February', 'March', 'April', 'May', 'June', 'July'],
+  labels: ['2024/01', '2024/02', '2024/03', '2024/04', '2024/05', '2024/06', '2024/07', '2024/08'],
   datasets: [
     {
-      label: 'Sales Data',
-      data: [65, 59, 80, 81, 56, 55, 40],
+      label: 'Post数',
+      data: [1, 4, 1, 2, 3, 3, 2, 4],
       fill: false,
       backgroundColor: 'rgba(75, 192, 192, 0.2)',
       borderColor: 'rgba(75, 192, 192, 1)',
@@ -144,7 +205,37 @@ export const options1 = {
     },
     title: {
       display: true,
-      text: 'Monthly Sales Data',
+      text: 別映像作品鑑賞報告Post数',
+    },
+  },
+}
+
+<LineChart data={data1} options={options1} />
+```
+
+export const data1 = {
+  labels: ['2024/01', '2024/02', '2024/03', '2024/04', '2024/05', '2024/06', '2024/07', '2024/08'],
+  datasets: [
+    {
+      label: 'Post数',
+      data: [1, 4, 1, 2, 3, 3, 2, 4],
+      fill: false,
+      backgroundColor: 'rgba(75, 192, 192, 0.2)',
+      borderColor: 'rgba(75, 192, 192, 1)',
+      tension: 0.1,
+    },
+  ],
+}
+
+export const options1 = {
+  responsive: true,
+  plugins: {
+    legend: {
+      position: 'top',
+    },
+    title: {
+      display: true,
+      text: 別映像作品鑑賞報告Post数',
     },
   },
 }

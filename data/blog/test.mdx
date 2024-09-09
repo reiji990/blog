@@ -3,18 +3,10 @@ title: ブログに最近追加した機能など(202409)
 tags: ['Tech', 'Next.js']
 date: '2024-09-09'
 draft: false
-summary: 'Next.jsへMermaid.jsとChart.jsの追加'
+summary: 'Next.jsへMermaid.js、Chart.jsの追加'
 ---
 
-使用するライブラリの追加
-
-```
-docker compose exec app yarn add react-chartjs-2
-docker compose exec app yarn add chart.js
-docker compose exec app yarn add mermaid
-```
-
-コンポーネント追加
+## コンポーネント
 
 [DonutChart.tsx](https://github.com/reiji990/blog/blob/main/components/DonutChart.tsx)
 
@@ -22,9 +14,48 @@ docker compose exec app yarn add mermaid
 
 [Mermaid.tsx](https://github.com/reiji990/blog/blob/main/components/Mermaid.tsx)
 
-以下、実践例。
+## 実践例
+
+<ul>
+    <details close>
+        <summary>コード</summary>
 
 ```
+export const sequenceDiagram = `
+  sequenceDiagram title 平日の為の作り置き
+  participant m as まな板
+  participant p as フライパン
+  participant c as 容器
+note over m,c: 開始
+note over m: ニンジンを切る
+note over p: 油を入れる
+m-)p: 食材を入れる
+note over p: 中火
+note over m: オクラを切る
+note over m: アスパラガスを切る
+note over m: ナスを切る
+note over m: エリンギを切る
+m-)p: 食材を入れる
+note over p: 塩、胡椒、タイム、ワイン、ローレルを入れる
+note over p: 沸騰後、弱火
+note over p: 10分煮込む
+p-)c: 盛り付ける
+note over m: 鶏胸肉を切る
+m-)p: 食材を入れる
+note over p: 塩、胡椒、タイム、ケーパー、黒オリーブを入れる
+note over p: 15分煮込む
+p-)c: 盛り付ける
+note over m, p: 洗う
+note over c: 冷蔵庫へ入れる
+note over m,c: 終了
+`
+
+<Mermaid chart={sequenceDiagram} />
+```
+
+    </details>
+</ul>
+
 export const sequenceDiagram = `
   sequenceDiagram title 平日の為の作り置き
   participant m as まな板
@@ -52,35 +83,10 @@ p-)d: 盛り付ける
 `
 
 <Mermaid chart={sequenceDiagram} />
-```
 
-export const sequenceDiagram = `
-  sequenceDiagram title 平日の為の作り置き
-  participant m as まな板
-  participant p as フライパン
-  participant d as 皿
-note over m,d: 開始
-note over m: ニンジンを切る
-note over p: 油を入れる
-m-)p: 食材を入れる
-note over p: 中火
-note over m: オクラを切る
-note over m: アスパラガスを切る
-note over m: ナスを切る
-note over m: エリンギを切る
-m-)p: 食材を入れる
-note over p: 塩、胡椒、タイム、ワイン、ローレルを入れる
-note over p: 沸騰後、弱火
-note over p: 10分煮込む
-p-)d: 盛り付ける
-note over m: 鶏胸肉を切る
-m-)p: 食材を入れる
-note over p: 塩、胡椒、タイム、ケーパー、黒オリーブを入れる
-note over p: 15分煮込む
-p-)d: 盛り付ける
-`
-
-<Mermaid chart={sequenceDiagram} />
+<ul>
+    <details close>
+        <summary>コード</summary>
 
 ```
 export const pie = `
@@ -94,6 +100,9 @@ pie title Sales Distribution by Category
 <Mermaid chart={pie} />
 ```
 
+    </details>
+</ul>
+
 export const pie = `
 pie title Sales Distribution by Category
     "Electronics" : 300
@@ -103,6 +112,10 @@ pie title Sales Distribution by Category
 `
 
 <Mermaid chart={pie} />
+
+<ul>
+    <details close>
+        <summary>コード</summary>
 
 ```
 export const data = {
@@ -144,6 +157,9 @@ export const options = {
 <DonutChart data={data} options={options} />
 ```
 
+    </details>
+</ul>
+
 export const data = {
 labels: ['Electronics', 'Groceries', 'Clothing', 'Books'],
       datasets: [
@@ -181,6 +197,10 @@ export const options = {
   }
 
 <DonutChart data={data} options={options} />
+
+<ul>
+    <details close>
+        <summary>コード</summary>
 
 ```
 export const data1 = {
@@ -188,7 +208,7 @@ export const data1 = {
   datasets: [
     {
       label: 'Post数',
-      data: [1, 4, 1, 2, 3, 3, 2, 4],
+      data: [3, 4, 1, 2, 3, 3, 2, 4],
       fill: false,
       backgroundColor: 'rgba(75, 192, 192, 0.2)',
       borderColor: 'rgba(75, 192, 192, 1)',
@@ -217,6 +237,9 @@ export const options1 = {
 
 <LineChart data={data1} options={options1} />
 ```
+
+    </details>
+</ul>
 
 export const data1 = {
   labels: ['2024/01', '2024/02', '2024/03', '2024/04', '2024/05', '2024/06', '2024/07', '2024/08'],

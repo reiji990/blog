@@ -3,33 +3,33 @@ import { useEffect, useState } from 'react'
 import mermaid from 'mermaid'
 import { useTheme } from 'next-themes'
 
-type MermaidTheme = 'default' | 'dark' | 'forest' | 'neutral' | 'base' | null;
+type MermaidTheme = 'default' | 'dark' | 'forest' | 'neutral' | 'base' | null
 
 const Mermaid = ({ chart }) => {
-  const { theme, systemTheme } = useTheme();
-  const [mermaidTheme, setMermaidTheme] = useState<MermaidTheme>('default');
+  const { theme, systemTheme } = useTheme()
+  const [mermaidTheme, setMermaidTheme] = useState<MermaidTheme>('default')
 
   useEffect(() => {
-    if (!theme) return;
+    if (!theme) return
 
-    let currentTheme: MermaidTheme;
+    let currentTheme: MermaidTheme
     if (theme === 'system') {
-      currentTheme = systemTheme === 'dark' ? 'dark' : 'default';
+      currentTheme = systemTheme === 'dark' ? 'dark' : 'default'
     } else {
-      currentTheme = theme === 'dark' ? 'dark' : 'default';
+      currentTheme = theme === 'dark' ? 'dark' : 'default'
     }
 
-    setMermaidTheme(currentTheme);
-  }, [theme, systemTheme]);
+    setMermaidTheme(currentTheme)
+  }, [theme, systemTheme])
 
   useEffect(() => {
     if (mermaidTheme) {
-      mermaid.initialize({ theme: mermaidTheme });
-      mermaid.contentLoaded();
+      mermaid.initialize({ theme: mermaidTheme })
+      mermaid.contentLoaded()
     }
-  }, [mermaidTheme, chart]);
+  }, [mermaidTheme, chart])
 
-  return <div className="mermaid">{chart}</div>;
-};
+  return <div className="mermaid">{chart}</div>
+}
 
-export default Mermaid;
+export default Mermaid

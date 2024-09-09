@@ -4,27 +4,31 @@ import mermaid from 'mermaid'
 import { useTheme } from 'next-themes'
 
 const Mermaid = ({ chart }) => {
-  const { theme, systemTheme } = useTheme() || {} // 初期値を空オブジェクトにする
+  const { theme, systemTheme } = useTheme();  // テーマとシステムテーマを取得
 
   useEffect(() => {
-    if (!theme && !systemTheme) return // themeがまだ初期化されていない場合は処理をスキップ
+    if (!theme) return;  // テーマが設定されていない場合は何もしない
 
-    let mermaidTheme
+    let mermaidTheme;
 
     if (theme === 'system') {
-      // システムテーマが有効ならOSのテーマに基づいてmermaidのテーマを選択
-      mermaidTheme = systemTheme === 'dark' ? 'dark' : 'default'
+      // システムテーマに基づいてmermaidテーマを設定
+      if (systemTheme === 'dark') {
+        mermaidTheme = 'dark';
+      } else if (systemTheme === 'light') {
+        mermaidTheme = 'default';
+      }
     } else {
-      // ユーザー設定のテーマに基づいてmermaidのテーマを選択
-      mermaidTheme = theme === 'dark' ? 'dark' : 'default'
+      // ユーザーが手動で選択したテーマに基づいてmermaidテーマを設定
+      mermaidTheme = theme === 'dark' ? 'dark' : 'default';
     }
 
-    // Mermaidのテーマを適用
-    mermaid.initialize({ theme: mermaidTheme })
-    mermaid.contentLoaded()
-  }, [theme, systemTheme, chart]) // テーマやチャートが変更されたら再レンダリング
+    // Mermaidのテーマを設定
+    mermaid.initialize({ theme: mermaidTheme });
+    mermaid.contentLoaded();
+  }, [theme, systemTheme, chart]);  // テーマやチャートの変更を監視
 
-  return <div className="mermaid">{chart}</div>
-}
+  return <div className="mermaid">{chart}</div>;
+};
 
-export default Mermaid
+export default Mermaid;

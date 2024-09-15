@@ -10,6 +10,7 @@ import {
   Whatsapp,
   Telegram,
   Threads,
+  Bluesky,
 } from './icons'
 
 const components = {
@@ -24,6 +25,7 @@ const components = {
   whatsapp: Whatsapp,
   telegram: Telegram,
   threads: Threads,
+  bluesky: Bluesky,
 }
 
 type SocialIconProps = {

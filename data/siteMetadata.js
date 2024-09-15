@@ -21,6 +21,7 @@ const siteMetadata = {
   Whatsapp: '',
   Telegram: '',
   Threads: '',
+  bluesky: 'https://bsky.app/profile/reiji990.blog',
   locale: 'ja-JP',
   analytics: {
     // If you want to use an analytics provider you have to add it to the

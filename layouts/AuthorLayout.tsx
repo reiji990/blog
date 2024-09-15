@@ -43,6 +43,7 @@ export default function AuthorLayout({ children, content }: Props) {
               <SocialIcon kind="youtube" href={siteMetadata.youtube} />
               <SocialIcon kind="facebook" href={siteMetadata.facebook} />
               <SocialIcon kind="mastodon" href={siteMetadata.mastodon} />
+              <SocialIcon kind="bluesky" href={siteMetadata.bluesky} />
             </div>
           </div>
           <div className="prose max-w-none pb-8 pt-8 dark:prose-invert xl:col-span-2">

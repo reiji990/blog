@@ -131,6 +131,7 @@ export const Authors = defineDocumentType(() => ({
     youtube: { type: 'string' },
     mastodon: { type: 'string' },
     facebook: { type: 'string' },
+    bluesky: { type: 'string'}
   },
   computedFields,
 }))

@@ -13,11 +13,23 @@ const Header = () => {
 
   return (
     <header className={headerClass}>
-      <div></div>
+      <Link href="/" aria-label={siteMetadata.title}>
+        <div className="flex items-center justify-between">
+          <div className="mr-3">
+          </div>
+          {typeof siteMetadata.title === 'string' ? (
+            <div className=" h-6 text-2xl font-semibold sm:block">
+              {siteMetadata.title}
+            </div>
+          ) : (
+            siteMetadata.title
+          )}
+        </div>
+      </Link>
       <div className="flex items-center space-x-4 leading-5 sm:space-x-6">
         <div className="no-scrollbar hidden items-center space-x-4 overflow-x-auto sm:flex sm:space-x-6">
           {headerNavLinks
-            .filter((link) => link.href !== '')
+            .filter((link) => link.href !== '/')
             .map((link) => (
               <Link
                 key={link.title}

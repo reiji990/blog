@@ -50,14 +50,7 @@ export default function BlueskyPostEmbed({ uri }: { uri: string }) {
 
   return (
     <div className="bluesky-embed flex w-full max-w-[600px]" data-uri={uri}>
-      <iframe
-        src={src}
-        data-bluesky-uri={uri}
-        style={{ height }}
-        frameborder="0"
-        width="100%"
-        height="500px"
-      />
+      <iframe src={src} data-bluesky-uri={uri} style={{ height }} width="100%" height="500px" />
     </div>
   )
 }

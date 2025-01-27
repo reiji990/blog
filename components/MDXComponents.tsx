@@ -14,6 +14,7 @@ import TableWrapper from './TableWrapper'
 import DonutChart from './DonutChart'
 import LineChart from './LineChart'
 import Mermaid from './Mermaid'
+import BlueskyPostEmbed from '@/components/Bluesky'
 
 export const components: MDXComponents = {
   Image,
@@ -31,4 +32,5 @@ export const components: MDXComponents = {
   DonutChart,
   LineChart,
   Mermaid,
+  BlueskyPostEmbed,
 }

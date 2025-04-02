@@ -61,7 +61,7 @@ export default function PostLayout({ content, authorDetails, next, prev, childre
                 <PageTitle>{title}</PageTitle>
                 <PageSubTitle>{subtitle}</PageSubTitle>
               </div>
-              <dd className="text-base font-medium leading-6 text-gray-500 dark:text-gray-400">
+              <dd className="text-base leading-6 font-medium text-gray-500 dark:text-gray-400">
                 {summary}
               </dd>
             </div>
@@ -103,7 +103,7 @@ export default function PostLayout({ content, authorDetails, next, prev, childre
             </dl>
             <div className="divide-y divide-gray-200 xl:col-span-3 xl:row-span-2 xl:pb-0 dark:divide-gray-700">
               <div className="prose dark:prose-invert max-w-none pt-10 pb-8">{children}</div>
-              <div className="pt-6 text-center text-primary-500 hover:text-primary-600 dark:hover:text-primary-400">
+              <div className="text-primary-500 hover:text-primary-600 dark:hover:text-primary-400 pt-6 text-center">
                 <Link href={editUrl(filePath)}>View on GitHub</Link>
               </div>
               <Share title={title} subtitle={subtitle} slug={slug} summary={summary} />
@@ -128,7 +128,7 @@ export default function PostLayout({ content, authorDetails, next, prev, childre
                 <div className="justify-between py-4 xl:block">
                   {prev && prev.draft === false && (
                     <div>
-                      <h2 className="text-xs uppercase tracking-wide text-gray-500 dark:text-gray-400">
+                      <h2 className="text-xs tracking-wide text-gray-500 uppercase dark:text-gray-400">
                         Previous Article
                       </h2>
                       <div className="text-primary-500 hover:text-primary-600 dark:hover:text-primary-400">
@@ -140,7 +140,7 @@ export default function PostLayout({ content, authorDetails, next, prev, childre
                   )}
                   {next && next.draft === false && (
                     <div className="justify-between py-4 xl:block">
-                      <h2 className="text-xs uppercase tracking-wide text-gray-500 dark:text-gray-400">
+                      <h2 className="text-xs tracking-wide text-gray-500 uppercase dark:text-gray-400">
                         Next Article
                       </h2>
                       <div className="text-primary-500 hover:text-primary-600 dark:hover:text-primary-400">

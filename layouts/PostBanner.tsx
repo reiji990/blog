@@ -76,7 +76,7 @@ export default function PostMinimal({ content, next, prev, children }: LayoutPro
             {siteMetadata.comments && (
               <div className="pt-6 pb-6 text-center text-gray-700 dark:text-gray-300" id="comment">
                 <Comments slug={slug} />
-                </div>
+              </div>
             )}
             <div className="justify-between py-4 xl:block">
               <Link
@@ -99,8 +99,8 @@ export default function PostMinimal({ content, next, prev, children }: LayoutPro
                         <div className="text-primary-500 hover:text-primary-600 dark:hover:text-primary-400">
                           <Link href={`/${prev.path}`}>
                             {prev.title} {prev.subtitle}
-                        </Link>
-                   </div>
+                          </Link>
+                        </div>
                       </div>
                     )}
                     {next && next.draft === false && (
@@ -111,7 +111,7 @@ export default function PostMinimal({ content, next, prev, children }: LayoutPro
                         <div className="text-primary-500 hover:text-primary-600 dark:hover:text-primary-400">
                           <Link href={`/${next.path}`}>
                             {next.title} {next.subtitle}
-                        </Link>
+                          </Link>
                         </div>
                       </div>
                     )}

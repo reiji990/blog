@@ -144,7 +144,7 @@ export default function ListLayoutWithTags({
                             <div>
                               {'最終更新日: '}
                               <time dateTime={date}>
-                                {formatDate(lastmod, siteMetadata.locale)}
+                               {formatDate(lastmod, siteMetadata.locale)}
                               </time>
                             </div>
                           )}

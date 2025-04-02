@@ -8,7 +8,6 @@ import Link from '@/components/Link'
 import PageTitle from '@/components/PageTitle'
 import PageSubTitle from '@/components/PageSubTitle'
 import SectionContainer from '@/components/SectionContainer'
-import Tag from '@/components/Tag'
 import siteMetadata from '@/data/siteMetadata'
 import ScrollTopAndComment from '@/components/ScrollTopAndComment'
 import Share from '@/components/Share'
@@ -23,8 +22,8 @@ const postDateTemplate: Intl.DateTimeFormatOptions = {
 interface LayoutProps {
   content: CoreContent<Blog>
   children: ReactNode
-  next?: { path: string; title: string; subtitle: string; draft: boolean }
-  prev?: { path: string; title: string; subtitle: string; draft: boolean }
+  next?: { path: string; title: string; subtitle: string }
+  prev?: { path: string; title: string; subtitle: string }
 }
 
 export default function PostMinimal({ content, next, prev, children }: LayoutProps) {
@@ -41,7 +40,7 @@ export default function PostMinimal({ content, next, prev, children }: LayoutPro
           <div className="space-y-1 pb-10 text-center dark:border-gray-700">
             <div className="w-full">
               <Bleed>
-                <div className="relative aspect-[2/1] w-full">
+                <div className="relative aspect-2/1 w-full">
                   <Image src={displayImage} alt={title} fill className="object-cover" />
                 </div>
               </Bleed>
@@ -73,11 +72,11 @@ export default function PostMinimal({ content, next, prev, children }: LayoutPro
               <Link href={editUrl(filePath)}>View on GitHub</Link>
               <Share title={title} subtitle={subtitle} slug={slug} summary={summary} />
             </div>
-            {siteMetadata.comments && (
-              <div className="pb-6 pt-6 text-center text-gray-700 dark:text-gray-300" id="comment">
-                <Comments slug={slug} />
-              </div>
-            )}
+          {siteMetadata.comments && (
+            <div className="pt-6 pb-6 text-center text-gray-700 dark:text-gray-300" id="comment">
+              <Comments slug={slug} />
+            </div>
+          )}
             <div className="justify-between py-4 xl:block">
               <Link
                 href={`/${basePath}`}
@@ -87,8 +86,8 @@ export default function PostMinimal({ content, next, prev, children }: LayoutPro
                 &larr; Back to the blog
               </Link>
             </div>
-            <footer>
-              <div className="flex flex-col text-sm font-medium sm:flex-row sm:justify-between sm:text-base">
+          <footer>
+            <div className="flex flex-col text-sm font-medium sm:flex-row sm:justify-between sm:text-base">
                 {(next || prev) && (
                   <div className="justify-between py-4 xl:block">
                     {prev && prev.draft === false && (
@@ -99,10 +98,10 @@ export default function PostMinimal({ content, next, prev, children }: LayoutPro
                         <div className="text-primary-500 hover:text-primary-600 dark:hover:text-primary-400">
                           <Link href={`/${prev.path}`}>
                             {prev.title} {prev.subtitle}
-                          </Link>
+                  </Link>
                         </div>
-                      </div>
-                    )}
+                </div>
+              )}
                     {next && next.draft === false && (
                       <div className="justify-between py-4 xl:block">
                         <h2 className="text-xs uppercase tracking-wide text-gray-500 dark:text-gray-400">
@@ -111,7 +110,7 @@ export default function PostMinimal({ content, next, prev, children }: LayoutPro
                         <div className="text-primary-500 hover:text-primary-600 dark:hover:text-primary-400">
                           <Link href={`/${next.path}`}>
                             {next.title} {next.subtitle}
-                          </Link>
+                  </Link>
                         </div>
                       </div>
                     )}
@@ -129,10 +128,10 @@ export default function PostMinimal({ content, next, prev, children }: LayoutPro
                         <Tag key={tag} text={tag} />
                       ))}
                     </div>
-                  </div>
-                )}
-              </div>
-            </footer>
+                </div>
+              )}
+            </div>
+          </footer>
           </div>
         </div>
       </article>

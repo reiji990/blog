@@ -28,7 +28,7 @@ const Share = ({ title, subtitle, summary, slug }: ShareProps) => {
               kind="twitter"
               size={5}
               aria-label={'twittershare'}
-              href={`https://twitter.com/intent/tweet?text=${fulltitle}%20%7C%20${siteMetadata.title}%20${siteMetadata.siteUrl}blog/${slug}%20@${siteMetadata.author}`}
+              href={`https://x.com/intent/tweet?text=${fulltitle}%20%7C%20${siteMetadata.title}%20${siteMetadata.siteUrl}blog/${slug}%20@${siteMetadata.author}`}
             />
           </li>
           <li className="ml-4 inline-block">

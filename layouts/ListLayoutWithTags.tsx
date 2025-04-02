@@ -109,7 +109,7 @@ export default function ListLayoutWithTags({
                   return (
                     <li key={t} className="my-3">
                       {decodeURI(pathname.split('/tags/')[1]) === slug(t) ? (
-                        <h3 className="text-primary-500 inline x-3 py-2 text-sm uppercase">
+                        <h3 className="text-primary-500 x-3 inline py-2 text-sm uppercase">
                           {`${t} (${tagCounts[t]})`}
                         </h3>
                       ) : (
@@ -137,7 +137,9 @@ export default function ListLayoutWithTags({
                       <dl>
                         <dt className="sr-only">Published on</dt>
                         <dd className="text-base leading-6 font-medium text-gray-500 dark:text-gray-400">
-                          <time dateTime={date} suppressHydrationWarning>{formatDate(date, siteMetadata.locale)}</time>
+                          <time dateTime={date} suppressHydrationWarning>
+                            {formatDate(date, siteMetadata.locale)}
+                           </time>
                           {lastmod && (
                             <div>
                               {'最終更新日: '}

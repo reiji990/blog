@@ -41,12 +41,12 @@ export default function PostMinimal({ content, next, prev, children }: LayoutPro
           <div className="space-y-1 pb-10 text-center dark:border-gray-700">
             <div className="w-full">
               <Bleed>
-                <div className="relative aspect-[2/1] w-full">
+                <div className="relative aspect-2/1 w-full">
                   <Image src={displayImage} alt={title} fill className="object-cover" />
                 </div>
               </Bleed>
               <div>
-                <dd className="pt-6 text-base font-medium leading-6 text-gray-500 dark:text-gray-400">
+                <dd className="pt-6 text-base leading-6 font-medium text-gray-500 dark:text-gray-400">
                   <time dateTime={date}>
                     {new Date(date).toLocaleDateString(siteMetadata.locale, postDateTemplate)}
                   </time>
@@ -63,18 +63,18 @@ export default function PostMinimal({ content, next, prev, children }: LayoutPro
               <PageTitle>{title}</PageTitle>
               <PageSubTitle>{subtitle}</PageSubTitle>
             </div>
-            <dd className="text-base font-medium leading-6 text-gray-500 dark:text-gray-400">
+            <dd className="text-base leading-6 font-medium text-gray-500 dark:text-gray-400">
               {summary}
             </dd>
           </div>
-          <div className="divide-y divide-gray-200 dark:divide-gray-700 xl:col-span-3 xl:row-span-2 xl:pb-0">
-            <div className="prose max-w-none py-4 dark:prose-invert">{children}</div>
-            <div className="pb-6 pt-6 text-center text-sm text-gray-700 dark:text-gray-300">
+          <div className="divide-y divide-gray-200 xl:col-span-3 xl:row-span-2 xl:pb-0 dark:divide-gray-700">
+            <div className="prose dark:prose-invert max-w-none py-4">{children}</div>
+            <div className="pt-6 pb-6 text-center text-sm text-gray-700 dark:text-gray-300">
               <Link href={editUrl(filePath)}>View on GitHub</Link>
               <Share title={title} subtitle={subtitle} slug={slug} summary={summary} />
             </div>
             {siteMetadata.comments && (
-              <div className="pb-6 pt-6 text-center text-gray-700 dark:text-gray-300" id="comment">
+              <div className="pt-6 pb-6 text-center text-gray-700 dark:text-gray-300" id="comment">
                 <Comments slug={slug} />
               </div>
             )}
@@ -93,7 +93,7 @@ export default function PostMinimal({ content, next, prev, children }: LayoutPro
                   <div className="justify-between py-4 xl:block">
                     {prev && prev.draft === false && (
                       <div>
-                        <h2 className="text-xs uppercase tracking-wide text-gray-500 dark:text-gray-400">
+                        <h2 className="text-xs tracking-wide text-gray-500 uppercase dark:text-gray-400">
                           Previous Article
                         </h2>
                         <div className="text-primary-500 hover:text-primary-600 dark:hover:text-primary-400">
@@ -105,7 +105,7 @@ export default function PostMinimal({ content, next, prev, children }: LayoutPro
                     )}
                     {next && next.draft === false && (
                       <div className="justify-between py-4 xl:block">
-                        <h2 className="text-xs uppercase tracking-wide text-gray-500 dark:text-gray-400">
+                        <h2 className="text-xs tracking-wide text-gray-500 uppercase dark:text-gray-400">
                           Next Article
                         </h2>
                         <div className="text-primary-500 hover:text-primary-600 dark:hover:text-primary-400">
@@ -118,10 +118,10 @@ export default function PostMinimal({ content, next, prev, children }: LayoutPro
                   </div>
                 )}
               </div>
-              <div className="divide-gray-200 text-sm font-medium leading-5 dark:divide-gray-700 xl:col-start-1 xl:row-start-2 xl:divide-y">
+              <div className="divide-gray-200 text-sm leading-5 font-medium xl:col-start-1 xl:row-start-2 xl:divide-y dark:divide-gray-700">
                 {tags && (
                   <div className="py-4 xl:py-8">
-                    <h2 className="text-xs uppercase tracking-wide text-gray-500 dark:text-gray-400">
+                    <h2 className="text-xs tracking-wide text-gray-500 uppercase dark:text-gray-400">
                       Tags
                     </h2>
                     <div className="flex flex-wrap">

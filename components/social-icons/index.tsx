@@ -6,10 +6,10 @@ import {
   Linkedin,
   Twitter,
   Mastodon,
+  Threads,
   Instagram,
   Whatsapp,
   Telegram,
-  Threads,
   Bluesky,
 } from './icons'
 
@@ -21,10 +21,10 @@ const components = {
   linkedin: Linkedin,
   twitter: Twitter,
   mastodon: Mastodon,
+  threads: Threads,
   instagram: Instagram,
   whatsapp: Whatsapp,
   telegram: Telegram,
-  threads: Threads,
   bluesky: Bluesky,
 }
 
@@ -35,7 +35,10 @@ type SocialIconProps = {
 }
 
 const SocialIcon = ({ kind, href, size = 8 }: SocialIconProps) => {
-  if (!href || (kind === 'mail' && !/^mailto:\w+([.-]?\w+)@\w+([.-]?\w+)(.\w{2,3})+$/.test(href)))
+  if (
+    !href ||
+    (kind === 'mail' && !/^mailto:[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(href))
+  )
     return null
 
   const SocialSvg = components[kind]
@@ -49,7 +52,7 @@ const SocialIcon = ({ kind, href, size = 8 }: SocialIconProps) => {
     >
       <span className="sr-only">{kind}</span>
       <SocialSvg
-        className={`fill-current text-gray-700 hover:text-primary-500 dark:text-gray-200 dark:hover:text-primary-400 h-${size} w-${size}`}
+        className={`hover:text-primary-500 dark:hover:text-primary-400 fill-current text-gray-700 dark:text-gray-200 h-${size} w-${size}`}
       />
     </a>
   )

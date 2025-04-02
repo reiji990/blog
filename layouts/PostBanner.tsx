@@ -22,8 +22,8 @@ const postDateTemplate: Intl.DateTimeFormatOptions = {
 interface LayoutProps {
   content: CoreContent<Blog>
   children: ReactNode
-  next?: { path: string; title: string; subtitle: string draft: boolean  }
-  prev?: { path: string; title: string; subtitle: string draft: boolean  }
+  next?: { path: string; title: string; subtitle: string; draft: boolean  }
+  prev?: { path: string; title: string; subtitle: string; draft: boolean  }
 }
 
 export default function PostMinimal({ content, next, prev, children }: LayoutProps) {

@@ -139,12 +139,12 @@ export default function ListLayoutWithTags({
                         <dd className="text-base leading-6 font-medium text-gray-500 dark:text-gray-400">
                           <time dateTime={date} suppressHydrationWarning>
                             {formatDate(date, siteMetadata.locale)}
-                           </time>
+                          </time>
                           {lastmod && (
                             <div>
                               {'最終更新日: '}
                               <time dateTime={date}>
-                               {formatDate(lastmod, siteMetadata.locale)}
+                                {formatDate(lastmod, siteMetadata.locale)}
                               </time>
                             </div>
                           )}

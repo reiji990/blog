@@ -28,52 +28,53 @@ export default function Home({ posts }) {
               <li key={slug} className="py-12">
                 <article>
                   <div className="grid grid-cols-1 items-start gap-6 xl:grid-cols-5">
-                  <div className="relative aspect-[2/1] w-full overflow-hidden rounded-lg shadow xl:col-span-2">
-                    <Link href={`/blog/${slug}`}>
-                      <Image src={displayImage} alt={title} fill className="object-cover" />
-                    </Link>
-                  </div>
-                  <div className="space-y-2 xl:col-span-3">
-                    <dl>
-                      <dt className="sr-only">Published on</dt>
-                      <dd className="text-base leading-6 font-medium text-gray-500 dark:text-gray-400">
-                        <time dateTime={date}>{formatDate(date, siteMetadata.locale)}</time>
-                        {lastmod && (
-                          <div>
-                            {'最終更新日: '}
-                            <time dateTime={date}>{formatDate(lastmod, siteMetadata.locale)}</time>
-                          </div>
-                        )}
-                      </dd>
-                    </dl>
-                    <h2 className="text-2xl leading-8 tracking-tight">
-                      <Link
-                        href={`/blog/${slug}`}
-                        className="text-gray-900 dark:text-gray-100"
-                      >
-                        {title}
-                        <br />
-                        {subtitle}
-                      </Link>
-                    </h2>
-                    <div className="flex flex-wrap">
-                      {tags.map((tag) => (
-                        <Tag key={tag} text={tag} />
-                      ))}
-                    </div>
-                    <div className="prose max-w-none text-gray-500 dark:text-gray-400">
-                      {summary}
-                    </div>
-                    <div className="text-base leading-6 font-medium">
-                      <Link
-                        href={`/blog/${slug}`}
-                          className="text-primary-500 hover:text-primary-600 dark:hover:text-primary-400"
-                        aria-label={`Read "${title} ${subtitle}"`}
-                      >
-                        Read more &rarr;
+                    <div className="relative aspect-[2/1] w-full overflow-hidden rounded-lg shadow xl:col-span-2">
+                      <Link href={`/blog/${slug}`}>
+                        <Image src={displayImage} alt={title} fill className="object-cover" />
                       </Link>
                     </div>
-                  </div>
+                    <div className="space-y-2 xl:col-span-3">
+                      <dl>
+                        <dt className="sr-only">Published on</dt>
+                        <dd className="text-base leading-6 font-medium text-gray-500 dark:text-gray-400">
+                          <time dateTime={date}>
+                            {formatDate(date, siteMetadata.locale)}
+                          </time>
+                          {lastmod && (
+                            <div>
+                              {'最終更新日: '}
+                              <time dateTime={date}>{formatDate(lastmod, siteMetadata.locale)}
+
+                              </time>
+                            </div>
+                          )}
+                        </dd>
+                      </dl>
+                      <h2 className="text-2xl leading-8 tracking-tight">
+                        <Link href={`/blog/${slug}`} className="text-gray-900 dark:text-gray-100">
+                          {title}
+                          <br />
+                          {subtitle}
+                        </Link>
+                      </h2>
+                      <div className="flex flex-wrap">
+                        {tags.map((tag) => (
+                          <Tag key={tag} text={tag} />
+                        ))}
+                      </div>
+                      <div className="prose max-w-none text-gray-500 dark:text-gray-400">
+                        {summary}
+                      </div>
+                      <div className="text-base leading-6 font-medium">
+                        <Link
+                          href={`/blog/${slug}`}
+                            className="text-primary-500 hover:text-primary-600 dark:hover:text-primary-400"
+                          aria-label={`Read "${title} ${subtitle}"`}
+                        >
+                          Read more &rarr;
+                        </Link>
+                      </div>
+                    </div>
                   </div>
                 </article>
               </li>

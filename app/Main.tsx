@@ -37,14 +37,12 @@ export default function Home({ posts }) {
                       <dl>
                         <dt className="sr-only">Published on</dt>
                         <dd className="text-base leading-6 font-medium text-gray-500 dark:text-gray-400">
-                          <time dateTime={date}>
-                            {formatDate(date, siteMetadata.locale)}
-                          </time>
+                          <time dateTime={date}>{formatDate(date, siteMetadata.locale)}</time>
                           {lastmod && (
                             <div>
                               {'最終更新日: '}
-                              <time dateTime={date}>{formatDate(lastmod, siteMetadata.locale)}
-
+                              <time dateTime={date}>
+                                {formatDate(lastmod, siteMetadata.locale)}
                               </time>
                             </div>
                           )}
@@ -68,7 +66,7 @@ export default function Home({ posts }) {
                       <div className="text-base leading-6 font-medium">
                         <Link
                           href={`/blog/${slug}`}
-                            className="text-primary-500 hover:text-primary-600 dark:hover:text-primary-400"
+                          className="text-primary-500 hover:text-primary-600 dark:hover:text-primary-400"
                           aria-label={`Read "${title} ${subtitle}"`}
                         >
                           Read more &rarr;

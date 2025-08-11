@@ -103,7 +103,7 @@ export default function PostLayout({ content, authorDetails, next, prev, childre
             </dl>
             <div className="divide-y divide-gray-200 xl:col-span-3 xl:row-span-2 xl:pb-0 dark:divide-gray-700">
               <div className="prose dark:prose-invert max-w-none pt-10 pb-8">{children}</div>
-              <div className="text-primary-500 hover:text-primary-600 dark:hover:text-primary-400 pt-6 text-center">
+              <div className="text-primary-500 hover:text-primary-600 dark:hover:text-primary-400 pt-6 pb-6 text-center">
                 <Link href={editUrl(filePath)}>View on GitHub</Link>
               </div>
               <Share title={title} subtitle={subtitle} slug={slug} summary={summary} />

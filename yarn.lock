@@ -2678,7 +2678,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@mermaid-js/parser@npm:^0.6.2":
+"@mermaid-js/parser@npm:^0.6.3":
   version: 0.6.3
   resolution: "@mermaid-js/parser@npm:0.6.3"
   dependencies:
@@ -2707,10 +2707,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@next/env@npm:15.3.3":
-  version: 15.3.3
-  resolution: "@next/env@npm:15.3.3"
-  checksum: 52513b04ff1951ad094b37a89dcd37e9275c2d6c635dbe7fbdc44bd39b5511eb2c7c537a80ebbf92d197e5f1293ff16c175cd5dccc9c54bbfaac7271c1fe1bb9
+"@next/env@npm:15.4.5":
+  version: 15.4.5
+  resolution: "@next/env@npm:15.4.5"
+  checksum: 274d72f05e8bfc30db7ead1b77c66ba508c3fe7eebede167c76f6cbfe9ff8b064aa19db9c5cc13529d2e8ee2800e96f079193da48ead8607647bb5c202e6d321
   languageName: node
   linkType: hard
 
@@ -2723,58 +2723,58 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@next/swc-darwin-arm64@npm:15.3.3":
-  version: 15.3.3
-  resolution: "@next/swc-darwin-arm64@npm:15.3.3"
+"@next/swc-darwin-arm64@npm:15.4.5":
+  version: 15.4.5
+  resolution: "@next/swc-darwin-arm64@npm:15.4.5"
   conditions: os=darwin & cpu=arm64
   languageName: node
   linkType: hard
 
-"@next/swc-darwin-x64@npm:15.3.3":
-  version: 15.3.3
-  resolution: "@next/swc-darwin-x64@npm:15.3.3"
+"@next/swc-darwin-x64@npm:15.4.5":
+  version: 15.4.5
+  resolution: "@next/swc-darwin-x64@npm:15.4.5"
   conditions: os=darwin & cpu=x64
   languageName: node
   linkType: hard
 
-"@next/swc-linux-arm64-gnu@npm:15.3.3":
-  version: 15.3.3
-  resolution: "@next/swc-linux-arm64-gnu@npm:15.3.3"
+"@next/swc-linux-arm64-gnu@npm:15.4.5":
+  version: 15.4.5
+  resolution: "@next/swc-linux-arm64-gnu@npm:15.4.5"
   conditions: os=linux & cpu=arm64 & libc=glibc
   languageName: node
   linkType: hard
 
-"@next/swc-linux-arm64-musl@npm:15.3.3":
-  version: 15.3.3
-  resolution: "@next/swc-linux-arm64-musl@npm:15.3.3"
+"@next/swc-linux-arm64-musl@npm:15.4.5":
+  version: 15.4.5
+  resolution: "@next/swc-linux-arm64-musl@npm:15.4.5"
   conditions: os=linux & cpu=arm64 & libc=musl
   languageName: node
   linkType: hard
 
-"@next/swc-linux-x64-gnu@npm:15.3.3":
-  version: 15.3.3
-  resolution: "@next/swc-linux-x64-gnu@npm:15.3.3"
+"@next/swc-linux-x64-gnu@npm:15.4.5":
+  version: 15.4.5
+  resolution: "@next/swc-linux-x64-gnu@npm:15.4.5"
   conditions: os=linux & cpu=x64 & libc=glibc
   languageName: node
   linkType: hard
 
-"@next/swc-linux-x64-musl@npm:15.3.3":
-  version: 15.3.3
-  resolution: "@next/swc-linux-x64-musl@npm:15.3.3"
+"@next/swc-linux-x64-musl@npm:15.4.5":
+  version: 15.4.5
+  resolution: "@next/swc-linux-x64-musl@npm:15.4.5"
   conditions: os=linux & cpu=x64 & libc=musl
   languageName: node
   linkType: hard
 
-"@next/swc-win32-arm64-msvc@npm:15.3.3":
-  version: 15.3.3
-  resolution: "@next/swc-win32-arm64-msvc@npm:15.3.3"
+"@next/swc-win32-arm64-msvc@npm:15.4.5":
+  version: 15.4.5
+  resolution: "@next/swc-win32-arm64-msvc@npm:15.4.5"
   conditions: os=win32 & cpu=arm64
   languageName: node
   linkType: hard
 
-"@next/swc-win32-x64-msvc@npm:15.3.3":
-  version: 15.3.3
-  resolution: "@next/swc-win32-x64-msvc@npm:15.3.3"
+"@next/swc-win32-x64-msvc@npm:15.4.5":
+  version: 15.4.5
+  resolution: "@next/swc-win32-x64-msvc@npm:15.4.5"
   conditions: os=win32 & cpu=x64
   languageName: node
   linkType: hard
@@ -3470,13 +3470,6 @@ __metadata:
     "@svgr/plugin-jsx": 8.1.0
     "@svgr/plugin-svgo": 8.1.0
   checksum: c6eec5b0cf2fb2ecd3a7a362d272eda35330b17c76802a3481f499b5d07ff8f87b31d2571043bff399b051a1767b1e2e499dbf186104d1c06d76f9f1535fac01
-  languageName: node
-  linkType: hard
-
-"@swc/counter@npm:0.1.3":
-  version: 0.1.3
-  resolution: "@swc/counter@npm:0.1.3"
-  checksum: df8f9cfba9904d3d60f511664c70d23bb323b3a0803ec9890f60133954173047ba9bdeabce28cd70ba89ccd3fd6c71c7b0bd58be85f611e1ffbe5d5c18616598
   languageName: node
   linkType: hard
 
@@ -4963,15 +4956,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"busboy@npm:1.6.0":
-  version: 1.6.0
-  resolution: "busboy@npm:1.6.0"
-  dependencies:
-    streamsearch: ^1.1.0
-  checksum: 32801e2c0164e12106bf236291a00795c3c4e4b709ae02132883fe8478ba2ae23743b11c5735a0aae8afe65ac4b6ca4568b91f0d9fed1fdbc32ede824a73746e
-  languageName: node
-  linkType: hard
-
 "cacache@npm:^19.0.1":
   version: 19.0.1
   resolution: "cacache@npm:19.0.1"
@@ -5940,13 +5924,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"dagre-d3-es@npm:7.0.11":
-  version: 7.0.11
-  resolution: "dagre-d3-es@npm:7.0.11"
+"dagre-d3-es@npm:7.0.13":
+  version: 7.0.13
+  resolution: "dagre-d3-es@npm:7.0.13"
   dependencies:
     d3: ^7.9.0
     lodash-es: ^4.17.21
-  checksum: 933b0a54d3d5f64d440dba8c6433385e6879bf433d03032b2884f1af6826e0f437e2e3da61f7441e74a445d68d9710020cc12242ce79f169289a5dd7054bab21
+  checksum: 4a6e5aeb8d4a643c19241b58b8507a7e8aadae8c470ecb9b0133b3af0d6244356cb2cda643fe2f4ef5f872800eb873d7287977b4c5965962396b1757afb0b5de
   languageName: node
   linkType: hard
 
@@ -6241,9 +6225,9 @@ __metadata:
   linkType: hard
 
 "electron-to-chromium@npm:^1.5.238":
-  version: 1.5.240
-  resolution: "electron-to-chromium@npm:1.5.240"
-  checksum: a2a14918f14b73b8c5a23aeb1bfd0be9660207efa0cd36e6b52ed8e60b2e1a9ad5789c01bb7262e1875c4abe3bf6bc2a50d545fb26a745bcfe6e84f4c7035e62
+  version: 1.5.241
+  resolution: "electron-to-chromium@npm:1.5.241"
+  checksum: 68fda2968f25687742920f390ceeac3a5d1bc9472553020a9531ad6060dfacd0f2089c1fa66e89b3e99ac2bc421082eb1605f4a7ec334dd5d88e38e535e7c233
   languageName: node
   linkType: hard
 
@@ -9426,19 +9410,19 @@ __metadata:
   linkType: hard
 
 "mermaid@npm:^11.12.0":
-  version: 11.12.0
-  resolution: "mermaid@npm:11.12.0"
+  version: 11.12.1
+  resolution: "mermaid@npm:11.12.1"
   dependencies:
     "@braintree/sanitize-url": ^7.1.1
     "@iconify/utils": ^3.0.1
-    "@mermaid-js/parser": ^0.6.2
+    "@mermaid-js/parser": ^0.6.3
     "@types/d3": ^7.4.3
     cytoscape: ^3.29.3
     cytoscape-cose-bilkent: ^4.1.0
     cytoscape-fcose: ^2.2.0
     d3: ^7.9.0
     d3-sankey: ^0.12.3
-    dagre-d3-es: 7.0.11
+    dagre-d3-es: 7.0.13
     dayjs: ^1.11.18
     dompurify: ^3.2.5
     katex: ^0.16.22
@@ -9449,7 +9433,7 @@ __metadata:
     stylis: ^4.3.6
     ts-dedent: ^2.2.0
     uuid: ^11.1.0
-  checksum: e3966941c1434d5e2f4924681aaf9f1bd0ba2e8cc502af8a40209d5432afdc157381b120908ab73ea1c170874fd8e9ea91ed81700862e7c3d70c4280fa8dfef0
+  checksum: db20ce808562e040c311c810f40c0fdcfe566ebc80df5b1cd47699bcd5d00369e0b3884269e024b1e479eb4ab292cc855efa6850211d4c4de3bb704a810eb2fd
   languageName: node
   linkType: hard
 
@@ -10229,29 +10213,27 @@ __metadata:
   languageName: node
   linkType: hard
 
-"next@npm:15.3.3":
-  version: 15.3.3
-  resolution: "next@npm:15.3.3"
+"next@npm:15.4.5":
+  version: 15.4.5
+  resolution: "next@npm:15.4.5"
   dependencies:
-    "@next/env": 15.3.3
-    "@next/swc-darwin-arm64": 15.3.3
-    "@next/swc-darwin-x64": 15.3.3
-    "@next/swc-linux-arm64-gnu": 15.3.3
-    "@next/swc-linux-arm64-musl": 15.3.3
-    "@next/swc-linux-x64-gnu": 15.3.3
-    "@next/swc-linux-x64-musl": 15.3.3
-    "@next/swc-win32-arm64-msvc": 15.3.3
-    "@next/swc-win32-x64-msvc": 15.3.3
-    "@swc/counter": 0.1.3
+    "@next/env": 15.4.5
+    "@next/swc-darwin-arm64": 15.4.5
+    "@next/swc-darwin-x64": 15.4.5
+    "@next/swc-linux-arm64-gnu": 15.4.5
+    "@next/swc-linux-arm64-musl": 15.4.5
+    "@next/swc-linux-x64-gnu": 15.4.5
+    "@next/swc-linux-x64-musl": 15.4.5
+    "@next/swc-win32-arm64-msvc": 15.4.5
+    "@next/swc-win32-x64-msvc": 15.4.5
     "@swc/helpers": 0.5.15
-    busboy: 1.6.0
     caniuse-lite: ^1.0.30001579
     postcss: 8.4.31
-    sharp: ^0.34.1
+    sharp: ^0.34.3
     styled-jsx: 5.1.6
   peerDependencies:
     "@opentelemetry/api": ^1.1.0
-    "@playwright/test": ^1.41.2
+    "@playwright/test": ^1.51.1
     babel-plugin-react-compiler: "*"
     react: ^18.2.0 || 19.0.0-rc-de68d2f4-20241204 || ^19.0.0
     react-dom: ^18.2.0 || 19.0.0-rc-de68d2f4-20241204 || ^19.0.0
@@ -10286,7 +10268,7 @@ __metadata:
       optional: true
   bin:
     next: dist/bin/next
-  checksum: 0e071a67e50b2770d27268b19dbe5a510297cf31fe3035ae169caa7e93f97bcf58c3f533e22fe300c8ad92b87e4f7d807619f7aa3b97a290de7c2b82b1451c4c
+  checksum: a68667e23a9d66d74bd003ac2a6ace9fb29cc315689701945f0bf042c4dc8ed640da7a8e3542068adb5c315dd428317aabc33aa4ca984cf25f68b76e35d4e137
   languageName: node
   linkType: hard
 
@@ -11051,12 +11033,12 @@ __metadata:
   linkType: hard
 
 "react-chartjs-2@npm:^5.3.0":
-  version: 5.3.0
-  resolution: "react-chartjs-2@npm:5.3.0"
+  version: 5.3.1
+  resolution: "react-chartjs-2@npm:5.3.1"
   peerDependencies:
     chart.js: ^4.1.1
     react: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
-  checksum: af05212a1e30a98379959dd2cd4670ff29ca6e9b1ad5d54d73ddc4336f463567fb0386f33dbc9de01ea724ac75dd0b7a8374e3936a91c7751b7c20c19ef3e920
+  checksum: 14a5698c9b8464cefa60eebb15c946358dc24390712bf775535b290b6304504b8108d3d9b8729b0f0c00fb3cf580b5d18cb29de3d670f6299222ca528b74bf32
   languageName: node
   linkType: hard
 
@@ -12106,7 +12088,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"sharp@npm:^0.34.1":
+"sharp@npm:^0.34.3":
   version: 0.34.4
   resolution: "sharp@npm:0.34.4"
   dependencies:
@@ -12398,13 +12380,6 @@ __metadata:
   dependencies:
     debug: 2
   checksum: 4d86ff8cffe7c7587dc91433fff9dce38a93ea7e9f47560055addc81eae6b6befab22b75643ce539faf325fe2b17d371778242566bed086e75f6cffb1e76c06c
-  languageName: node
-  linkType: hard
-
-"streamsearch@npm:^1.1.0":
-  version: 1.1.0
-  resolution: "streamsearch@npm:1.1.0"
-  checksum: 1cce16cea8405d7a233d32ca5e00a00169cc0e19fbc02aa839959985f267335d435c07f96e5e0edd0eadc6d39c98d5435fb5bbbdefc62c41834eadc5622ad942
   languageName: node
   linkType: hard
 
@@ -12761,7 +12736,7 @@ __metadata:
     image-size: ^2.0.2
     lint-staged: ^13.0.0
     mermaid: ^11.12.0
-    next: 15.3.3
+    next: 15.4.5
     next-contentlayer2: 0.5.5
     next-themes: ^0.4.6
     pliny: 0.4.1

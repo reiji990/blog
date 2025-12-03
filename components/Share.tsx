@@ -63,6 +63,14 @@ const Share = ({ title, subtitle, summary, slug }: ShareProps) => {
               href={`https://telegram.me/share/url?url=${siteMetadata.siteUrl}blog/${slug}&text=${fulltitle}`}
             />
           </li>
+          <li className="ml-4 inline-block">
+            <SocialIcon
+              kind="bluesky"
+              size={5}
+              aria-label={'blueskyshare'}
+              href={`https://bsky.app/intent/compose?text=${fulltitle}%20%7C%20${siteMetadata.title}%20${siteMetadata.siteUrl}blog/${slug}%20@${siteMetadata.author}.blog`}
+            />
+          </li>
         </ul>
       </div>
     </div>

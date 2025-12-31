@@ -30,7 +30,7 @@ export function genPageMetadata({
     },
     twitter: {
       title: `${title} | ${siteMetadata.title}`,
-      card: 'summary',
+      card: 'summary_large_image',
       images: image ? [image] : [siteMetadata.socialBanner],
     },
     ...rest,

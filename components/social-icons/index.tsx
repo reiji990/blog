@@ -11,6 +11,7 @@ import {
   Whatsapp,
   Telegram,
   Bluesky,
+  RSS,
 } from './icons'
 
 const components = {
@@ -26,6 +27,7 @@ const components = {
   whatsapp: Whatsapp,
   telegram: Telegram,
   bluesky: Bluesky,
+  rss: RSS,
 }
 
 type SocialIconProps = {

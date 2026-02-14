@@ -7,5 +7,7 @@ services:
     volumes:
       - .:/home/app
       - /home/app/node_modules
+    environment:
+      - UNOPTIMIZED=true
     tty: true
     stdin_open: true

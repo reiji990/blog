@@ -6,10 +6,6 @@ services:
       - '3000:3000'
     volumes:
       - .:/home/app
-      - app_node_modules:/home/app/node_modules
+      - /home/app/node_modules
     tty: true
     stdin_open: true
-    command: bash -c "node .yarn/releases/yarn-3.6.1.cjs install && node .yarn/releases/yarn-3.6.1.cjs dev"
-
-volumes:
-  app_node_modules:

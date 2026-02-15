@@ -1,3 +1,9 @@
 node_modules
 .next
 .contentlayer
+.git
+.husky
+*.md
+!README.md
+.DS_Store
+.env*.local

@@ -7,16 +7,16 @@ const withBundleAnalyzer = require('@next/bundle-analyzer')({
 // You might need to insert additional domains in script-src if you are using external services
 const ContentSecurityPolicy = `
   default-src 'self';
-  script-src 'self' 'unsafe-eval' 'unsafe-inline' 'giscus.app' 'analytics.umami.is' 'https://twitter.com' 'https://*.twitter.com' 'https://syndication.twitter.com' 'https://www.nicovideo.jp' 'https://open.spotify.com' 'https://pbs.twimg.com' 'https://cdn.syndication.twimg.com';
-  style-src 'self' 'unsafe-inline' 'https://www.youtube.com' 'https://twitter.com' 'https://*.twitter.com' 'https://syndication.twitter.com' 'https://www.nicovideo.jp' 'https://open.spotify.com' 'https://pbs.twimg.com' 'https://cdn.syndication.twimg.com';
+  script-src 'self' 'unsafe-eval' 'unsafe-inline' 'giscus.app' 'analytics.umami.is' 'https://twitter.com' 'https://*.twitter.com' 'https://syndication.twitter.com' 'https://www.nicovideo.jp' 'https://open.spotify.com' 'https://pbs.twimg.com' 'https://cdn.syndication.twimg.com' 'https://embed.music.apple.com';
+  style-src 'self' 'unsafe-inline' 'https://www.youtube.com' 'https://twitter.com' 'https://*.twitter.com' 'https://syndication.twitter.com' 'https://www.nicovideo.jp' 'https://open.spotify.com' 'https://pbs.twimg.com' 'https://cdn.syndication.twimg.com' 'https://embed.music.apple.com';
   script-src 'self' 'unsafe-eval' 'unsafe-inline' giscus.app analytics.umami.is;
   style-src 'self' 'unsafe-inline';
   img-src * blob: data:;
   media-src *.s3.amazonaws.com;
   connect-src *;
   font-src 'self';
-  frame-src giscus.app https://www.youtube.com https://twitter.com https://*.twitter.com https://syndication.twitter.com https://www.nicovideo.jp https://embed.nicovideo.jp https://open.spotify.com https://pbs.twimg.com https://cdn.syndication.twimg.com https://bsky.app https://embed.bsky.app;
-  child-src https://www.youtube.com https://twitter.com https://*.twitter.com https://syndication.twitter.com https://www.nicovideo.jp https://embed.nicovideo.jp https://open.spotify.com https://pbs.twimg.com https://cdn.syndication.twimg.com;
+  frame-src giscus.app https://www.youtube.com https://twitter.com https://*.twitter.com https://syndication.twitter.com https://www.nicovideo.jp https://embed.nicovideo.jp https://open.spotify.com https://pbs.twimg.com https://cdn.syndication.twimg.com https://bsky.app https://embed.bsky.app https://embed.music.apple.com;
+  child-src https://www.youtube.com https://twitter.com https://*.twitter.com https://syndication.twitter.com https://www.nicovideo.jp https://embed.nicovideo.jp https://open.spotify.com https://pbs.twimg.com https://cdn.syndication.twimg.com https://embed.music.apple.com;
   frame-src giscus.app
 `
 
@@ -73,9 +73,7 @@ module.exports = () => {
     reactStrictMode: true,
     trailingSlash: false,
     pageExtensions: ['ts', 'tsx', 'js', 'jsx', 'md', 'mdx'],
-    eslint: {
-      dirs: ['app', 'components', 'layouts', 'scripts'],
-    },
+    turbopack: {},
     images: {
       remotePatterns: [
         {
@@ -96,14 +94,6 @@ module.exports = () => {
           headers: securityHeaders,
         },
       ]
-    },
-    webpack: (config, options) => {
-      config.module.rules.push({
-        test: /\.svg$/,
-        use: ['@svgr/webpack'],
-      })
-
-      return config
     },
   })
 }

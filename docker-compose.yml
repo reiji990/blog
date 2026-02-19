@@ -6,9 +6,13 @@ services:
       - '3000:3000'
     volumes:
       - .:/home/app
-      - /home/app/node_modules
-      - /home/app/.next
+      - app_node_modules:/home/app/node_modules
     environment:
       - UNOPTIMIZED=true
+      - WATCHPACK_POLLING=true
+      - CHOKIDAR_USEPOLLING=true
     tty: true
     stdin_open: true
+
+volumes:
+  app_node_modules:

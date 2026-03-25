@@ -11,6 +11,7 @@ services:
       - UNOPTIMIZED=true
       - WATCHPACK_POLLING=true
       - CHOKIDAR_USEPOLLING=true
+      - PATH=/home/app/node_modules/.bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
     tty: true
     stdin_open: true
 

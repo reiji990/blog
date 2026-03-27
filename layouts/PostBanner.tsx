@@ -12,6 +12,7 @@ import Tag from '@/components/Tag'
 import siteMetadata from '@/data/siteMetadata'
 import ScrollTopAndComment from '@/components/ScrollTopAndComment'
 import Share from '@/components/Share'
+import SeriesNav from '@/components/SeriesNav'
 
 const postDateTemplate: Intl.DateTimeFormatOptions = {
   weekday: 'short',
@@ -20,16 +21,31 @@ const postDateTemplate: Intl.DateTimeFormatOptions = {
   day: 'numeric',
 }
 
+interface SeriesPost {
+  path: string
+  title: string
+  seriesOrder?: number | null
+}
+
 interface LayoutProps {
   content: CoreContent<Blog>
   children: ReactNode
   authorDetails: CoreContent<Authors>[]
   next?: { path: string; title: string; subtitle: string; draft: boolean }
   prev?: { path: string; title: string; subtitle: string; draft: boolean }
+  seriesPosts?: SeriesPost[]
 }
 
-export default function PostLayout({ content, authorDetails, next, prev, children }: LayoutProps) {
-  const { filePath, path, slug, date, title, subtitle, tags, lastmod, images, summary } = content
+export default function PostLayout({
+  content,
+  authorDetails,
+  next,
+  prev,
+  children,
+  seriesPosts = [],
+}: LayoutProps) {
+  const { filePath, path, slug, date, title, subtitle, tags, lastmod, images, summary, series } =
+    content
   const displayImage =
     images && images.length > 0 ? images[0] : 'https://picsum.photos/seed/picsum/800/400'
   const basePath = path.split('/')[0]
@@ -110,6 +126,9 @@ export default function PostLayout({ content, authorDetails, next, prev, childre
               </dd>
             </dl>
             <div className="divide-y divide-gray-200 xl:col-span-3 xl:row-span-2 xl:pb-0 dark:divide-gray-700">
+              {series && seriesPosts.length > 1 && (
+                <SeriesNav series={series} currentPath={path} posts={seriesPosts} />
+              )}
               <div className="prose dark:prose-invert max-w-none pt-10 pb-8">{children}</div>
               <div className="text-primary-500 hover:text-primary-600 dark:hover:text-primary-400 pt-6 pb-6 text-center">
                 <Link href={editUrl(filePath)}>View on GitHub（記事のソースと変更履歴を見る）</Link>

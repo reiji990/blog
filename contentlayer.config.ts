@@ -110,6 +110,8 @@ export const Blog = defineDocumentType(() => ({
     layout: { type: 'string' },
     bibliography: { type: 'string' },
     canonicalUrl: { type: 'string' },
+    series: { type: 'string' },
+    seriesOrder: { type: 'number' },
   },
   computedFields: {
     ...computedFields,
@@ -147,7 +149,7 @@ export const Authors = defineDocumentType(() => ({
     youtube: { type: 'string' },
     mastodon: { type: 'string' },
     facebook: { type: 'string' },
-    bluesky: { type: 'string'}
+    bluesky: { type: 'string' },
   },
   computedFields,
 }))

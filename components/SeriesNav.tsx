@@ -17,7 +17,7 @@ export default function SeriesNav({ series, currentPath, posts }: SeriesNavProps
 
   return (
     <div className="my-6 rounded-lg border border-gray-200 bg-gray-50 p-4 dark:border-gray-700 dark:bg-gray-800/50">
-      <p className="mb-3 text-xs font-semibold tracking-wide text-gray-500 uppercase dark:text-gray-400">
+      <p className="mb-3 text-sm font-semibold tracking-wide text-gray-500 uppercase dark:text-gray-400">
         シリーズ：{series}
       </p>
       <ol className="space-y-1">

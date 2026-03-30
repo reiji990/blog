@@ -6,7 +6,6 @@
 
 /* Core theme configuration */
 @theme {
-
   /* Colors */
   /* Copied from https://tailwindcss.com/docs/theme#default-theme-variable-reference */
 
@@ -96,6 +95,12 @@
     }
     & :where(code):not(pre code) {
       color: var(--color-indigo-500);
+    }
+    & blockquote p:first-of-type::before {
+      content: none;
+    }
+    & blockquote p:last-of-type::after {
+      content: none;
     }
   }
 

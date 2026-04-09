@@ -49,15 +49,21 @@ export default function PostLayout({
   const displayImage =
     images && images.length > 0 ? images[0] : 'https://picsum.photos/seed/picsum/800/400'
   const basePath = path.split('/')[0]
-  const editUrl = (path) => `${siteMetadata.siteRepo}/blob/main/data/${path}`
+  const editUrl = (path: string) => `${siteMetadata.siteRepo}/blob/main/data/${path}`
   return (
     <SectionContainer>
       <ScrollTopAndComment />
       <article>
         <div className="xl:divide-y xl:divide-gray-200 xl:dark:divide-gray-700">
           <Bleed>
-            <div className="relative aspect-2/1 w-full">
-              <Image src={displayImage} alt={title} fill className="object-cover" />
+            <div className="w-full">
+              <Image
+                src={displayImage}
+                alt={title}
+                width={1600}
+                height={900}
+                className="h-auto w-full"
+              />
             </div>
           </Bleed>
           <header className="pt-6 xl:pb-6">

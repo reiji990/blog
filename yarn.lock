@@ -5748,7 +5748,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-plugin-prettier@npm:^5.4.0":
+"eslint-plugin-prettier@npm:^5.5.5":
   version: 5.5.5
   resolution: "eslint-plugin-prettier@npm:5.5.5"
   dependencies:
@@ -9693,14 +9693,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"postcss@npm:^8.5.10":
-  version: 8.5.11
-  resolution: "postcss@npm:8.5.11"
+"postcss@npm:^8.5.13":
+  version: 8.5.13
+  resolution: "postcss@npm:8.5.13"
   dependencies:
     nanoid: ^3.3.11
     picocolors: ^1.1.1
     source-map-js: ^1.2.1
-  checksum: 8dc99fd0bd8a263c60408377f79efc69ec5d88f7e1b2907d9b3eee4307d4f2b8f908227e3be5aba3b302ef42867578ff349505f8ea87f26c1a79108788740be3
+  checksum: f02410c109514c39cfae480359d6221627ff22a0ebbb257bacddee4b65028bfcb5a067b874e0c8c661403ef021bbbfaea7082c81fc4c36dd593991506976fda1
   languageName: node
   linkType: hard
 
@@ -11540,7 +11540,7 @@ __metadata:
     eslint: ^9.27.0
     eslint-config-next: 16.2.4
     eslint-config-prettier: ^9.1.0
-    eslint-plugin-prettier: ^5.4.0
+    eslint-plugin-prettier: ^5.5.5
     github-slugger: ^2.0.0
     globals: ^15.12.0
     gray-matter: ^4.0.3
@@ -11553,7 +11553,7 @@ __metadata:
     next-contentlayer2: 0.5.8
     next-themes: ^0.4.6
     pliny: 0.4.1
-    postcss: ^8.5.10
+    postcss: ^8.5.13
     prettier: ^3.8.3
     prettier-plugin-tailwindcss: ^0.7.3
     react: 19.2.5

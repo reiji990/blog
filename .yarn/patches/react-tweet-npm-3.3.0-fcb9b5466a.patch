@@ -1,12 +1,12 @@
 diff --git a/dist/utils.js b/dist/utils.js
-index 059c64753ab8aef65a0f4fc6f4db813b271f1929..f740a05397ac9ccb36f023b33e6aeb922f166e5b 100644
+index 059c64753ab8aef65a0f4fc6f4db813b271f1929..8d13ce82647de5685954a12174d89a9783b0c784 100644
 --- a/dist/utils.js
 +++ b/dist/utils.js
 @@ -82,6 +82,7 @@ function getEntities(tweet) {
      });
  }
  function addEntities(result, type, entities) {
-+    if (!entities) return;
++    if (!Array.isArray(entities)) return;
      for (const entity of entities){
          for (const [i, item] of result.entries()){
              if (item.indices[0] > entity.indices[0] || item.indices[1] < entity.indices[1]) {

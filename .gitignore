@@ -45,3 +45,6 @@ yarn-error.log*
 
 # Contentlayer
 .contentlayer
+
+# remark-link-card-plus cache
+/public/remark-link-card-plus

@@ -8,6 +8,7 @@ import { fromHtmlIsomorphic } from 'hast-util-from-html-isomorphic'
 import remarkGfm from 'remark-gfm'
 import remarkMath from 'remark-math'
 import { remarkAlert } from 'remark-github-blockquote-alert'
+import remarkLinkCard from 'remark-link-card-plus'
 import {
   remarkExtractFrontmatter,
   remarkCodeTitles,
@@ -22,6 +23,7 @@ import rehypeKatexNoTranslate from 'rehype-katex-notranslate'
 import rehypeCitation from 'rehype-citation'
 import rehypePrismPlus from 'rehype-prism-plus'
 import rehypePresetMinify from 'rehype-preset-minify'
+import rehypeRaw from 'rehype-raw'
 import siteMetadata from './data/siteMetadata'
 import { allCoreContent, sortPosts } from 'pliny/utils/contentlayer.js'
 import prettier from 'prettier'
@@ -166,8 +168,34 @@ export default makeSource({
       remarkMath,
       remarkImgToJsx,
       remarkAlert,
+      [
+        remarkLinkCard,
+        {
+          cache: true,
+          shortenUrl: true,
+          thumbnailPosition: 'left',
+          ogTransformer: (og, url) => {
+            if (url.hostname.includes('amazon.')) {
+              return { ...og, imageUrl: undefined }
+            }
+            return og
+          },
+        },
+      ],
     ],
     rehypePlugins: [
+      [
+        rehypeRaw,
+        {
+          passThrough: [
+            'mdxFlowExpression',
+            'mdxJsxFlowElement',
+            'mdxJsxTextElement',
+            'mdxTextExpression',
+            'mdxjsEsm',
+          ],
+        },
+      ],
       rehypeSlug,
       [
         rehypeAutolinkHeadings,

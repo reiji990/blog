@@ -86,6 +86,7 @@
     "@eslint/config-array/minimatch": "3.1.5",
     "@eslint/eslintrc/minimatch": "3.1.5",
     "copyfiles/minimatch": "3.1.5",
-    "postcss": "^8.5.13"
+    "postcss": "^8.5.13",
+    "react-tweet@^3.3.0": "patch:react-tweet@npm%3A3.3.0#./.yarn/patches/react-tweet-npm-3.3.0-fcb9b5466a.patch"
   }
 }

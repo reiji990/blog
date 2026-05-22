@@ -9865,7 +9865,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-tweet@npm:^3.3.0":
+"react-tweet@npm:3.3.0":
   version: 3.3.0
   resolution: "react-tweet@npm:3.3.0"
   dependencies:
@@ -9876,6 +9876,20 @@ __metadata:
     react: ^18.0.0 || ^19.0.0
     react-dom: ^18.0.0 || ^19.0.0
   checksum: 6c3ece040d78275f53e85efbfb919b47520e2a15d76d23063f28b74dfd92334d09b7ec1418498ca9d48f1c5b723ac36ae8089385c85ca16cc1d3d9a3004928bc
+  languageName: node
+  linkType: hard
+
+"react-tweet@patch:react-tweet@npm%3A3.3.0#./.yarn/patches/react-tweet-npm-3.3.0-fcb9b5466a.patch::locator=tailwind-nextjs-starter-blog%40workspace%3A.":
+  version: 3.3.0
+  resolution: "react-tweet@patch:react-tweet@npm%3A3.3.0#./.yarn/patches/react-tweet-npm-3.3.0-fcb9b5466a.patch::version=3.3.0&hash=0fbf68&locator=tailwind-nextjs-starter-blog%40workspace%3A."
+  dependencies:
+    "@swc/helpers": ^0.5.3
+    clsx: ^2.0.0
+    swr: ^2.2.4
+  peerDependencies:
+    react: ^18.0.0 || ^19.0.0
+    react-dom: ^18.0.0 || ^19.0.0
+  checksum: e4cd655309399698901aeec0d1134c6adc6d521b8c3b910c479ef018ead9ad382d69fc62641bf55daf3f2713d3059c3288c3bb799c8724a9a1972a3569b7158d
   languageName: node
   linkType: hard
 

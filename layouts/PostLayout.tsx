@@ -12,13 +12,7 @@ import siteMetadata from '@/data/siteMetadata'
 import ScrollTopAndComment from '@/components/ScrollTopAndComment'
 import Share from '@/components/Share'
 import SeriesNav from '@/components/SeriesNav'
-
-const postDateTemplate: Intl.DateTimeFormatOptions = {
-  weekday: 'short',
-  year: 'numeric',
-  month: 'long',
-  day: 'numeric',
-}
+import formatYMD from '@/components/formatYMD'
 
 interface SeriesPost {
   path: string
@@ -55,18 +49,12 @@ export default function PostLayout({
             <div className="space-y-1 text-center">
               <dl className="space-y-10">
                 <div>
-                  <dt className="sr-only">Published on</dt>
+                  <dt className="sr-only">公開日</dt>
                   <dd className="text-base leading-6 font-medium text-gray-500 dark:text-gray-400">
-                    <time dateTime={date}>
-                      {new Date(date).toLocaleDateString(siteMetadata.locale, postDateTemplate)}
-                    </time>
+                    公開: <time dateTime={date}>{formatYMD(date)}</time>
                     {lastmod && (
                       <div>
-                        {'最終更新日: '}
-                        {new Date(lastmod).toLocaleDateString(
-                          siteMetadata.locale,
-                          postDateTemplate
-                        )}
+                        最終更新: <time dateTime={lastmod}>{formatYMD(lastmod)}</time>
                       </div>
                     )}
                   </dd>
@@ -122,7 +110,7 @@ export default function PostLayout({
               )}
               <div className="prose dark:prose-invert max-w-none pt-10 pb-8">{children}</div>
               <div className="text-primary-500 hover:text-primary-600 dark:hover:text-primary-400 pt-6 pb-6 text-center">
-                <Link href={editUrl(filePath)}>View on GitHub（記事のソースと変更履歴を見る）</Link>
+                <Link href={editUrl(filePath)}>記事のソースと変更履歴（GitHub）</Link>
               </div>
               <Share title={title} subtitle={subtitle} slug={slug} summary={summary} />
               {siteMetadata.comments && (
@@ -137,9 +125,9 @@ export default function PostLayout({
                 <Link
                   href={`/${basePath}`}
                   className="text-primary-500 hover:text-primary-600 dark:hover:text-primary-400"
-                  aria-label="Back to the blog"
+                  aria-label="記事一覧へ戻る"
                 >
-                  &larr; Back to the blog
+                  &larr; 記事一覧へ戻る
                 </Link>
               </div>
               {(next || prev) && (
@@ -147,7 +135,7 @@ export default function PostLayout({
                   {prev && prev.draft === false && (
                     <div>
                       <h2 className="text-xs tracking-wide text-gray-500 uppercase dark:text-gray-400">
-                        Previous Article
+                        前の記事
                       </h2>
                       <div className="text-primary-500 hover:text-primary-600 dark:hover:text-primary-400">
                         <Link href={`/${prev.path}`}>
@@ -159,7 +147,7 @@ export default function PostLayout({
                   {next && next.draft === false && (
                     <div className="justify-between py-4 xl:block">
                       <h2 className="text-xs tracking-wide text-gray-500 uppercase dark:text-gray-400">
-                        Next Article
+                        次の記事
                       </h2>
                       <div className="text-primary-500 hover:text-primary-600 dark:hover:text-primary-400">
                         <Link href={`/${next.path}`}>
@@ -176,7 +164,7 @@ export default function PostLayout({
                 {tags && (
                   <div className="py-4 xl:py-8">
                     <h2 className="text-xs tracking-wide text-gray-500 uppercase dark:text-gray-400">
-                      Tags
+                      タグ
                     </h2>
                     <div className="flex flex-wrap">
                       {tags.map((tag) => (

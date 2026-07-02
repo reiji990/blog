@@ -1,6 +1,6 @@
 ---
 title: ブログに最近追加した機能など(202409)
-tags: ['Tech', 'Next.js']
+tags: ['技術']
 date: '2024-09-09'
 draft: false
 summary: 'Next.jsアプリへMermaid.js、Chart.jsの追加'
@@ -64,6 +64,7 @@ note over m,c: 終了
 ```
 
     </details>
+
 </ul>
 
 export const sequenceDiagram = `
@@ -119,6 +120,7 @@ pie title 平日夜の食費内訳
 ```
 
     </details>
+
 </ul>
 
 export const pie = `
@@ -178,43 +180,44 @@ export const options = {
 ```
 
     </details>
+
 </ul>
 
 export const data = {
-labels: ['お米', '鶏肉', '野菜', 'その他'],
-      datasets: [
-        {
-          label: 'Sales Distribution',
-          data: [54.675, 93.312, 149.688, 36.72],
-          backgroundColor: [
-            'rgba(255, 99, 132, 0.2)',
-            'rgba(54, 162, 235, 0.2)',
-            'rgba(255, 206, 86, 0.2)',
-            'rgba(75, 192, 192, 0.2)',
-          ],
-          borderColor: [
-            'rgba(255, 99, 132, 1)',
-            'rgba(54, 162, 235, 1)',
-            'rgba(255, 206, 86, 1)',
-            'rgba(75, 192, 192, 1)',
-          ],
+  labels: ['お米', '鶏肉', '野菜', 'その他'],
+  datasets: [
+    {
+      label: 'Sales Distribution',
+      data: [54.675, 93.312, 149.688, 36.72],
+      backgroundColor: [
+        'rgba(255, 99, 132, 0.2)',
+        'rgba(54, 162, 235, 0.2)',
+        'rgba(255, 206, 86, 0.2)',
+        'rgba(75, 192, 192, 0.2)',
+      ],
+      borderColor: [
+        'rgba(255, 99, 132, 1)',
+        'rgba(54, 162, 235, 1)',
+        'rgba(255, 206, 86, 1)',
+        'rgba(75, 192, 192, 1)',
+      ],
       borderWidth: 1,
     },
   ],
 }
 
 export const options = {
-    responsive: true,
-    plugins: {
-      legend: {
-        position: 'top',
-      },
-      title: {
-        display: true,
-        text: '平日夜の食費内訳',
-      },
+  responsive: true,
+  plugins: {
+    legend: {
+      position: 'top',
     },
-  }
+    title: {
+      display: true,
+      text: '平日夜の食費内訳',
+    },
+  },
+}
 
 <DonutChart data={data} options={options} />
 
@@ -259,6 +262,7 @@ export const options1 = {
 ```
 
     </details>
+
 </ul>
 
 export const data1 = {

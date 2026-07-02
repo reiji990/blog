@@ -9,6 +9,7 @@
     "serve": "next start",
     "analyze": "cross-env ANALYZE=true next build --webpack",
     "lint": "eslint --fix app components layouts scripts",
+    "lint:content": "node ./scripts/lint-tags.mjs",
     "prepare": "husky"
   },
   "dependencies": {

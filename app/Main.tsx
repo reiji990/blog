@@ -3,6 +3,7 @@ import Tag from '@/components/Tag'
 import siteMetadata from '@/data/siteMetadata'
 import formatYMD from '@/components/formatYMD'
 import Image from '@/components/Image'
+import seriesData from '@/data/series.json'
 
 const MAX_DISPLAY = 5
 
@@ -15,6 +16,23 @@ export default function Home({ posts }) {
             最新の記事
           </h1>
           <p className="text-muted text-lg leading-7">{siteMetadata.description}</p>
+        </div>
+        <div className="space-y-4 py-8">
+          {seriesData.map((series) => {
+            const count = posts.filter((post) => post.series === series.name).length
+            return (
+              <Link
+                key={series.slug}
+                href={`/series/${series.slug}`}
+                className="border-border hover:border-accent block rounded-lg border p-5 transition-colors"
+              >
+                <p className="text-muted text-sm tracking-wide">シリーズ</p>
+                <p className="font-heading text-fg-strong pt-1 [font-feature-settings:'palt'] text-xl">
+                  {series.name}（全{count}回）
+                </p>
+              </Link>
+            )
+          })}
         </div>
         <ul className="divide-border divide-y">
           {!posts.length && '記事がありません。'}

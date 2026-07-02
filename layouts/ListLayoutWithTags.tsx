@@ -128,26 +128,24 @@ export default function ListLayoutWithTags({
           <div>
             <ul>
               {displayPosts.map((post) => {
-                const { path, date, lastmod, title, subtitle, summary, images, tags } = post
-                const displayImage = images && images.length > 0 ? images[0] : null
+                const { path, slug, date, lastmod, title, subtitle, summary, images, tags } = post
+                // images の無い記事は生成OG画像にフォールバック
+                const displayImage =
+                  images && images.length > 0 ? images[0] : `/static/og/${slug}.png`
                 return (
                   <li key={path} className="py-5">
                     <article className="grid grid-cols-1 items-start gap-6 xl:grid-cols-5">
-                      {displayImage && (
-                        <div className="relative aspect-[2/1] w-full overflow-hidden rounded-lg shadow xl:col-span-2">
-                          <Link href={`/${path}`}>
-                            <Image
-                              src={displayImage}
-                              alt={title}
-                              fill
-                              className="object-cover object-center"
-                            />
-                          </Link>
-                        </div>
-                      )}
-                      <div
-                        className={`space-y-2 ${displayImage ? 'xl:col-span-3' : 'xl:col-span-5'}`}
-                      >
+                      <div className="relative aspect-[2/1] w-full overflow-hidden rounded-lg shadow xl:col-span-2">
+                        <Link href={`/${path}`}>
+                          <Image
+                            src={displayImage}
+                            alt={title}
+                            fill
+                            className="object-cover object-center"
+                          />
+                        </Link>
+                      </div>
+                      <div className="space-y-2 xl:col-span-3">
                         <dl>
                           <dt className="sr-only">公開日</dt>
                           <dd className="text-muted text-base leading-6 font-medium">

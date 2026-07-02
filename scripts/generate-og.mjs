@@ -19,6 +19,8 @@ const COLORS = {
   textStrong: '#ece9e2',
   muted: '#9a968e',
   border: '#2a2a2e',
+  // 一覧カードの背景（#111113）と画像の境界を示す内枠
+  frame: '#44444c',
 }
 
 const el = (type, style, children) => ({ type, props: { style, children } })
@@ -64,24 +66,36 @@ function ogTree({ title, subtitle, series }) {
       width: '100%',
       height: '100%',
       display: 'flex',
-      flexDirection: 'column',
-      justifyContent: 'space-between',
       backgroundColor: COLORS.bg,
-      padding: 72,
+      padding: 20,
       fontFamily: 'Zen Kaku Gothic New',
     },
     [
-      el('div', { display: 'flex', flexDirection: 'column' }, headerChildren),
       el(
         'div',
         {
+          width: '100%',
+          height: '100%',
           display: 'flex',
-          borderTop: `1px solid ${COLORS.border}`,
-          paddingTop: 28,
-          fontSize: 30,
-          color: COLORS.muted,
+          flexDirection: 'column',
+          justifyContent: 'space-between',
+          border: `2px solid ${COLORS.frame}`,
+          padding: 56,
         },
-        SITE_NAME
+        [
+          el('div', { display: 'flex', flexDirection: 'column' }, headerChildren),
+          el(
+            'div',
+            {
+              display: 'flex',
+              borderTop: `1px solid ${COLORS.border}`,
+              paddingTop: 28,
+              fontSize: 30,
+              color: COLORS.muted,
+            },
+            SITE_NAME
+          ),
+        ]
       ),
     ]
   )

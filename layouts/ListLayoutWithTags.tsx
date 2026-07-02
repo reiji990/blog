@@ -113,7 +113,7 @@ export default function ListLayoutWithTags({
                       ) : (
                         <Link
                           href={`/tags/${slug(t)}`}
-                          className="hover:text-primary-500 dark:hover:text-primary-500 text-muted text-fg px-3 py-2 text-sm font-medium uppercase"
+                          className="hover:text-primary-500 dark:hover:text-primary-500 text-muted px-3 py-2 text-sm font-medium uppercase"
                           aria-label={`View posts tagged ${t}`}
                         >
                           {`${t} (${tagCounts[t]})`}
@@ -141,7 +141,7 @@ export default function ListLayoutWithTags({
                             src={displayImage}
                             alt={title}
                             fill
-                            className="object-cover object-center"
+                            className="object-cover object-center transition-opacity hover:opacity-80"
                           />
                         </Link>
                       </div>
@@ -161,7 +161,10 @@ export default function ListLayoutWithTags({
                           </dd>
                         </dl>
                         <h2 className="text-2xl leading-8 tracking-tight">
-                          <Link href={`/${path}`} className="text-fg-strong">
+                          <Link
+                            href={`/${path}`}
+                            className="text-fg-strong hover:text-accent transition-colors"
+                          >
                             {title}
                             <br />
                             {subtitle}

@@ -67,7 +67,7 @@ export default async function SeriesPage(props: { params: Promise<{ slug: string
                       src={displayImage}
                       alt={post.title}
                       fill
-                      className="object-cover object-center"
+                      className="object-cover object-center transition-opacity hover:opacity-80"
                     />
                   </Link>
                 </div>
@@ -83,7 +83,10 @@ export default async function SeriesPage(props: { params: Promise<{ slug: string
                     )}
                   </p>
                   <h2 className="text-xl leading-8 tracking-tight">
-                    <Link href={`/${post.path}`} className="text-fg-strong">
+                    <Link
+                      href={`/${post.path}`}
+                      className="text-fg-strong hover:text-accent transition-colors"
+                    >
                       {post.title}
                       {post.subtitle && (
                         <>

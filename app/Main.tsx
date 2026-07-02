@@ -28,7 +28,12 @@ export default function Home({ posts }) {
                   <div className="grid grid-cols-1 items-start gap-6 xl:grid-cols-5">
                     <div className="relative aspect-[2/1] w-full overflow-hidden rounded-lg shadow xl:col-span-2">
                       <Link href={`/blog/${slug}`}>
-                        <Image src={displayImage} alt={title} fill className="object-cover" />
+                        <Image
+                          src={displayImage}
+                          alt={title}
+                          fill
+                          className="object-cover transition-opacity hover:opacity-80"
+                        />
                       </Link>
                     </div>
                     <div className="space-y-2 xl:col-span-3">
@@ -44,7 +49,10 @@ export default function Home({ posts }) {
                         </dd>
                       </dl>
                       <h2 className="text-2xl leading-8 tracking-tight">
-                        <Link href={`/blog/${slug}`} className="text-fg-strong">
+                        <Link
+                          href={`/blog/${slug}`}
+                          className="text-fg-strong hover:text-accent transition-colors"
+                        >
                           {title}
                           <br />
                           {subtitle}

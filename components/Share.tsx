@@ -24,7 +24,7 @@ const CopyUrlButton = ({ url }: { url: string }) => {
       onClick={handleCopy}
       aria-label="URLをコピー"
       title="URLをコピー"
-      className="hover:text-primary-500 dark:hover:text-primary-400 text-fg align-middle"
+      className="hover:text-primary-500 dark:hover:text-primary-400 text-fg flex items-center"
     >
       {copied ? (
         <svg viewBox="0 0 20 20" fill="currentColor" className="h-5 w-5">
@@ -53,28 +53,20 @@ const Share = ({ title, subtitle, slug }: ShareProps) => {
       <div className="mb-4 sm:mb-0">
         <p className="text-fg mr-3">共有:</p>
       </div>
-      <div>
-        <ul>
-          <li className="inline-block">
-            <SocialIcon
-              kind="twitter"
-              size={5}
-              aria-label={'twittershare'}
-              href={`https://x.com/intent/tweet?text=${fulltitle}%20%7C%20${siteMetadata.title}%20${url}%20@${siteMetadata.author}`}
-            />
-          </li>
-          <li className="ml-4 inline-block">
-            <SocialIcon
-              kind="bluesky"
-              size={5}
-              aria-label={'blueskyshare'}
-              href={`https://bsky.app/intent/compose?text=${fulltitle}%20%7C%20${siteMetadata.title}%20${url}%20@${siteMetadata.author}.blog`}
-            />
-          </li>
-          <li className="ml-4 inline-block">
-            <CopyUrlButton url={url} />
-          </li>
-        </ul>
+      <div className="flex items-center gap-4">
+        <SocialIcon
+          kind="twitter"
+          size={5}
+          aria-label={'twittershare'}
+          href={`https://x.com/intent/tweet?text=${fulltitle}%20%7C%20${siteMetadata.title}%20${url}%20@${siteMetadata.author}`}
+        />
+        <SocialIcon
+          kind="bluesky"
+          size={5}
+          aria-label={'blueskyshare'}
+          href={`https://bsky.app/intent/compose?text=${fulltitle}%20%7C%20${siteMetadata.title}%20${url}%20@${siteMetadata.author}.blog`}
+        />
+        <CopyUrlButton url={url} />
       </div>
     </div>
   )

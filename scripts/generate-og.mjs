@@ -1,7 +1,7 @@
 // frontmatter に images の無い記事の OG 画像 (1200x630) をビルド時に生成する。
-// #111113 地に Shippori Mincho で記事表題+シリーズ名+「調和と変革」を組み、
+// #111113 地にゴシック体で記事表題+シリーズ名+「調和と変革」を組み、
 // public/static/og/<slug>.png に出力する。
-// フォントは scripts/fonts/ShipporiMincho-SemiBold.ttf（SIL OFL 1.1, Google Fonts より取得）
+// フォントは scripts/fonts/ZenKakuGothicNew-Medium.ttf（SIL OFL 1.1, Google Fonts より取得）
 import fs from 'node:fs'
 import path from 'node:path'
 import matter from 'gray-matter'
@@ -68,7 +68,7 @@ function ogTree({ title, subtitle, series }) {
       justifyContent: 'space-between',
       backgroundColor: COLORS.bg,
       padding: 72,
-      fontFamily: 'Shippori Mincho',
+      fontFamily: 'Zen Kaku Gothic New',
     },
     [
       el('div', { display: 'flex', flexDirection: 'column' }, headerChildren),
@@ -89,7 +89,7 @@ function ogTree({ title, subtitle, series }) {
 
 async function main() {
   fs.mkdirSync(outDir, { recursive: true })
-  const fontData = fs.readFileSync(path.join(root, 'scripts/fonts/ShipporiMincho-SemiBold.ttf'))
+  const fontData = fs.readFileSync(path.join(root, 'scripts/fonts/ZenKakuGothicNew-Medium.ttf'))
   const files = fs.readdirSync(blogDir).filter((f) => f.endsWith('.mdx'))
   let generated = 0
 
@@ -103,7 +103,7 @@ async function main() {
       {
         width: 1200,
         height: 630,
-        fonts: [{ name: 'Shippori Mincho', data: fontData, weight: 600, style: 'normal' }],
+        fonts: [{ name: 'Zen Kaku Gothic New', data: fontData, weight: 500, style: 'normal' }],
       }
     )
     const png = new Resvg(svg, { fitTo: { mode: 'width', value: 1200 } }).render().asPng()

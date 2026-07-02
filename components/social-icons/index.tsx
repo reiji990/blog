@@ -47,7 +47,7 @@ const SocialIcon = ({ kind, href, size = 8 }: SocialIconProps) => {
 
   return (
     <a
-      className="text-muted hover:text-fg text-sm transition"
+      className="text-muted hover:text-fg flex items-center text-sm transition"
       target="_blank"
       rel="noopener noreferrer"
       href={href}

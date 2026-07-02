@@ -3,6 +3,7 @@ import { allBlogs } from 'contentlayer/generated'
 import { notFound } from 'next/navigation'
 import { Metadata } from 'next'
 import Link from '@/components/Link'
+import Image from '@/components/Image'
 import formatYMD from '@/components/formatYMD'
 import { genPageMetadata } from 'app/seo'
 import seriesData from '@/data/series.json'
@@ -45,7 +46,7 @@ export default async function SeriesPage(props: { params: Promise<{ slug: string
     <div className="divide-border divide-y">
       <div className="space-y-2 pt-6 pb-8 md:space-y-5">
         <p className="text-muted text-sm tracking-wide uppercase">シリーズ</p>
-        <h1 className="font-heading text-fg-strong [font-feature-settings:'palt'] text-3xl leading-9 tracking-tight sm:text-4xl sm:leading-10 md:text-5xl md:leading-14">
+        <h1 className="text-fg-strong [font-feature-settings:'palt'] text-3xl leading-9 tracking-tight sm:text-4xl sm:leading-10 md:text-5xl md:leading-14">
           {series.name}
         </h1>
         <p className="text-muted text-lg leading-7">全{posts.length}回</p>
@@ -53,28 +54,51 @@ export default async function SeriesPage(props: { params: Promise<{ slug: string
         {series.description && <p className="text-fg text-base leading-7">{series.description}</p>}
       </div>
       <ol className="divide-border divide-y">
-        {posts.map((post, i) => (
-          <li key={post.path} className="py-6">
-            <article className="space-y-2">
-              <p className="text-muted text-sm">
-                第{post.seriesOrder ?? i + 1}回 ・ 公開:{' '}
-                <time dateTime={post.date}>{formatYMD(post.date)}</time>
-              </p>
-              <h2 className="text-xl leading-8 tracking-tight">
-                <Link href={`/${post.path}`} className="text-fg-strong">
-                  {post.title}
-                  {post.subtitle && (
-                    <>
-                      <br />
-                      {post.subtitle}
-                    </>
-                  )}
-                </Link>
-              </h2>
-              {post.summary && <p className="text-muted text-base leading-7">{post.summary}</p>}
-            </article>
-          </li>
-        ))}
+        {posts.map((post, i) => {
+          // images の無い記事は生成OG画像にフォールバック
+          const displayImage =
+            post.images && post.images.length > 0 ? post.images[0] : `/static/og/${post.slug}.png`
+          return (
+            <li key={post.path} className="py-6">
+              <article className="grid grid-cols-1 items-start gap-6 xl:grid-cols-5">
+                <div className="relative aspect-[2/1] w-full overflow-hidden rounded-lg shadow xl:col-span-2">
+                  <Link href={`/${post.path}`}>
+                    <Image
+                      src={displayImage}
+                      alt={post.title}
+                      fill
+                      className="object-cover object-center"
+                    />
+                  </Link>
+                </div>
+                <div className="space-y-2 xl:col-span-3">
+                  <p className="text-muted text-sm">
+                    第{post.seriesOrder ?? i + 1}回 ・ 公開:{' '}
+                    <time dateTime={post.date}>{formatYMD(post.date)}</time>
+                    {post.lastmod && (
+                      <>
+                        {' ・ '}最終更新:{' '}
+                        <time dateTime={post.lastmod}>{formatYMD(post.lastmod)}</time>
+                      </>
+                    )}
+                  </p>
+                  <h2 className="text-xl leading-8 tracking-tight">
+                    <Link href={`/${post.path}`} className="text-fg-strong">
+                      {post.title}
+                      {post.subtitle && (
+                        <>
+                          <br />
+                          {post.subtitle}
+                        </>
+                      )}
+                    </Link>
+                  </h2>
+                  {post.summary && <p className="text-muted text-base leading-7">{post.summary}</p>}
+                </div>
+              </article>
+            </li>
+          )
+        })}
       </ol>
     </div>
   )

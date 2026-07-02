@@ -59,6 +59,7 @@ const ThemeSwitch = () => {
   const { theme, setTheme, resolvedTheme } = useTheme()
 
   // When mounted on client, now we can show the UI
+  // eslint-disable-next-line react-hooks/set-state-in-effect
   useEffect(() => setMounted(true), [])
 
   return (
@@ -78,7 +79,7 @@ const ThemeSwitch = () => {
           leaveFrom="transform opacity-100 scale-100"
           leaveTo="transform opacity-0 scale-95"
         >
-          <MenuItems className="ring-opacity-5 absolute right-0 z-50 mt-2 w-32 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black focus:outline-hidden dark:bg-gray-800">
+          <MenuItems className="ring-opacity-5 divide-border border-border bg-bg absolute right-0 z-50 mt-2 w-32 origin-top-right divide-y rounded-md border shadow-lg focus:outline-hidden">
             <RadioGroup value={theme} onChange={setTheme}>
               <div className="p-1">
                 <Radio value="light">

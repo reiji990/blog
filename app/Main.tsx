@@ -9,16 +9,14 @@ const MAX_DISPLAY = 5
 export default function Home({ posts }) {
   return (
     <>
-      <div className="divide-y divide-gray-200 dark:divide-gray-700">
+      <div className="divide-border divide-y">
         <div className="space-y-2 pt-6 pb-8 md:space-y-5">
-          <h1 className="text-3xl leading-9 tracking-tight text-gray-900 sm:text-4xl sm:leading-10 md:text-6xl md:leading-14 dark:text-gray-100">
+          <h1 className="text-fg-strong text-3xl leading-9 tracking-tight sm:text-4xl sm:leading-10 md:text-6xl md:leading-14">
             最新の記事
           </h1>
-          <p className="text-lg leading-7 text-gray-500 dark:text-gray-400">
-            {siteMetadata.description}
-          </p>
+          <p className="text-muted text-lg leading-7">{siteMetadata.description}</p>
         </div>
-        <ul className="divide-y divide-gray-200 dark:divide-gray-700">
+        <ul className="divide-border divide-y">
           {!posts.length && '記事がありません。'}
           {posts.slice(0, MAX_DISPLAY).map((post) => {
             const { slug, date, lastmod, title, subtitle, summary, images, tags } = post
@@ -39,7 +37,7 @@ export default function Home({ posts }) {
                     >
                       <dl>
                         <dt className="sr-only">公開日</dt>
-                        <dd className="text-base leading-6 font-medium text-gray-500 dark:text-gray-400">
+                        <dd className="text-muted text-base leading-6 font-medium">
                           公開: <time dateTime={date}>{formatYMD(date)}</time>
                           {lastmod && (
                             <div>
@@ -49,7 +47,7 @@ export default function Home({ posts }) {
                         </dd>
                       </dl>
                       <h2 className="text-2xl leading-8 tracking-tight">
-                        <Link href={`/blog/${slug}`} className="text-gray-900 dark:text-gray-100">
+                        <Link href={`/blog/${slug}`} className="text-fg-strong">
                           {title}
                           <br />
                           {subtitle}
@@ -60,9 +58,7 @@ export default function Home({ posts }) {
                           <Tag key={tag} text={tag} />
                         ))}
                       </div>
-                      <div className="prose max-w-none text-gray-500 dark:text-gray-400">
-                        {summary}
-                      </div>
+                      <div className="prose text-muted max-w-none">{summary}</div>
                       <div className="text-base leading-6 font-medium">
                         <Link
                           href={`/blog/${slug}`}

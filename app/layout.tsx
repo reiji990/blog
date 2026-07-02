@@ -3,7 +3,7 @@ import 'pliny/search/algolia.css'
 import 'remark-github-blockquote-alert/alert.css'
 
 import { ReactNode } from 'react'
-import { Space_Grotesk } from 'next/font/google'
+import { Space_Grotesk, Shippori_Mincho } from 'next/font/google'
 // import { Analytics, AnalyticsConfig } from 'pliny/analytics'
 import { SearchProvider, SearchConfig } from 'pliny/search'
 import Header from '@/components/Header'
@@ -19,6 +19,15 @@ const space_grotesk = Space_Grotesk({
   subsets: ['latin'],
   display: 'swap',
   variable: '--font-space-grotesk',
+})
+
+// 見出し用の明朝体。日本語グリフはサブセット配信されないため preload しない
+const shippori_mincho = Shippori_Mincho({
+  weight: '600',
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-shippori-mincho',
+  preload: false,
 })
 
 export const metadata: Metadata = {
@@ -67,7 +76,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html
       lang={siteMetadata.language}
-      className={`${space_grotesk.variable} scroll-smooth`}
+      className={`${space_grotesk.variable} ${shippori_mincho.variable} scroll-smooth`}
       suppressHydrationWarning
       data-scroll-behavior="smooth"
     >
@@ -97,7 +106,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       <meta name="msapplication-TileColor" content="#000000" />
       <meta name="theme-color" content="#111113" />
       <link rel="alternate" type="application/rss+xml" href={`${basePath}/feed.xml`} />
-      <body className="bg-white pl-[calc(100vw-100%)] text-black antialiased dark:bg-black dark:text-white">
+      <body className="bg-bg text-fg pl-[calc(100vw-100%)] antialiased">
         <ThemeProviders>
           <Analytics />
           <SpeedInsights />

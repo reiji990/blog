@@ -83,21 +83,21 @@ export default function ListLayoutWithTags({
     <>
       <div>
         <div className="pt-6 pb-6">
-          <h1 className="text-3xl leading-9 tracking-tight text-gray-900 sm:hidden sm:text-4xl sm:leading-10 md:text-6xl md:leading-14 dark:text-gray-100">
+          <h1 className="text-fg-strong text-3xl leading-9 tracking-tight sm:hidden sm:text-4xl sm:leading-10 md:text-6xl md:leading-14">
             {title}
             <br />
             {subtitle}
           </h1>
         </div>
         <div className="flex sm:space-x-24">
-          <div className="hidden h-full max-h-screen max-w-[280px] min-w-[280px] flex-wrap overflow-auto rounded-sm bg-gray-50 pt-5 shadow-md sm:flex dark:bg-gray-900/70 dark:shadow-gray-800/40">
+          <div className="border-border hidden h-full max-h-screen max-w-[280px] min-w-[280px] flex-wrap overflow-auto rounded-sm border pt-5 sm:flex">
             <div className="px-6 py-4">
               {pathname.startsWith('/blog') ? (
                 <h3 className="text-primary-500 uppercase">記事一覧</h3>
               ) : (
                 <Link
                   href={`/blog`}
-                  className="hover:text-primary-500 dark:hover:text-primary-500 text-gray-700 uppercase dark:text-gray-300"
+                  className="hover:text-primary-500 dark:hover:text-primary-500 text-fg uppercase"
                 >
                   記事一覧
                 </Link>
@@ -113,7 +113,7 @@ export default function ListLayoutWithTags({
                       ) : (
                         <Link
                           href={`/tags/${slug(t)}`}
-                          className="hover:text-primary-500 dark:hover:text-primary-500 px-3 py-2 text-sm font-medium text-gray-500 uppercase dark:text-gray-300"
+                          className="hover:text-primary-500 dark:hover:text-primary-500 text-muted text-fg px-3 py-2 text-sm font-medium uppercase"
                           aria-label={`View posts tagged ${t}`}
                         >
                           {`${t} (${tagCounts[t]})`}
@@ -150,7 +150,7 @@ export default function ListLayoutWithTags({
                       >
                         <dl>
                           <dt className="sr-only">公開日</dt>
-                          <dd className="text-base leading-6 font-medium text-gray-500 dark:text-gray-400">
+                          <dd className="text-muted text-base leading-6 font-medium">
                             公開:{' '}
                             <time dateTime={date} suppressHydrationWarning>
                               {formatYMD(date)}
@@ -163,7 +163,7 @@ export default function ListLayoutWithTags({
                           </dd>
                         </dl>
                         <h2 className="text-2xl leading-8 tracking-tight">
-                          <Link href={`/${path}`} className="text-gray-900 dark:text-gray-100">
+                          <Link href={`/${path}`} className="text-fg-strong">
                             {title}
                             <br />
                             {subtitle}
@@ -174,9 +174,7 @@ export default function ListLayoutWithTags({
                             <Tag key={tag} text={tag} />
                           ))}
                         </div>
-                        <div className="prose max-w-none text-gray-500 dark:text-gray-400">
-                          {summary}
-                        </div>
+                        <div className="prose text-muted max-w-none">{summary}</div>
                       </div>
                     </article>
                   </li>

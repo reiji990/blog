@@ -24,7 +24,7 @@ const CopyUrlButton = ({ url }: { url: string }) => {
       onClick={handleCopy}
       aria-label="URLをコピー"
       title="URLをコピー"
-      className="hover:text-primary-500 dark:hover:text-primary-400 align-middle text-gray-700 dark:text-gray-200"
+      className="hover:text-primary-500 dark:hover:text-primary-400 text-fg align-middle"
     >
       {copied ? (
         <svg viewBox="0 0 20 20" fill="currentColor" className="h-5 w-5">
@@ -51,7 +51,7 @@ const Share = ({ title, subtitle, slug }: ShareProps) => {
   return (
     <div className="m-4 mt-8 flex flex-col items-center justify-center pt-4 pb-4 sm:flex-row">
       <div className="mb-4 sm:mb-0">
-        <p className="mr-3 text-gray-700 dark:text-gray-300">共有:</p>
+        <p className="text-fg mr-3">共有:</p>
       </div>
       <div>
         <ul>

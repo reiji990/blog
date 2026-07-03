@@ -95,5 +95,22 @@ module.exports = () => {
         },
       ]
     },
+    async redirects() {
+      return [
+        // 旧スラッグ Vilhelm-Hammershøi の恒久リダイレクト。
+        // Next.js は source の非ASCIIをパーセントエンコード表記で照合する既知の挙動が
+        // あるため、エンコード済みと素の表記の両方を登録する
+        {
+          source: '/blog/Vilhelm-Hammersh%C3%B8i',
+          destination: '/blog/vilhelm-hammershoi',
+          permanent: true,
+        },
+        {
+          source: '/blog/Vilhelm-Hammershøi',
+          destination: '/blog/vilhelm-hammershoi',
+          permanent: true,
+        },
+      ]
+    },
   })
 }

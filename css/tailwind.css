@@ -4,6 +4,47 @@
 @source '../node_modules/pliny';
 @custom-variant dark (&:where(.dark, .dark *));
 
+/* デザイントークン: 灰基調・静謐・抑制（既定はダーク） */
+:root {
+  --bg: #f4f2ee;
+  --text: #26262a;
+  --text-strong: #111113;
+  --muted: #6e6a62;
+  --accent: #5a7280;
+  --border: #dad6ce;
+  --quote: #4b4b52;
+}
+
+.dark {
+  --bg: #111113;
+  --text: #d8d5cf;
+  --text-strong: #ece9e2;
+  --muted: #9a968e;
+  --accent: #94a7b0;
+  --border: #2a2a2e;
+  --quote: #c4c1ba;
+}
+
+/* トークンを Tailwind ユーティリティ（text-fg, border-border 等）として公開 */
+@theme inline {
+  --color-bg: var(--bg);
+  --color-fg: var(--text);
+  --color-fg-strong: var(--text-strong);
+  --color-muted: var(--muted);
+  --color-accent: var(--accent);
+  --color-border: var(--border);
+
+  /* 既存の primary-* 参照（リンク・タグ等）をアクセントに沈める */
+  --color-primary-400: color-mix(in oklab, var(--accent) 85%, white);
+  --color-primary-500: var(--accent);
+  --color-primary-600: color-mix(in oklab, var(--accent) 85%, black);
+
+  /* サイト全体（タイトル・見出し含む）を本文と同じ和文ゴシックに統一 */
+  --font-sans:
+    'Hiragino Kaku Gothic ProN', 'Hiragino Sans', 'Noto Sans JP', ui-sans-serif, system-ui,
+    sans-serif;
+}
+
 /* Core theme configuration */
 @theme {
   /* Colors */
@@ -13,9 +54,7 @@
   --color-primary-100: oklch(0.953 0.051 180.801);
   --color-primary-200: oklch(0.91 0.096 180.426);
   --color-primary-300: oklch(0.855 0.138 181.071);
-  --color-primary-400: oklch(0.777 0.152 181.912);
-  --color-primary-500: oklch(0.704 0.14 182.503);
-  --color-primary-600: oklch(0.6 0.118 184.704);
+  /* primary-400/500/600 は上の @theme inline でアクセントトークンに写像済み */
   --color-primary-700: oklch(0.511 0.096 186.391);
   --color-primary-800: oklch(0.437 0.078 188.216);
   --color-primary-900: oklch(0.386 0.063 188.416);
@@ -77,24 +116,63 @@
 
 @layer utilities {
   .prose {
+    /* 本文組版: 和文向け設定 */
+    font-family: 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', 'Noto Sans JP', sans-serif;
+    font-size: 1.0625rem;
+    line-height: 1.9;
+    letter-spacing: 0.02em;
+    max-width: 41rem;
+    /* 対応ブラウザのみの漸進的強化 */
+    text-spacing-trim: space-all;
+
+    /* typography プラグインの配色をトークンへ */
+    --tw-prose-body: var(--text);
+    --tw-prose-headings: var(--text-strong);
+    --tw-prose-lead: var(--text);
+    --tw-prose-bold: var(--text-strong);
+    --tw-prose-counters: var(--muted);
+    --tw-prose-bullets: var(--muted);
+    --tw-prose-hr: var(--border);
+    --tw-prose-quotes: var(--quote);
+    --tw-prose-quote-borders: var(--border);
+    --tw-prose-captions: var(--muted);
+    --tw-prose-th-borders: var(--border);
+    --tw-prose-td-borders: var(--border);
+
     & a {
-      color: var(--color-primary-500);
+      color: var(--accent);
+      text-underline-offset: 0.25em;
+      text-decoration-color: var(--border);
       &:hover {
-        color: var(--color-primary-600);
+        text-decoration-color: var(--accent);
       }
       & code {
-        color: var(--color-primary-400);
+        color: var(--accent);
       }
     }
-    & :where(h1, h2) {
-      font-weight: 700;
-      letter-spacing: var(--tracking-tight);
+    /* 見出しも本文と同じ等幅メトリクス・字間にする（palt 等は使わない） */
+    & :where(h1, h2, h3) {
+      font-weight: 600;
+      letter-spacing: inherit;
     }
-    & h3 {
+    & h2 {
+      margin-top: 3em;
+    }
+    /* prose 既定の過剰な強調を抑制 */
+    & strong {
+      color: var(--text-strong);
       font-weight: 600;
     }
     & :where(code):not(pre code) {
       color: var(--color-indigo-500);
+    }
+    & blockquote {
+      /* 和文の疑似イタリック禁止・本文よりわずかに沈める */
+      font-style: normal;
+      font-weight: 400;
+      color: var(--quote);
+      border-left: 1px solid var(--border);
+      padding-left: 1.25em;
     }
     & blockquote p:first-of-type::before {
       content: none;
@@ -136,17 +214,24 @@
   }
 
   .prose-invert {
+    /* トークンが .dark で切り替わるため、prose と同じ参照でよい */
+    --tw-prose-body: var(--text);
+    --tw-prose-headings: var(--text-strong);
+    --tw-prose-bold: var(--text-strong);
+    --tw-prose-quotes: var(--quote);
+    --tw-prose-quote-borders: var(--border);
+
     & a {
-      color: var(--color-primary-500);
+      color: var(--accent);
       &:hover {
-        color: var(--color-primary-400);
+        text-decoration-color: var(--accent);
       }
       & code {
-        color: var(--color-primary-400);
+        color: var(--accent);
       }
     }
     & :where(h1, h2, h3, h4, h5, h6) {
-      color: var(--color-gray-100);
+      color: var(--text-strong);
     }
   }
 }
@@ -160,7 +245,7 @@
 }
 
 .footnotes {
-  @apply mt-12 border-t border-gray-200 pt-8 dark:border-gray-700;
+  @apply border-border mt-12 border-t pt-8;
 }
 
 .data-footnote-backref {

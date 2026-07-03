@@ -38,13 +38,14 @@ export async function generateMetadata(props: {
   const publishedAt = new Date(post.date).toISOString()
   const modifiedAt = new Date(post.lastmod || post.date).toISOString()
   const authors = authorDetails.map((author) => author.name)
-  let imageList = [siteMetadata.socialBanner]
+  // images の無い記事はビルド時に生成した OG 画像へフォールバックする
+  let imageList = [`/static/og/${post.slug}.png`]
   if (post.images) {
     imageList = typeof post.images === 'string' ? [post.images] : post.images
   }
   const ogImages = imageList.map((img) => {
     return {
-      url: img && img.includes('http') ? img : siteMetadata.siteUrl + img,
+      url: img && img.includes('http') ? img : new URL(img, siteMetadata.siteUrl).toString(),
     }
   })
 
@@ -55,7 +56,7 @@ export async function generateMetadata(props: {
       title: post.title,
       description: post.summary,
       siteName: siteMetadata.title,
-      locale: 'en_US',
+      locale: 'ja_JP',
       type: 'article',
       publishedTime: publishedAt,
       modifiedTime: modifiedAt,

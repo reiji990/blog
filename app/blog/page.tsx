@@ -7,7 +7,7 @@ const POSTS_PER_PAGE = 50
 
 export const metadata = genPageMetadata({ title: 'Blog' })
 
-export default async function BlogPage(props: { searchParams: Promise<{ page: string }> }) {
+export default async function BlogPage() {
   const posts = allCoreContent(sortPosts(allBlogs))
   const pageNumber = 1
   const totalPages = Math.ceil(posts.length / POSTS_PER_PAGE)
@@ -22,7 +22,7 @@ export default async function BlogPage(props: { searchParams: Promise<{ page: st
       posts={posts}
       initialDisplayPosts={initialDisplayPosts}
       pagination={pagination}
-      title="All Posts"
+      title="記事一覧"
       subtitle=""
     />
   )

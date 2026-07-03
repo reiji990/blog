@@ -3,7 +3,7 @@ const siteMetadata = {
   title: '調和と変革',
   author: 'reiji990',
   headerTitle: 'TailwindBlog',
-  description: 'アニメ・文学・音楽についての精読と随筆', // TODO: 著者確認
+  description: '',
   language: 'ja',
   theme: 'dark', // system, dark or light
   siteUrl: 'https://www.reiji990.blog/',

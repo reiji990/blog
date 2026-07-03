@@ -1,4 +1,5 @@
 import Link from '@/components/Link'
+import seriesData from '@/data/series.json'
 
 interface SeriesPost {
   path: string
@@ -14,11 +15,22 @@ interface SeriesNavProps {
 
 export default function SeriesNav({ series, currentPath, posts }: SeriesNavProps) {
   const sorted = [...posts].sort((a, b) => (a.seriesOrder ?? 0) - (b.seriesOrder ?? 0))
+  const seriesSlug = seriesData.find((s) => s.name === series)?.slug
 
   return (
     <div className="border-border my-6 rounded-lg border p-4">
       <p className="text-muted mb-3 text-sm font-semibold tracking-wide uppercase">
-        シリーズ：{series}
+        シリーズ：
+        {seriesSlug ? (
+          <Link
+            href={`/series/${seriesSlug}`}
+            className="hover:text-accent underline decoration-[var(--border)] underline-offset-4 transition-colors hover:decoration-[var(--accent)]"
+          >
+            {series}
+          </Link>
+        ) : (
+          series
+        )}
       </p>
       <ol className="space-y-1">
         {sorted.map((post, i) => (

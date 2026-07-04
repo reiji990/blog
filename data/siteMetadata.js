@@ -4,7 +4,7 @@ const siteMetadata = {
   author: 'reiji990',
   headerTitle: 'TailwindBlog',
   description: '',
-  language: 'en-US',
+  language: 'ja',
   theme: 'dark', // system, dark or light
   siteUrl: 'https://www.reiji990.blog/',
   siteRepo: 'https://github.com/reiji990/blog',
@@ -74,7 +74,7 @@ const siteMetadata = {
       // example: https://giscus.app/themes/custom_example.css
       themeURL: '',
       // This corresponds to the `data-lang="en"` in giscus's configurations
-      lang: 'en',
+      lang: 'ja',
     },
   },
   search: {

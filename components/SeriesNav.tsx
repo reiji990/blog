@@ -1,4 +1,5 @@
 import Link from '@/components/Link'
+import seriesData from '@/data/series.json'
 
 interface SeriesPost {
   path: string
@@ -14,18 +15,29 @@ interface SeriesNavProps {
 
 export default function SeriesNav({ series, currentPath, posts }: SeriesNavProps) {
   const sorted = [...posts].sort((a, b) => (a.seriesOrder ?? 0) - (b.seriesOrder ?? 0))
+  const seriesSlug = seriesData.find((s) => s.name === series)?.slug
 
   return (
-    <div className="my-6 rounded-lg border border-gray-200 bg-gray-50 p-4 dark:border-gray-700 dark:bg-gray-800/50">
-      <p className="mb-3 text-sm font-semibold tracking-wide text-gray-500 uppercase dark:text-gray-400">
-        シリーズ：{series}
+    <div className="border-border my-6 rounded-lg border p-4">
+      <p className="text-muted mb-3 text-sm font-semibold tracking-wide uppercase">
+        シリーズ：
+        {seriesSlug ? (
+          <Link
+            href={`/series/${seriesSlug}`}
+            className="hover:text-accent underline decoration-[var(--border)] underline-offset-4 transition-colors hover:decoration-[var(--accent)]"
+          >
+            {series}
+          </Link>
+        ) : (
+          series
+        )}
       </p>
       <ol className="space-y-1">
         {sorted.map((post, i) => (
           <li key={post.path} className="flex items-baseline gap-2 text-sm">
-            <span className="text-gray-500 dark:text-gray-400">{i + 1}.</span>
+            <span className="text-muted">{i + 1}.</span>
             {post.path === currentPath ? (
-              <span className="font-semibold text-gray-900 dark:text-gray-100">{post.title}</span>
+              <span className="text-fg-strong font-semibold">{post.title}</span>
             ) : (
               <Link
                 href={`/${post.path}`}

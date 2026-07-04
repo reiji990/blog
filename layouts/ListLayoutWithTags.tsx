@@ -2,12 +2,11 @@
 
 import { usePathname } from 'next/navigation'
 import { slug } from 'github-slugger'
-import { formatDate } from 'pliny/utils/formatDate'
+import formatYMD from '@/components/formatYMD'
 import { CoreContent } from 'pliny/utils/contentlayer'
 import type { Blog } from 'contentlayer/generated'
 import Link from '@/components/Link'
 import Tag from '@/components/Tag'
-import siteMetadata from '@/data/siteMetadata'
 import tagData from 'app/tag-data.json'
 import Image from '@/components/Image'
 
@@ -25,8 +24,6 @@ interface ListLayoutProps {
 
 function Pagination({ totalPages, currentPage }: PaginationProps) {
   const pathname = usePathname()
-  const segments = pathname.split('/')
-  const lastSegment = segments[segments.length - 1]
   const basePath = pathname
     .replace(/^\//, '') // Remove leading slash
     .replace(/\/page\/\d+\/?$/, '') // Remove any trailing /page
@@ -39,7 +36,7 @@ function Pagination({ totalPages, currentPage }: PaginationProps) {
       <nav className="flex justify-between">
         {!prevPage && (
           <button className="cursor-auto disabled:opacity-50" disabled={!prevPage}>
-            Previous
+            前のページ
           </button>
         )}
         {prevPage && (
@@ -47,20 +44,20 @@ function Pagination({ totalPages, currentPage }: PaginationProps) {
             href={currentPage - 1 === 1 ? `/${basePath}/` : `/${basePath}/page/${currentPage - 1}`}
             rel="prev"
           >
-            Previous
+            前のページ
           </Link>
         )}
         <span>
-          {currentPage} of {totalPages}
+          {currentPage} / {totalPages}
         </span>
         {!nextPage && (
           <button className="cursor-auto disabled:opacity-50" disabled={!nextPage}>
-            Next
+            次のページ
           </button>
         )}
         {nextPage && (
           <Link href={`/${basePath}/page/${currentPage + 1}`} rel="next">
-            Next
+            次のページ
           </Link>
         )}
       </nav>
@@ -86,23 +83,23 @@ export default function ListLayoutWithTags({
     <>
       <div>
         <div className="pt-6 pb-6">
-          <h1 className="text-3xl leading-9 tracking-tight text-gray-900 sm:hidden sm:text-4xl sm:leading-10 md:text-6xl md:leading-14 dark:text-gray-100">
+          <h1 className="text-fg-strong text-3xl leading-9 tracking-tight sm:hidden sm:text-4xl sm:leading-10 md:text-6xl md:leading-14">
             {title}
             <br />
             {subtitle}
           </h1>
         </div>
         <div className="flex sm:space-x-24">
-          <div className="hidden h-full max-h-screen max-w-[280px] min-w-[280px] flex-wrap overflow-auto rounded-sm bg-gray-50 pt-5 shadow-md sm:flex dark:bg-gray-900/70 dark:shadow-gray-800/40">
+          <div className="border-border hidden h-full max-h-screen max-w-[280px] min-w-[280px] flex-wrap overflow-auto rounded-sm border pt-5 sm:flex">
             <div className="px-6 py-4">
               {pathname.startsWith('/blog') ? (
-                <h3 className="text-primary-500 uppercase">All Posts</h3>
+                <h3 className="text-primary-500 uppercase">記事一覧</h3>
               ) : (
                 <Link
                   href={`/blog`}
-                  className="hover:text-primary-500 dark:hover:text-primary-500 text-gray-700 uppercase dark:text-gray-300"
+                  className="hover:text-primary-500 dark:hover:text-primary-500 text-fg uppercase"
                 >
-                  All Posts
+                  記事一覧
                 </Link>
               )}
               <ul>
@@ -116,7 +113,7 @@ export default function ListLayoutWithTags({
                       ) : (
                         <Link
                           href={`/tags/${slug(t)}`}
-                          className="hover:text-primary-500 dark:hover:text-primary-500 px-3 py-2 text-sm font-medium text-gray-500 uppercase dark:text-gray-300"
+                          className="hover:text-primary-500 dark:hover:text-primary-500 text-muted px-3 py-2 text-sm font-medium uppercase"
                           aria-label={`View posts tagged ${t}`}
                         >
                           {`${t} (${tagCounts[t]})`}
@@ -131,9 +128,10 @@ export default function ListLayoutWithTags({
           <div>
             <ul>
               {displayPosts.map((post) => {
-                const { path, date, lastmod, title, subtitle, summary, images, tags } = post
+                const { path, slug, date, lastmod, title, subtitle, summary, images, tags } = post
+                // images の無い記事は生成OG画像にフォールバック
                 const displayImage =
-                  images && images.length > 0 ? images[0] : [siteMetadata.socialBanner]
+                  images && images.length > 0 ? images[0] : `/static/og/${slug}.png`
                 return (
                   <li key={path} className="py-5">
                     <article className="grid grid-cols-1 items-start gap-6 xl:grid-cols-5">
@@ -143,29 +141,30 @@ export default function ListLayoutWithTags({
                             src={displayImage}
                             alt={title}
                             fill
-                            className="object-cover object-center"
+                            className="object-cover object-center transition-opacity hover:opacity-80"
                           />
                         </Link>
                       </div>
                       <div className="space-y-2 xl:col-span-3">
                         <dl>
-                          <dt className="sr-only">Published on</dt>
-                          <dd className="text-base leading-6 font-medium text-gray-500 dark:text-gray-400">
+                          <dt className="sr-only">公開日</dt>
+                          <dd className="text-muted text-base leading-6 font-medium">
+                            公開:{' '}
                             <time dateTime={date} suppressHydrationWarning>
-                              {formatDate(date, siteMetadata.locale)}
+                              {formatYMD(date)}
                             </time>
                             {lastmod && (
                               <div>
-                                {'最終更新日: '}
-                                <time dateTime={date}>
-                                  {formatDate(lastmod, siteMetadata.locale)}
-                                </time>
+                                最終更新: <time dateTime={lastmod}>{formatYMD(lastmod)}</time>
                               </div>
                             )}
                           </dd>
                         </dl>
                         <h2 className="text-2xl leading-8 tracking-tight">
-                          <Link href={`/${path}`} className="text-gray-900 dark:text-gray-100">
+                          <Link
+                            href={`/${path}`}
+                            className="text-fg-strong hover:text-accent transition-colors"
+                          >
                             {title}
                             <br />
                             {subtitle}
@@ -176,9 +175,7 @@ export default function ListLayoutWithTags({
                             <Tag key={tag} text={tag} />
                           ))}
                         </div>
-                        <div className="prose max-w-none text-gray-500 dark:text-gray-400">
-                          {summary}
-                        </div>
+                        <div className="prose text-muted max-w-none">{summary}</div>
                       </div>
                     </article>
                   </li>

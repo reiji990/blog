@@ -1,14 +1,16 @@
 'use client'
 
-// pliny の KBarButton は pliny 配下の別インスタンスの kbar コンテキストを参照して
-// しまうため、トップレベルの kbar を直接使う（SearchProvider と同じインスタンス）
-import { useKBar } from 'kbar'
-
+// kbar を初期バンドルから外すため、このボタンは kbar に直接依存しない。
+// クリック時にカスタムイベントを飛ばし、SearchProvider が遅延モジュール
+// (SearchModal)をマウント/オープンする。ロード後は SearchModal 側の
+// リスナーが同じイベントを受けて query.toggle する。
 const SearchButton = () => {
-  const { query } = useKBar()
+  const onClick = () => {
+    window.dispatchEvent(new CustomEvent('search:open'))
+  }
 
   return (
-    <button aria-label="検索" onClick={query.toggle}>
+    <button aria-label="検索" onClick={onClick}>
       <svg
         xmlns="http://www.w3.org/2000/svg"
         fill="none"

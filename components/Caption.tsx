@@ -5,7 +5,5 @@ interface Props {
 }
 
 export default function Source({ children }: Props) {
-  return (
-    <div style={{ fontSize: '14px', textAlign: 'center', fontStyle: 'italic' }}>{children}</div>
-  )
+  return <div style={{ fontSize: '14px', textAlign: 'center' }}>{children}</div>
 }

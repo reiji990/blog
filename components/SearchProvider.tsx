@@ -22,8 +22,8 @@ export default function SearchProvider({ children }: { children: ReactNode }) {
 
     // ⌘K / Ctrl+K の初回発火で遅延モジュールをマウントする。
     // capture フェーズで拾い preventDefault してブラウザ既定動作を止める。
-    // ロード後の2回目以降は kbar 自身の $mod+k ショートカット(KBarProvider 内蔵)に
-    // 委ねるため、ここでは preventDefault せず素通りさせる。
+    // ロード後の2回目以降は kbar 自身の toggle ショートカット(bubble フェーズの
+    // tinykeys リスナー)に委ねるため、ここでは preventDefault せず素通りさせる。
     // これで自前リスナーと kbar の二重トグルを避ける。
     const onKeyDown = (e: KeyboardEvent) => {
       if ((e.metaKey || e.ctrlKey) && !e.shiftKey && !e.altKey && e.key.toLowerCase() === 'k') {

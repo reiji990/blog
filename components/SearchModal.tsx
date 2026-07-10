@@ -28,9 +28,12 @@ interface SearchDoc {
 }
 
 // 日本語IMEの変換確定 Enter で記事遷移してしまう問題への対策。
-// kbar は window の capture リスナーで Enter を拾って結果を実行するため、
-// それより先（Provider マウント時）に登録した capture リスナーで
-// 変換中・変換確定直後の Enter を握りつぶす。
+// kbar は KBarResults が window の capture リスナーで Enter を拾って結果を実行するため、
+// それより先に登録した capture リスナーで変換中・変換確定直後の Enter を握りつぶす。
+// capture フェーズのリスナーは登録順に発火するので「ガードが KBarResults より先に
+// 登録される」ことが実効性の条件になる。このガードはモーダルを開く前(KBarProvider が
+// hidden の初回コミット)に登録され、KBarResults はモーダルを開いた次のコミットで
+// 初めてマウントされるため、常にガードが先に登録され先に発火する。
 // Safari は compositionend の後に isComposing=false の Enter keydown を
 // 発火する既知の挙動があるため、確定直後 100ms も対象にする。
 function useImeEnterGuard() {
@@ -143,11 +146,8 @@ const SearchDialog = ({ actions, isLoading }: { actions: Action[]; isLoading: bo
 // KBarProvider の内側で kbar の状態を操作するコントローラ。
 // - /search.json をここで初めて fetch し、検索アクションを構築する
 //   (= 検索を開くまでフェッチしない)
-// - マウント時にモーダルを開く(kbar に defaultOpen が無いため。SearchButton/
-//   SearchProvider から見て「初回クリックで即座に開く」という従来の見た目を保つ)
+// - マウント時にモーダルを開く(kbar に defaultOpen が無いため)
 // - ロード後の SearchButton クリック('search:open')を query.toggle に橋渡しする
-//   (kbar 自身の $mod+k ショートカットは KBarProvider マウント後、追加の配線なしで
-//   機能し続ける)
 function SearchController() {
   const router = useRouter()
   const { query } = useKBar()
@@ -188,6 +188,10 @@ function SearchController() {
   }, [router])
 
   // マウント時に検索モーダルを開く(defaultOpen 相当)。
+  // toggle ではなく visualState を直接 animating-in にすることで、StrictMode の
+  // effect 二重実行でも「開いたまま」を保つ(冪等)。この effect が走って初めて
+  // モーダルが開き KBarResults がマウントされるため、上の useImeEnterGuard の
+  // capture リスナーは常にこれより前(閉じている初回コミット)で登録済みになる。
   useEffect(() => {
     query.setVisualState(VisualState.animatingIn)
   }, [query])

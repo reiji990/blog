@@ -19,6 +19,17 @@
 //
 // フォーマット判定は拡張子ではなく sharp の metadata() 実測値で行う (実際のキャッシュに
 // 拡張子なしファイルが存在するため)。ico/svg 等の非対象フォーマットはスキップする。
+//
+// 上記の幅ベースの縮小だけでは、寸法自体は小さくてもファイルサイズが大きい写真系 PNG
+// (例: 300x400 で 289KB) が最適化されずに残ってしまう。そこで PNG_PALETTE_MIN_BYTES を
+// 超える PNG は、寸法に関わらず sharp の palette モード (減色してインデックスカラー化
+// する非可逆圧縮) で再エンコードする。リンクカードのサムネイル用途では画質劣化より
+// 転送量削減を優先する。
+//
+// 冪等性: パレット量子化された PNG は IHDR の color type が 3 (インデックスカラー) に
+// なるため、isPalettePng() により再実行時は対象外と判定される。またエンコード後に
+// サイズが縮まらなかった場合は書き込み自体を行わないため、ビルドのたびに実行しても
+// 結果が変わらない。
 
 import { readdir, readFile, writeFile, rename, unlink } from 'node:fs/promises'
 import path from 'node:path'
@@ -28,11 +39,24 @@ const TARGET_DIR = path.join(process.cwd(), 'public', 'remark-link-card-plus')
 const MAX_WIDTH = 640 // 表示幅目安 320px の 2 倍 (詳細は上記コメント参照)
 const JPEG_QUALITY = 80
 const PNG_COMPRESSION_LEVEL = 9
+const PNG_PALETTE_MIN_BYTES = 50 * 1024 // このバイト数を超える PNG をパレット量子化の対象とする
+const PNG_PALETTE_QUALITY = 90
+
+/**
+ * PNG がすでにパレット (インデックスカラー) 形式かどうかを判定する。
+ * IHDR チャンクはファイル先頭から固定オフセットを持ち、シグネチャ8B + チャンク長4B +
+ * "IHDR"4B + 幅4B + 高さ4B + bit depth1B の次 (buf[25]) が color type。3 はインデックス
+ * カラーを表す。metadata.format === 'png' を確認した後にのみ呼ぶ想定。
+ */
+function isPalettePng(buf) {
+  return buf.length > 25 && buf[25] === 3
+}
 
 /**
  * 1ファイルを処理する。戻り値の status は以下のいずれか:
- *   'optimized' - 縮小・再圧縮して上書きした
- *   'skip'      - 対象外 (非対応フォーマット/既に閾値以下/アニメーション画像) のため何もしなかった
+ *   'optimized' - 縮小・パレット量子化・再圧縮のいずれかを行って上書きした
+ *   'skip'      - 対象外 (非対応フォーマット/幅・サイズが閾値以下/アニメーション画像/
+ *                 再エンコードしてもサイズが縮まらなかった) のため何もしなかった
  *   'error'     - 読み込み・デコード・書き込みに失敗した (処理は継続する)
  */
 async function processFile(filePath) {
@@ -61,24 +85,40 @@ async function processFile(filePath) {
     return { status: 'skip', reason: `animated image (${metadata.pages} pages)` }
   }
 
-  if (!metadata.width || metadata.width <= MAX_WIDTH) {
-    return { status: 'skip', reason: 'already within max width' }
+  const needsResize = Boolean(metadata.width && metadata.width > MAX_WIDTH)
+  const needsPalette =
+    metadata.format === 'png' && before > PNG_PALETTE_MIN_BYTES && !isPalettePng(input)
+
+  if (!needsResize && !needsPalette) {
+    return { status: 'skip', reason: 'no optimization needed' }
   }
 
-  let image = sharp(input, { failOn: 'none' })
-    .rotate() // EXIF Orientation をピクセルに焼き込んでから縮小する
-    .resize({ width: MAX_WIDTH, withoutEnlargement: true })
+  let image = sharp(input, { failOn: 'none' }).rotate() // EXIF Orientation をピクセルに焼き込んでから処理する
+
+  if (needsResize) {
+    image = image.resize({ width: MAX_WIDTH, withoutEnlargement: true })
+  }
 
   image =
     metadata.format === 'jpeg'
       ? image.jpeg({ quality: JPEG_QUALITY, mozjpeg: true })
-      : image.png({ compressionLevel: PNG_COMPRESSION_LEVEL })
+      : image.png({
+          compressionLevel: PNG_COMPRESSION_LEVEL,
+          ...(needsPalette && { palette: true, quality: PNG_PALETTE_QUALITY }),
+        })
 
   let output
   try {
     output = await image.toBuffer()
   } catch (err) {
     return { status: 'error', reason: `encode failed: ${err.message}` }
+  }
+
+  // 再エンコードしてもサイズが縮まっていなければ上書きしない。パレット量子化後は
+  // color type が 3 になり isPalettePng() が true を返すため再実行時は自然と対象外に
+  // なるが、万一縮まらなかった場合の保険としてここでも明示的にスキップする。
+  if (output.length >= before) {
+    return { status: 'skip', reason: 'no size reduction' }
   }
 
   // 同一パスへの読み書き競合を避けるため、一時ファイル経由でアトミックに置き換える。
@@ -94,7 +134,9 @@ async function processFile(filePath) {
     return { status: 'error', reason: `write failed: ${err.message}` }
   }
 
-  return { status: 'optimized', before, after: output.length }
+  const ops = [needsResize && 'resize', needsPalette && 'palette'].filter(Boolean).join('+')
+
+  return { status: 'optimized', before, after: output.length, ops }
 }
 
 async function main() {
@@ -125,7 +167,9 @@ async function main() {
       optimized++
       totalBefore += result.before
       totalAfter += result.after
-      console.log(`[optimize-linkcards] shrink: ${name} ${result.before}B -> ${result.after}B`)
+      console.log(
+        `[optimize-linkcards] shrink (${result.ops}): ${name} ${result.before}B -> ${result.after}B`
+      )
     } else if (result.status === 'skip') {
       skipped++
     } else {

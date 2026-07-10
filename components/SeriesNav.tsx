@@ -19,12 +19,12 @@ export default function SeriesNav({ series, currentPath, posts }: SeriesNavProps
 
   return (
     <div className="border-border my-6 rounded-lg border p-4">
-      <p className="text-muted mb-3 text-sm font-semibold tracking-wide uppercase">
+      <p className="text-muted mb-3 text-sm tracking-wide uppercase">
         シリーズ：
         {seriesSlug ? (
           <Link
             href={`/series/${seriesSlug}`}
-            className="hover:text-accent underline decoration-[var(--border)] underline-offset-4 transition-colors hover:decoration-[var(--accent)]"
+            className="text-primary-500 hover:text-primary-600 dark:hover:text-primary-400"
           >
             {series}
           </Link>

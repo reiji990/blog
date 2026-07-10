@@ -45,7 +45,7 @@ export default async function SeriesPage(props: { params: Promise<{ slug: string
   return (
     <div className="divide-border divide-y">
       <div className="space-y-2 pt-6 pb-8 md:space-y-5">
-        <p className="text-muted text-sm tracking-wide uppercase">シリーズ</p>
+        <p className="text-muted text-lg tracking-wide">Series</p>
         <h1 className="text-fg-strong text-3xl leading-9 tracking-tight sm:text-4xl sm:leading-10 md:text-5xl md:leading-14">
           {series.name}
         </h1>

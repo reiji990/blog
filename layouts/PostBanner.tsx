@@ -56,6 +56,9 @@ export default function PostLayout({
                 alt={title}
                 width={1600}
                 height={900}
+                priority
+                fetchPriority="high"
+                sizes="100vw"
                 className="h-auto w-full"
               />
             </div>

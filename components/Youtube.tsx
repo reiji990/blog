@@ -15,8 +15,11 @@ export default function YoutubevideoPlayer(props: Props) {
   const [screenHeight, setScreenHeight] = useState<CSSProperties['height']>()
   const [isLandscape, setIsLandScape] = useState<boolean>(false)
   const [isFullScreen, setIsFullScreen] = useState<boolean>(false)
+  // クリック・トゥ・ロード: クリックされるまで iframe 自体を描画しない
+  const [isLoaded, setIsLoaded] = useState<boolean>(false)
 
-  const src = `https://www.youtube.com/embed/${id}?persistence=1&oldScript=1&referer=&from=0&allowProgrammaticFullScreen=1`
+  // プライバシー強化ドメイン + クリック済みなので autoplay を付与
+  const src = `https://www.youtube-nocookie.com/embed/${id}?persistence=1&oldScript=1&referer=&from=0&allowProgrammaticFullScreen=1&autoplay=1`
 
   const styleFullScreen: CSSProperties = isFullScreen
     ? {
@@ -34,9 +37,14 @@ export default function YoutubevideoPlayer(props: Props) {
       }
     : {}
 
-  const margedStyle = {
+  // ファサード（サムネイル+再生ボタン）と再生後の iframe とで同一の枠サイズにし、
+  // クリックしてもレイアウトシフトが発生しないようにする（従来の width=640/height=360 相当、16:9維持）
+  const margedStyle: CSSProperties = {
+    display: 'block',
     border: 'none',
     maxWidth: '100%',
+    width: '640px',
+    aspectRatio: '16 / 9',
     ...style,
     ...styleFullScreen,
   }
@@ -68,7 +76,7 @@ export default function YoutubevideoPlayer(props: Props) {
 
     const initialScrollX = window.scrollX
     const initialScrollY = window.scrollY
-    let timer: NodeJS.Timeout
+    let timer: ReturnType<typeof setTimeout>
     let ended = false
 
     const pollingResize = () => {
@@ -105,6 +113,36 @@ export default function YoutubevideoPlayer(props: Props) {
     if (!isFullScreen) return
     window.scrollTo(0, 0)
   }, [screenWidth, screenHeight, isFullScreen])
+
+  if (!isLoaded) {
+    return (
+      <button
+        type="button"
+        onClick={() => setIsLoaded(true)}
+        aria-label="動画を再生"
+        className="group relative cursor-pointer overflow-hidden rounded-md border-0 bg-black p-0"
+        style={margedStyle}
+      >
+        {/* サムネイルのみを転送し、実際の埋め込みiframeはクリックまで読み込まない */}
+        {/* eslint-disable-next-line @next/next/no-img-element -- next/image は i.ytimg.com 未許可のため意図的に生img */}
+        <img
+          src={`https://i.ytimg.com/vi/${id}/hqdefault.jpg`}
+          alt=""
+          loading="lazy"
+          decoding="async"
+          className="absolute inset-0 h-full w-full object-cover"
+        />
+        <span
+          aria-hidden="true"
+          className="absolute top-1/2 left-1/2 flex h-12 w-[68px] -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-xl bg-[#212121]/80 transition-colors duration-150 group-hover:bg-red-600"
+        >
+          <svg viewBox="0 0 24 24" className="ml-1 h-6 w-6 fill-white">
+            <path d="M8 5v14l11-7z" />
+          </svg>
+        </span>
+      </button>
+    )
+  }
 
   return (
     <iframe

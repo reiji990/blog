@@ -127,7 +127,7 @@ export default function ListLayoutWithTags({
           </div>
           <div>
             <ul>
-              {displayPosts.map((post) => {
+              {displayPosts.map((post, index) => {
                 const { path, slug, date, lastmod, title, subtitle, summary, images, tags } = post
                 // images の無い記事は生成OG画像にフォールバック
                 const displayImage =
@@ -141,6 +141,9 @@ export default function ListLayoutWithTags({
                             src={displayImage}
                             alt={title}
                             fill
+                            priority={index === 0}
+                            fetchPriority={index === 0 ? 'high' : undefined}
+                            sizes="(min-width: 1280px) 40vw, 100vw"
                             className="object-cover object-center transition-opacity hover:opacity-80"
                           />
                         </Link>

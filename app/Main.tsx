@@ -18,7 +18,7 @@ export default function Home({ posts }) {
         </div>
         <ul className="divide-border divide-y">
           {!posts.length && '記事がありません。'}
-          {posts.slice(0, MAX_DISPLAY).map((post) => {
+          {posts.slice(0, MAX_DISPLAY).map((post, index) => {
             const { slug, date, lastmod, title, subtitle, summary, images, tags } = post
             // images の無い記事は生成OG画像にフォールバック
             const displayImage = images && images.length > 0 ? images[0] : `/static/og/${slug}.png`
@@ -32,6 +32,9 @@ export default function Home({ posts }) {
                           src={displayImage}
                           alt={title}
                           fill
+                          priority={index === 0}
+                          fetchPriority={index === 0 ? 'high' : undefined}
+                          sizes="(min-width: 1280px) 40vw, 100vw"
                           className="object-cover transition-opacity hover:opacity-80"
                         />
                       </Link>

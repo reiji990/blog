@@ -15,6 +15,7 @@ import {
   remarkImgToJsx,
   extractTocHeadings,
 } from 'pliny/mdx-plugins/index.js'
+import remarkFirstImageEager from './scripts/remark-first-image-eager.mjs'
 // Rehype packages
 import rehypeSlug from 'rehype-slug'
 import rehypeAutolinkHeadings from 'rehype-autolink-headings'
@@ -167,6 +168,7 @@ export default makeSource({
       remarkCodeTitles,
       remarkMath,
       remarkImgToJsx,
+      remarkFirstImageEager,
       remarkAlert,
       [
         remarkLinkCard,

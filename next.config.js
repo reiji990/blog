@@ -13,8 +13,8 @@ const ContentSecurityPolicy = `
   media-src *.s3.amazonaws.com;
   connect-src *;
   font-src 'self';
-  frame-src giscus.app https://www.youtube.com https://twitter.com https://*.twitter.com https://syndication.twitter.com https://www.nicovideo.jp https://embed.nicovideo.jp https://open.spotify.com https://pbs.twimg.com https://cdn.syndication.twimg.com https://bsky.app https://embed.bsky.app https://embed.music.apple.com;
-  child-src https://www.youtube.com https://twitter.com https://*.twitter.com https://syndication.twitter.com https://www.nicovideo.jp https://embed.nicovideo.jp https://open.spotify.com https://pbs.twimg.com https://cdn.syndication.twimg.com https://embed.music.apple.com
+  frame-src giscus.app https://www.youtube.com https://www.youtube-nocookie.com https://twitter.com https://*.twitter.com https://syndication.twitter.com https://www.nicovideo.jp https://embed.nicovideo.jp https://open.spotify.com https://pbs.twimg.com https://cdn.syndication.twimg.com https://bsky.app https://embed.bsky.app https://embed.music.apple.com;
+  child-src https://www.youtube.com https://www.youtube-nocookie.com https://twitter.com https://*.twitter.com https://syndication.twitter.com https://www.nicovideo.jp https://embed.nicovideo.jp https://open.spotify.com https://pbs.twimg.com https://cdn.syndication.twimg.com https://embed.music.apple.com
 `
 
 const securityHeaders = [

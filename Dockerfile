@@ -7,4 +7,4 @@ COPY .yarn .yarn
 
 RUN node .yarn/releases/yarn-3.6.1.cjs install --immutable
 
-CMD ["node", ".yarn/releases/yarn-3.6.1.cjs", "dev"]
+CMD ["node", ".yarn/releases/yarn-3.6.1.cjs", "dev:docker"]

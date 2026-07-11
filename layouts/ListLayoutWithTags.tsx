@@ -152,10 +152,7 @@ export default function ListLayoutWithTags({
                         <dl>
                           <dt className="sr-only">公開日</dt>
                           <dd className="text-muted text-base leading-6 font-medium">
-                            公開:{' '}
-                            <time dateTime={date} suppressHydrationWarning>
-                              {formatYMD(date)}
-                            </time>
+                            公開: <time dateTime={date}>{formatYMD(date)}</time>
                             {lastmod && (
                               <div>
                                 最終更新: <time dateTime={lastmod}>{formatYMD(lastmod)}</time>

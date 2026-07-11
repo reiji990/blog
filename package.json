@@ -5,6 +5,7 @@
   "scripts": {
     "start": "next dev",
     "dev": "cross-env INIT_CWD=$PWD contentlayer2 build && cross-env INIT_CWD=$PWD next dev",
+    "dev:docker": "cross-env INIT_CWD=$PWD contentlayer2 build && cross-env INIT_CWD=$PWD next dev --webpack",
     "build": "node ./scripts/generate-og.mjs && cross-env INIT_CWD=$PWD next build --webpack && node ./scripts/optimize-linkcards.mjs && cross-env NODE_OPTIONS='--experimental-json-modules' node ./scripts/postbuild.mjs",
     "serve": "next start",
     "analyze": "cross-env ANALYZE=true next build --webpack",

@@ -82,7 +82,10 @@ export default function PostLayout({
                 <PageTitle>{title}</PageTitle>
                 <PageSubTitle>{subtitle}</PageSubTitle>
               </div>
-              <dd className="text-muted text-base leading-6 font-medium">{summary}</dd>
+              <dl>
+                <dt className="sr-only">Description</dt>
+                <dd className="text-muted text-base leading-6 font-medium">{summary}</dd>
+              </dl>
             </div>
           </header>
           <div className="divide-border grid-rows-[auto_1fr] divide-y pb-8 xl:grid xl:grid-cols-4 xl:gap-x-6 xl:divide-y-0">

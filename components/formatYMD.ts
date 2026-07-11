@@ -1,7 +1,13 @@
+// サーバー(Vercel=UTC)とクライアント(JST)でロケール依存の日付がズレて
+// hydration mismatch (#418) を起こさないよう、常にAsia/Tokyoで決定的にフォーマットする。
+// en-CAロケールはYYYY-MM-DD形式を返す。リスト表示で多数回呼ばれるためモジュールレベルで1回だけ生成する。
+const formatter = new Intl.DateTimeFormat('en-CA', {
+  timeZone: 'Asia/Tokyo',
+  year: 'numeric',
+  month: '2-digit',
+  day: '2-digit',
+})
+
 export default function formatYMD(date: string): string {
-  const d = new Date(date)
-  const y = d.getFullYear()
-  const m = String(d.getMonth() + 1).padStart(2, '0')
-  const day = String(d.getDate()).padStart(2, '0')
-  return `${y}-${m}-${day}`
+  return formatter.format(new Date(date))
 }

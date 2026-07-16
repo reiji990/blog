@@ -16,6 +16,7 @@ import {
   extractTocHeadings,
 } from 'pliny/mdx-plugins/index.js'
 import remarkFirstImageEager from './scripts/remark-first-image-eager.mjs'
+import rehypeLinkcardLazy from './scripts/rehype-linkcard-lazy.mjs'
 // Rehype packages
 import rehypeSlug from 'rehype-slug'
 import rehypeAutolinkHeadings from 'rehype-autolink-headings'
@@ -213,6 +214,7 @@ export default makeSource({
       rehypeKatexNoTranslate,
       [rehypeCitation, { path: path.join(root, 'data') }],
       [rehypePrismPlus, { defaultLanguage: 'js', ignoreMissing: true }],
+      rehypeLinkcardLazy,
       rehypePresetMinify,
     ],
   },

@@ -71,6 +71,13 @@ module.exports = () => {
     trailingSlash: false,
     pageExtensions: ['ts', 'tsx', 'js', 'jsx', 'md', 'mdx'],
     turbopack: {},
+    experimental: {
+      // CSS を <style> として HTML にインライン化し、レンダリングブロックと
+      // クリティカルチェーン(CSS 5ファイル分)を解消する。トレードオフとして
+      // HTML は太り再訪時の CSS キャッシュは効かなくなるが、検索流入中心の
+      // ブログでは初回表示の最適化を優先する
+      inlineCss: true,
+    },
     images: {
       remotePatterns: [
         {

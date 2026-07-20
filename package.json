@@ -75,8 +75,12 @@
     "lint-staged": "^16.4.0",
     "prettier": "^3.8.3",
     "prettier-plugin-tailwindcss": "^0.7.3",
+    "rehype-stringify": "^10.0.1",
+    "remark-parse": "^11.0.0",
+    "remark-rehype": "^11.1.2",
     "satori": "^0.26.0",
-    "typescript": "^5.8.3"
+    "typescript": "^5.8.3",
+    "unified": "^11.0.5"
   },
   "lint-staged": {
     "*.+(js|jsx|ts|tsx)": [

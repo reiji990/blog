@@ -46,7 +46,7 @@ const CopyUrlButton = ({ url }: { url: string }) => {
 
 const Share = ({ title, subtitle, slug }: ShareProps) => {
   const fulltitle = subtitle ? `${title} ${subtitle}` : title
-  const url = `${siteMetadata.siteUrl}blog/${slug}`
+  const url = `${siteMetadata.siteUrl}/blog/${slug}`
 
   return (
     <div className="m-4 mt-8 flex flex-col items-center justify-center pt-4 pb-4 sm:flex-row">

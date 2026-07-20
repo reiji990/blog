@@ -25,6 +25,11 @@ public/sitemap.xml
 
 # rss feed
 /public/feed.xml
+/public/tags/
+
+# llms.txt
+/public/llms.txt
+/public/llms-full.txt
 
 # search
 /public/search.json

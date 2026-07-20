@@ -6,7 +6,7 @@ const siteMetadata = {
   description: '本とアニメと音楽について',
   language: 'ja',
   theme: 'dark', // system, dark or light
-  siteUrl: 'https://www.reiji990.blog/',
+  siteUrl: 'https://www.reiji990.blog',
   siteRepo: 'https://github.com/reiji990/blog',
   siteLogo: '/static/images/logo.png',
   socialBanner: '/static/images/twitter-card.png',

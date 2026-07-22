@@ -34,9 +34,7 @@ function titleFontSize(title) {
 function ogTree({ title, subtitle, series }) {
   const headerChildren = []
   if (series) {
-    headerChildren.push(
-      el('div', { fontSize: 28, color: COLORS.muted, marginBottom: 28 }, series)
-    )
+    headerChildren.push(el('div', { fontSize: 28, color: COLORS.muted, marginBottom: 28 }, series))
   }
   headerChildren.push(
     el(
@@ -52,11 +50,7 @@ function ogTree({ title, subtitle, series }) {
   )
   if (subtitle) {
     headerChildren.push(
-      el(
-        'div',
-        { fontSize: 36, color: COLORS.text, lineHeight: 1.5, marginTop: 20 },
-        subtitle
-      )
+      el('div', { fontSize: 36, color: COLORS.text, lineHeight: 1.5, marginTop: 20 }, subtitle)
     )
   }
 

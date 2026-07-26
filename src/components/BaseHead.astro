@@ -1,0 +1,85 @@
+---
+import siteMetadata from '@/data/siteMetadata.mjs'
+
+// app/layout.tsx の metadata と app/seo.tsx の genPageMetadata を合わせた移植。
+// Next の Metadata API は canonical を自動でパーセントエンコードしていたので、
+// ここでも URL オブジェクトを経由して同じ表記に揃える。
+export interface SeoProps {
+  /** ページ固有のタイトル。未指定ならサイト名のみ（トップページ用） */
+  title?: string
+  description?: string
+  /** OGP 画像。絶対 URL でも public 配下の相対パスでも可 */
+  image?: string
+  /** article 用。未指定なら website */
+  ogType?: 'website' | 'article'
+  publishedTime?: string
+  modifiedTime?: string
+  authors?: string[]
+  /** 正規 URL を明示したい場合（frontmatter の canonicalUrl 用） */
+  canonicalUrl?: string
+  /** 構造化データ。記事ページで JSON-LD を出す */
+  jsonLd?: Record<string, unknown>
+}
+
+const {
+  title,
+  description = siteMetadata.description,
+  image,
+  ogType = 'website',
+  publishedTime,
+  modifiedTime,
+  authors,
+  canonicalUrl,
+  jsonLd,
+} = Astro.props as SeoProps
+
+// Next 版の title.template（"%s | サイト名"）と同じ組み立て
+const fullTitle = title ? `${title} | ${siteMetadata.title}` : siteMetadata.title
+
+const canonical = canonicalUrl ?? new URL(Astro.url.pathname, siteMetadata.siteUrl).toString()
+const ogImage = new URL(image ?? siteMetadata.socialBanner, siteMetadata.siteUrl).toString()
+---
+
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>{fullTitle}</title>
+<meta name="description" content={description} />
+<link rel="canonical" href={canonical} />
+
+<meta name="robots" content="index, follow" />
+<meta
+  name="googlebot"
+  content="index, follow, max-video-preview:-1, max-image-preview:large, max-snippet:-1"
+/>
+
+<meta property="og:title" content={fullTitle} />
+<meta property="og:description" content={description} />
+<meta property="og:url" content={canonical} />
+<meta property="og:site_name" content={siteMetadata.title} />
+<meta property="og:locale" content="ja_JP" />
+<meta property="og:type" content={ogType} />
+<meta property="og:image" content={ogImage} />
+{publishedTime && <meta property="article:published_time" content={publishedTime} />}
+{modifiedTime && <meta property="article:modified_time" content={modifiedTime} />}
+{authors?.map((a) => <meta property="article:author" content={a} />)}
+
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content={fullTitle} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={ogImage} />
+
+<link rel="apple-touch-icon" sizes="76x76" href="/static/favicons/apple-touch-icon.png" />
+<link rel="icon" type="image/png" sizes="32x32" href="/static/favicons/favicon-32x32.png" />
+<link rel="icon" type="image/png" sizes="16x16" href="/static/favicons/favicon-16x16.png" />
+<link rel="manifest" href="/static/favicons/site.webmanifest" />
+<link rel="mask-icon" href="/static/favicons/safari-pinned-tab.svg" color="#5bbad5" />
+<meta name="msapplication-TileColor" content="#000000" />
+<meta name="theme-color" content="#111113" />
+<link
+  rel="alternate"
+  type="application/rss+xml"
+  href={`${siteMetadata.siteUrl}/feed.xml`}
+  title={siteMetadata.title}
+/>
+
+{jsonLd && <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />}

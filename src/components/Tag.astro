@@ -1,0 +1,14 @@
+---
+import { slug } from 'github-slugger'
+interface Props { text: string }
+const { text } = Astro.props
+// Next 版の Tag.tsx と同じく、リンク先はタグを slug 化した URL。
+// 日本語タグは slug がそのまま日本語になるため、サイトマップ側と揃えて
+// パーセントエンコードした最終 URL を出す（生のままだとリダイレクトされる）
+---
+<a
+  href={`/tags/${encodeURIComponent(slug(text))}`}
+  class="text-primary-500 hover:text-primary-600 dark:hover:text-primary-400 mr-3 text-sm font-medium uppercase"
+>
+  {text.split(' ').join('-')}
+</a>

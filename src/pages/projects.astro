@@ -1,0 +1,23 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro'
+import Card from '@/components/Card.astro'
+import projectsData from '@/data/projectsData'
+
+// app/projects/page.tsx の移植
+---
+<BaseLayout title="Projects">
+  <div class="divide-border divide-y">
+    <div class="space-y-2 pt-6 pb-8 md:space-y-5">
+      <h1 class="text-fg-strong text-3xl leading-9 tracking-tight sm:text-4xl sm:leading-10 md:text-6xl md:leading-14">
+        Projects
+      </h1>
+    </div>
+    <div class="container py-12">
+      <div class="-m-4 flex flex-wrap">
+        {projectsData.map((d) => (
+          <Card title={d.title} description={d.description} imgSrc={d.imgSrc} href={d.href} />
+        ))}
+      </div>
+    </div>
+  </div>
+</BaseLayout>

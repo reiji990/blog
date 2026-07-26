@@ -1,0 +1,30 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro'
+import seriesData from '@/data/series.json'
+import { getSortedPosts } from '@/lib/content'
+
+// app/series/page.tsx の移植
+interface SeriesEntry { name: string; slug: string; description: string }
+const allSeries = seriesData as SeriesEntry[]
+const posts = await getSortedPosts()
+---
+<BaseLayout title="シリーズ">
+  <div class="divide-border divide-y">
+    <div class="space-y-2 pt-6 pb-8 md:space-y-5">
+      <h1 class="text-fg-strong text-3xl leading-9 tracking-tight sm:text-4xl sm:leading-10 md:text-6xl md:leading-14">
+        Series
+      </h1>
+    </div>
+    <div class="space-y-4 py-8">
+      {allSeries.map((series) => {
+        const count = posts.filter((p) => p.data.series === series.name).length
+        return (
+          <a href={`/series/${series.slug}`} class="border-border hover:border-accent block rounded-lg border p-5 transition-colors">
+            <p class="text-fg-strong text-xl">{series.name}（全{count}回）</p>
+            {series.description && <p class="text-muted pt-2 text-sm leading-6">{series.description}</p>}
+          </a>
+        )
+      })}
+    </div>
+  </div>
+</BaseLayout>

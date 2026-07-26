@@ -8,6 +8,15 @@ export type AuthorEntry = CollectionEntry<'authors'>
 const isProduction = import.meta.env.PROD
 
 /**
+ * 1ページあたりの記事数（Next 版の app/blog/page.tsx と同値）。
+ *
+ * Astro の getStaticPaths は コンポーネントのスコープ外へ巻き上げられるため、
+ * frontmatter で宣言した定数を参照できない（POSTS_PER_PAGE is not defined になる）。
+ * import は巻き上げ後も解決されるので、共有モジュールに置いて import する。
+ */
+export const POSTS_PER_PAGE = 50
+
+/**
  * pliny/utils/contentlayer の sortPosts 相当。
  * 日付の降順（新しい順）。同値なら元の順序を保つ。
  */

@@ -1,0 +1,28 @@
+---
+// layouts/ListLayoutWithTags.tsx の Pagination の移植
+interface Props {
+  currentPage: number
+  totalPages: number
+  basePath: string
+}
+const { currentPage, totalPages, basePath } = Astro.props
+const prevPage = currentPage - 1 > 0
+const nextPage = currentPage + 1 <= totalPages
+const base = basePath.replace(/\/$/, '')
+---
+
+<div class="space-y-2 pt-6 pb-8 md:space-y-5">
+  <nav class="flex justify-between">
+    {prevPage ? (
+      <a href={currentPage - 1 === 1 ? `/${base}/` : `/${base}/page/${currentPage - 1}`} rel="prev">前のページ</a>
+    ) : (
+      <button class="cursor-auto disabled:opacity-50" disabled>前のページ</button>
+    )}
+    <span>{currentPage} / {totalPages}</span>
+    {nextPage ? (
+      <a href={`/${base}/page/${currentPage + 1}`} rel="next">次のページ</a>
+    ) : (
+      <button class="cursor-auto disabled:opacity-50" disabled>次のページ</button>
+    )}
+  </nav>
+</div>

@@ -1,0 +1,53 @@
+---
+import seriesData from '@/data/series.json'
+
+// components/SeriesNav.tsx の移植。表示のみなので JS を出さない
+interface SeriesPost {
+  path: string
+  title: string
+  seriesOrder?: number | null
+}
+interface Props {
+  series: string
+  currentPath: string
+  posts: SeriesPost[]
+}
+
+const { series, currentPath, posts } = Astro.props
+const sorted = [...posts].sort((a, b) => (a.seriesOrder ?? 0) - (b.seriesOrder ?? 0))
+const seriesSlug = (seriesData as { name: string; slug: string }[]).find(
+  (s) => s.name === series
+)?.slug
+const linkClass = 'text-primary-500 hover:text-primary-600 dark:hover:text-primary-400 break-words'
+---
+
+<div class="border-border my-6 rounded-lg border p-4">
+  <p class="text-muted mb-3 text-sm tracking-wide uppercase">
+    シリーズ：
+    {
+      seriesSlug ? (
+        <a href={`/series/${seriesSlug}`} class={linkClass}>
+          {series}
+        </a>
+      ) : (
+        series
+      )
+    }
+  </p>
+  <ol class="space-y-1">
+    {
+      sorted.map((post, i) => (
+        <li class="flex items-baseline gap-2 text-sm">
+          <span class="text-muted">{i + 1}.</span>
+          {post.path === currentPath ? (
+            <span class="text-fg-strong font-semibold">{post.title}</span>
+          ) : (
+            <a href={`/${post.path}`} class={linkClass}>
+              {post.title}
+            </a>
+          )}
+        </li>
+      ))
+    }
+  </ol>
+</div>

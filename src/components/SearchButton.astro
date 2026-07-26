@@ -1,0 +1,30 @@
+---
+// components/SearchButton.tsx の移植。
+// 元実装が既に「kbar に直接依存せず search:open イベントを飛ばすだけ」の
+// 設計だったため、React を使わずそのまま .astro にできる。
+// kbar 一式は SearchProvider 島が受け取ってから初めて読み込まれる。
+---
+
+<button aria-label="検索" data-search-open>
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    fill="none"
+    viewBox="0 0 24 24"
+    stroke-width="1.5"
+    stroke="currentColor"
+    class="hover:text-primary-500 dark:hover:text-primary-400 text-fg-strong h-6 w-6"
+  >
+    <path
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"
+    ></path>
+  </svg>
+</button>
+
+<script>
+  document.addEventListener('click', (event) => {
+    if (!(event.target as HTMLElement).closest('[data-search-open]')) return
+    window.dispatchEvent(new CustomEvent('search:open'))
+  })
+</script>

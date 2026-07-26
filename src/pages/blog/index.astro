@@ -1,0 +1,16 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro'
+import ListLayoutWithTags from '@/layouts/ListLayoutWithTags.astro'
+import { getSortedPosts, POSTS_PER_PAGE } from '@/lib/content'
+
+// app/blog/page.tsx の移植
+const posts = await getSortedPosts()
+const totalPages = Math.ceil(posts.length / POSTS_PER_PAGE)
+---
+<BaseLayout title="Blog">
+  <ListLayoutWithTags
+    posts={posts.slice(0, POSTS_PER_PAGE)}
+    title="記事一覧"
+    pagination={{ currentPage: 1, totalPages, basePath: 'blog' }}
+  />
+</BaseLayout>

@@ -1,0 +1,203 @@
+---
+import siteMetadata from '@/data/siteMetadata.mjs'
+import formatYMD from '@/lib/formatYMD'
+import PageTitle from '@/components/PageTitle.astro'
+import PageSubTitle from '@/components/PageSubTitle.astro'
+import Tag from '@/components/Tag.astro'
+import SeriesNav from '@/components/SeriesNav.astro'
+import ScrollTopAndComment from '@/components/react/ScrollTopAndComment.tsx'
+import Share from '@/components/react/Share.tsx'
+import Comments from '@/components/react/Comments.tsx'
+import type { BlogEntry, AuthorEntry } from '@/lib/content'
+import { postPath, postFilePath, firstImage } from '@/lib/content'
+
+// layouts/PostLayout.tsx の移植。
+// 静的な部分はすべて .astro で出し、スクロールボタン・共有・コメントだけを島にする。
+interface SeriesPost {
+  path: string
+  title: string
+  seriesOrder?: number | null
+}
+interface Props {
+  post: BlogEntry
+  authors: AuthorEntry[]
+  prev?: BlogEntry
+  next?: BlogEntry
+  seriesPosts?: SeriesPost[]
+  /**
+   * 'banner' は layouts/PostBanner.tsx 相当。本文以降は PostLayout と完全に
+   * 同一で、冒頭に全幅のヒーロー画像が入るだけの差なので variant で分ける
+   * （150行の重複を避ける）。frontmatter の layout: 'PostBanner' が該当。
+   */
+  variant?: 'default' | 'banner'
+}
+
+const { post, authors, prev, next, seriesPosts = [], variant = 'default' } = Astro.props
+const { title, subtitle, date, lastmod, tags, summary, series } = post.data
+const path = postPath(post)
+const basePath = path.split('/')[0]
+const editUrl = `${siteMetadata.siteRepo}/blob/main/data/${postFilePath(post)}`
+const linkClass = 'text-primary-500 hover:text-primary-600 dark:hover:text-primary-400 break-words'
+
+// PostBanner のヒーロー画像。frontmatter に images が無い場合のフォールバックも
+// Next 版と同じ picsum のプレースホルダにする
+const displayImage = firstImage(post) ?? 'https://picsum.photos/seed/picsum/800/400'
+// pliny/ui/Bleed の className をそのまま持ち込む（full は未使用）
+const bleedClass = 'relative mt-6 -mx-6 md:-mx-8 2xl:-mx-24'
+---
+
+<ScrollTopAndComment client:idle />
+<article>
+  <div class="xl:divide-border xl:divide-y">
+    {
+      variant === 'banner' && (
+        <div class={bleedClass}>
+          <div class="w-full">
+            <img
+              src={displayImage}
+              alt={title}
+              width="1600"
+              height="900"
+              fetchpriority="high"
+              class="h-auto w-full"
+            />
+          </div>
+        </div>
+      )
+    }
+    <header class="pt-6 xl:pb-6">
+      <div class="space-y-1 text-center">
+        <dl class="space-y-10">
+          <div>
+            <dt class="sr-only">公開日</dt>
+            <dd class="text-muted text-base leading-6 font-medium">
+              公開: <time datetime={date.toISOString()}>{formatYMD(date.toISOString())}</time>
+              {
+                lastmod && (
+                  <div>
+                    最終更新:{' '}
+                    <time datetime={lastmod.toISOString()}>{formatYMD(lastmod.toISOString())}</time>
+                  </div>
+                )
+              }
+            </dd>
+          </div>
+        </dl>
+        <div>
+          <PageTitle>{title}</PageTitle>
+          <PageSubTitle>{subtitle}</PageSubTitle>
+        </div>
+        <dl>
+          <dt class="sr-only">Description</dt>
+          <dd class="text-muted text-base leading-6 font-medium">{summary}</dd>
+        </dl>
+      </div>
+    </header>
+    <div
+      class="divide-border grid-rows-[auto_1fr] divide-y pb-8 xl:grid xl:grid-cols-4 xl:gap-x-6 xl:divide-y-0"
+    >
+      <dl class="xl:border-border pt-6 pb-10 xl:border-b xl:pt-11">
+        <dt class="sr-only">Authors</dt>
+        <dd>
+          <ul class="flex flex-wrap justify-center gap-4 sm:space-x-12 xl:block xl:space-y-8 xl:space-x-0">
+            {
+              authors.map((author) => (
+                <li class="flex items-center space-x-2">
+                  {author.data.avatar && (
+                    <img
+                      src={author.data.avatar}
+                      width="38"
+                      height="38"
+                      alt="avatar"
+                      class="h-10 w-10 rounded-full"
+                    />
+                  )}
+                  <dl class="text-sm leading-5 font-medium whitespace-nowrap">
+                    <dt class="sr-only">Name</dt>
+                    <dd>
+                      <a href="/about" class={linkClass}>
+                        {author.data.name}
+                      </a>
+                    </dd>
+                  </dl>
+                </li>
+              ))
+            }
+          </ul>
+        </dd>
+      </dl>
+      <div class="divide-border divide-y xl:col-span-3 xl:row-span-2 xl:pb-0">
+        {
+          series && seriesPosts.length > 1 && (
+            <SeriesNav series={series} currentPath={path} posts={seriesPosts} />
+          )
+        }
+        <div class="prose dark:prose-invert mx-auto w-full pt-10 pb-8"><slot /></div>
+        <div
+          class="text-primary-500 hover:text-primary-600 dark:hover:text-primary-400 pt-6 pb-6 text-center"
+        >
+          <a href={editUrl} class="break-words" target="_blank" rel="noopener noreferrer"
+            >記事のソースと変更履歴（GitHub）</a
+          >
+        </div>
+        <Share client:visible title={title} subtitle={subtitle} slug={post.id} summary={summary} />
+        {
+          siteMetadata.comments && (
+            <div class="text-fg pt-6 pb-6 text-center" id="comment">
+              <Comments client:visible slug={post.id} />
+            </div>
+          )
+        }
+        <div class="justify-between py-4 xl:block">
+          <a href={`/${basePath}`} class={linkClass} aria-label="記事一覧へ戻る">
+            &larr; 記事一覧へ戻る
+          </a>
+        </div>
+        {
+          (next || prev) && (
+            <div class="justify-between py-4 xl:block">
+              {prev && (
+                <div>
+                  <h2 class="text-muted text-xs tracking-wide uppercase">前の記事</h2>
+                  <div class="text-primary-500 hover:text-primary-600 dark:hover:text-primary-400">
+                    <a href={`/${postPath(prev)}`} class="break-words">
+                      {prev.data.title} {prev.data.subtitle}
+                    </a>
+                  </div>
+                </div>
+              )}
+              {next && (
+                <div class="justify-between py-4 xl:block">
+                  <h2 class="text-muted text-xs tracking-wide uppercase">次の記事</h2>
+                  <div class="text-primary-500 hover:text-primary-600 dark:hover:text-primary-400">
+                    <a href={`/${postPath(next)}`} class="break-words">
+                      {next.data.title} {next.data.subtitle}
+                    </a>
+                  </div>
+                </div>
+              )}
+            </div>
+          )
+        }
+      </div>
+      <footer>
+        <div
+          class="divide-border text-sm leading-5 font-medium xl:col-start-1 xl:row-start-2 xl:divide-y"
+        >
+          {
+            tags && (
+              <div class="py-4 xl:py-8">
+                <h2 class="text-muted text-xs tracking-wide uppercase">タグ</h2>
+                <div class="flex flex-wrap">
+                  {tags.map((tag) => (
+                    <Tag text={tag} />
+                  ))}
+                </div>
+              </div>
+            )
+          }
+        </div>
+      </footer>
+    </div>
+  </div>
+</article>

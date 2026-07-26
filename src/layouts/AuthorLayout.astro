@@ -1,0 +1,32 @@
+---
+import SocialIcon from '@/components/react/social-icons/index.tsx'
+import type { AuthorEntry } from '@/lib/content'
+
+// layouts/AuthorLayout.tsx の移植
+interface Props { author: AuthorEntry }
+const { author } = Astro.props
+const { name, avatar, occupation, company, email, twitter, bluesky, linkedin, github } = author.data
+---
+<div class="divide-border divide-y">
+  <div class="space-y-2 pt-6 pb-8 md:space-y-5">
+    <h1 class="text-fg-strong text-3xl leading-9 tracking-tight sm:text-4xl sm:leading-10 md:text-6xl md:leading-14">
+      About
+    </h1>
+  </div>
+  <div class="x1:space-y-0 items-start space-y-2 xl:grid xl:grid-cols-3 xl:gap-x-8">
+    <div class="flex flex-col items-center space-x-2 pt-8">
+      {avatar && <img src={avatar} alt="avatar" width="192" height="192" class="h-48 w-48 rounded-full" />}
+      <h3 class="pt-4 pb-2 text-2xl leading-8 font-bold tracking-tight">{name}</h3>
+      <div class="text-muted">{occupation}</div>
+      <div class="text-muted">{company}</div>
+      <div class="flex space-x-3 pt-6">
+        <SocialIcon kind="mail" href={`mailto:${email}`} />
+        <SocialIcon kind="github" href={github} />
+        <SocialIcon kind="linkedin" href={linkedin} />
+        <SocialIcon kind="twitter" href={twitter} />
+        <SocialIcon kind="bluesky" href={bluesky} />
+      </div>
+    </div>
+    <div class="prose dark:prose-invert max-w-none pt-8 pb-8 xl:col-span-2"><slot /></div>
+  </div>
+</div>

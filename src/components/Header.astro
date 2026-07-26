@@ -25,7 +25,13 @@ const headerClass =
   </a>
   {/* min-w-0: これが無いと内側の overflow-x-auto が効かず、代わりにサイト名が潰される
       ml-4: サイト名との間隔。justify-between だけだとナビが伸びた際に密着する */}
-  <div class="ml-4 flex min-w-0 items-center space-x-4 leading-5 sm:space-x-6">
+  {/* space-x-* ではなく gap-x-* を使うこと。
+      space-x-* は直下の子に margin-left を付けるが、client:* を付けた島は
+      <astro-island> でラップされ display:contents になる。display:contents の
+      要素に margin は効かないため、島だけ間隔が消えてテーマ切替と RSS の
+      アイコンが重なる。flex の gap はコンテナ側が実際の flex item
+      （display:contents 配下の子）に対して効くので島でも正しく空く */}
+  <div class="ml-4 flex min-w-0 items-center gap-x-4 leading-5 sm:gap-x-6">
     {/* md: で表示。sm(640px) だと横幅が足りず "About" が見切れる
         (実測: 必要幅 631px > コンテナ幅 592px)。それ未満は MobileNav が担当する */}
     <div class="no-scrollbar hidden min-w-0 items-center space-x-4 overflow-x-auto md:flex md:space-x-6">

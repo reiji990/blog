@@ -21,7 +21,6 @@
     "@tailwindcss/typography": "^0.5.19",
     "@tailwindcss/vite": "^4.3.3",
     "astro": "^5.18.2",
-    "body-scroll-lock": "^4.0.0-beta.0",
     "chart.js": "^4.5.1",
     "esbuild": "0.28.1",
     "github-slugger": "^2.0.0",

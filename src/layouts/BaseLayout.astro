@@ -21,12 +21,14 @@ type Props = SeoProps
 const props = Astro.props
 ---
 
+{/* スクロールバー幅の扱いは css/tailwind.css の html ルールに集約している
+    （インラインの style 属性はテーマ切替スクリプトに上書きされるため） */}
 <html lang="ja" class={`${siteMetadata.theme === 'dark' ? 'dark' : ''} scroll-smooth`}>
   <head>
     <ThemeScript />
     <BaseHead {...props} />
   </head>
-  <body class="bg-bg text-fg pl-[calc(100vw-100%)] antialiased">
+  <body class="bg-bg text-fg antialiased">
     {/* 検索モーダルの器。ボタン(.astro)が飛ばす search:open を受けて
         初めて kbar 一式を読み込む */}
     <SearchProvider client:idle />

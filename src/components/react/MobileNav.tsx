@@ -1,30 +1,23 @@
 'use client'
 
 import { Dialog, DialogPanel, Transition, TransitionChild } from '@headlessui/react'
-import { disableBodyScroll, enableBodyScroll, clearAllBodyScrollLocks } from 'body-scroll-lock'
-import { Fragment, useState, useEffect, useRef } from 'react'
+import { Fragment, useState } from 'react'
 import Link from './Link'
 import headerNavLinks from '@/data/headerNavLinks'
 
+/**
+ * スクロールロックは body-scroll-lock ではなく headlessui の Dialog に任せる。
+ *
+ * @headlessui/react v2 の Dialog は開いている間のスクロールロックと
+ * スクロールバー幅の補正を自前で行う。そこへ body-scroll-lock の
+ * disableBodyScroll を重ねると、ロックが二重にかかったうえに
+ * body の pl-[calc(100vw-100%)]（スクロールバー補正）とも干渉し、
+ * メニューを開いた瞬間に背景の記事の横幅が変わって見える。
+ */
 const MobileNav = () => {
   const [navShow, setNavShow] = useState(false)
-  const navRef = useRef(null)
 
-  const onToggleNav = () => {
-    setNavShow((status) => {
-      if (status) {
-        enableBodyScroll(navRef.current)
-      } else {
-        // Prevent scrolling
-        disableBodyScroll(navRef.current)
-      }
-      return !status
-    })
-  }
-
-  useEffect(() => {
-    return clearAllBodyScrollLocks
-  })
+  const onToggleNav = () => setNavShow((status) => !status)
 
   return (
     <>
@@ -70,10 +63,7 @@ const MobileNav = () => {
             unmount={false}
           >
             <DialogPanel className="bg-bg/95 fixed top-0 left-0 z-70 h-full w-full duration-300">
-              <nav
-                ref={navRef}
-                className="mt-8 flex h-full basis-0 flex-col items-start overflow-y-auto pt-2 pl-12 text-left"
-              >
+              <nav className="mt-8 flex h-full basis-0 flex-col items-start overflow-y-auto pt-2 pl-12 text-left">
                 {headerNavLinks.map((link) => (
                   <Link
                     key={link.title}

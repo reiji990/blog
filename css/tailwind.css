@@ -4,6 +4,25 @@
 @source '../src';
 @custom-variant dark (&:where(.dark, .dark *));
 
+/* スクロールバー幅の扱い。
+ *
+ * 以前は body に pl-[calc(100vw-100%)] を当ててページ間の横ズレを防いでいたが、
+ * あの式はスクロールバーの有無で結果が変わるため、モバイルメニュー
+ * (headlessui Dialog) が html に overflow:hidden を掛けた瞬間に値が変化し、
+ * 背景の記事の幅がずれていた。scrollbar-gutter なら常に同じ幅を確保するので
+ * overflow を切り替えても再計算が起きない。
+ *
+ * さらに headlessui は Dialog を開くとき html にインラインで
+ * padding-right（スクロールバー幅の補正）を差し込む。オーバーレイ
+ * スクロールバーの環境（iOS Safari 等）では元からスクロールバーが場所を
+ * 取っていないため、この補正がそのまま余分な横ズレになる。gutter を
+ * 自前で確保している以上この補正は不要なので、!important で打ち消す。
+ */
+html {
+  scrollbar-gutter: stable;
+  padding-right: 0 !important;
+}
+
 /* デザイントークン: 灰基調・静謐・抑制（既定はダーク） */
 :root {
   --bg: #f4f2ee;

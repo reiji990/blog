@@ -33,6 +33,17 @@
     "not_found_handling": "404-page"
   },
 
+  // 本番 (main ブランチ) は独自ドメイン www.reiji990.blog のみで配信する。
+  // 既定の true のままだと blog.<subdomain>.workers.dev でも同じ内容が見え、
+  // 独自ドメインと重複してしまう。canonical は全ページで www.reiji990.blog を
+  // 指しているので致命的ではないが、索引対象を1つに絞るため無効化する。
+  "workers_dev": false,
+
+  // dev ブランチなど非本番ブランチのビルドに
+  // <version>-blog.<subdomain>.workers.dev のプレビュー URL を発行する。
+  // 既定は false なので明示的に有効化しないと dev の確認先が無い。
+  "preview_urls": true,
+
   "observability": {
     "enabled": true
   }

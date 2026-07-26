@@ -14,8 +14,13 @@ const headerClass =
 ---
 
 <header class={headerClass}>
-  {/* shrink-0: サイト名は折り返させない。潰れる余地はスクロール可能なナビ側に持たせる */}
-  <a href="/" aria-label={siteMetadata.title} class="shrink-0">
+  {/* shrink-0: サイト名は折り返させない。潰れる余地はスクロール可能なナビ側に持たせる
+      hover は Blog / Tags などのナビ項目と同じ配色にして、押せることを分かるようにする */}
+  <a
+    href="/"
+    aria-label={siteMetadata.title}
+    class="hover:text-primary-500 dark:hover:text-primary-400 text-fg-strong shrink-0 transition-colors"
+  >
     <div class="flex items-center justify-between">
       <div class="mr-3"></div>
       {/* 高さは行高に任せる。text-2xl の行高は 32px なので h-6 (24px) を指定すると

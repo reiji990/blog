@@ -6,7 +6,11 @@ const siteMetadata = {
   description: '本とアニメと音楽について',
   language: 'ja',
   theme: 'dark', // system, dark or light
-  siteUrl: 'https://www.reiji990.blog',
+  // Cloudflare 移行に伴い正規ホストを www 付きからルートドメインへ変更した。
+  // canonical / sitemap / robots / RSS / JSON-LD / OG はすべてこの値から導出されるため、
+  // ここを変えないと正規 URL がリダイレクト先を指すことになり検索評価が分散する。
+  // www.reiji990.blog は Cloudflare の Redirect Rule で 301 させること。
+  siteUrl: 'https://reiji990.blog',
   siteRepo: 'https://github.com/reiji990/blog',
   siteLogo: '/static/images/logo.png',
   socialBanner: '/static/images/twitter-card.png',

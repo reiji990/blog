@@ -2,15 +2,13 @@
   // Cloudflare Workers (静的アセット配信) の設定。
   //
   // 【このファイルが必須である理由】
-  // これが無いと `wrangler deploy` はオンボーディング処理に入り、リポジトリを
-  // Next.js プロジェクトとして自動検出したうえで OpenNext (Workers 上で SSR する
-  // 構成) へ移行しようとする。このブログは全ルートが静的なので OpenNext は不要で、
-  // 実際その移行処理は CI 上でクラッシュする。設定を明示して自動検出を止める。
+  // これが無いと `wrangler deploy` はオンボーディング処理に入り、フレームワークを
+  // 自動検出して余計な移行を試みる。設定を明示して自動検出を止める。
   //
-  // Worker スクリプトは持たず out/ を配信するだけなので `main` は指定しない。
+  // Worker スクリプトは持たず dist/ を配信するだけなので `main` は指定しない。
   //
   // ダッシュボードの Build 設定と対応させること:
-  //   Build command  : yarn build:export
+  //   Build command  : yarn build
   //   Deploy command : npx wrangler deploy
   //   Root directory : /
   "$schema": "node_modules/wrangler/config-schema.json",
@@ -23,19 +21,19 @@
 
   // nodejs_compat は付けない。OpenNext の SSR 用であり、静的配信では不要
   "assets": {
-    "directory": "./out",
+    "directory": "./dist",
 
-    // next.config.js の trailingSlash: false に合わせる。
-    // /blog/foo/ は /blog/foo へリダイレクトし out/blog/foo.html を返す
+    // astro.config.mjs の trailingSlash: "never" に合わせる。
+    // /blog/foo/ は /blog/foo へリダイレクトし dist/blog/foo/index.html を返す
     "html_handling": "drop-trailing-slash",
 
-    // 未知のパスは Next が出力する out/404.html を 404 ステータスで返す
+    // 未知のパスは Astro が出力する dist/404.html を 404 ステータスで返す
     "not_found_handling": "404-page"
   },
 
-  // 本番 (main ブランチ) は独自ドメイン www.reiji990.blog のみで配信する。
+  // 本番 (main ブランチ) は独自ドメイン reiji990.blog のみで配信する。
   // 既定の true のままだと blog.<subdomain>.workers.dev でも同じ内容が見え、
-  // 独自ドメインと重複してしまう。canonical は全ページで www.reiji990.blog を
+  // 独自ドメインと重複してしまう。canonical は全ページで reiji990.blog を
   // 指しているので致命的ではないが、索引対象を1つに絞るため無効化する。
   "workers_dev": false,
 

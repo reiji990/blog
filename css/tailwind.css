@@ -1,7 +1,7 @@
 @import 'tailwindcss';
 @plugin '@tailwindcss/forms';
 @plugin '@tailwindcss/typography';
-@source '../node_modules/pliny';
+@source '../src';
 @custom-variant dark (&:where(.dark, .dark *));
 
 /* デザイントークン: 灰基調・静謐・抑制（既定はダーク） */

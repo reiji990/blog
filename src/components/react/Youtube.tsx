@@ -124,7 +124,6 @@ export default function YoutubevideoPlayer(props: Props) {
         style={margedStyle}
       >
         {/* サムネイルのみを転送し、実際の埋め込みiframeはクリックまで読み込まない */}
-        {/* eslint-disable-next-line @next/next/no-img-element -- next/image は i.ytimg.com 未許可のため意図的に生img */}
         <img
           src={`https://i.ytimg.com/vi/${id}/hqdefault.jpg`}
           alt=""

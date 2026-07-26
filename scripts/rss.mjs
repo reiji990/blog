@@ -6,14 +6,12 @@ import remarkParse from 'remark-parse'
 import remarkGfm from 'remark-gfm'
 import remarkRehype from 'remark-rehype'
 import rehypeStringify from 'rehype-stringify'
-import { escape } from 'pliny/utils/htmlEscaper.js'
 import siteMetadata from '../data/siteMetadata.mjs'
-import tagData from '../app/tag-data.json' with { type: 'json' }
-import { allBlogs } from '../.contentlayer/generated/index.mjs'
-import { sortPosts } from 'pliny/utils/contentlayer.js'
+import { getAllPosts, sortPosts, getTagCounts, escape } from './lib/posts.mjs'
 import { excerpt } from './lib/plain-text.mjs'
 
-const outputFolder = process.env.EXPORT ? 'out' : 'public'
+// Astro の出力先は dist。EXPORT は Next 時代の名残なので dist を既定にする
+const outputFolder = 'dist'
 
 // MDX 本文 (markdown 記法 + 素通りする HTML/JSX タグ) を HTML 文字列に変換する。
 // MDX 独自コンポーネントのタグ自体は解決できずソースのまま残るが、
@@ -80,7 +78,7 @@ async function generateRSS(config, allBlogs, page = 'feed.xml') {
   }
 
   if (publishPosts.length > 0) {
-    for (const tag of Object.keys(tagData)) {
+    for (const tag of Object.keys(getTagCounts(allBlogs))) {
       const filteredPosts = publishPosts.filter((post) =>
         post.tags.map((t) => slug(t)).includes(tag)
       )
@@ -94,6 +92,7 @@ async function generateRSS(config, allBlogs, page = 'feed.xml') {
 }
 
 const rss = () => {
+  const allBlogs = getAllPosts()
   generateRSS(siteMetadata, allBlogs)
   console.log('RSS feed generated...')
 }

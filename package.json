@@ -9,7 +9,7 @@
     "build": "node ./scripts/generate-og.mjs && cross-env INIT_CWD=$PWD next build --webpack && node ./scripts/optimize-linkcards.mjs && node ./scripts/optimize-static-images.mjs && cross-env NODE_OPTIONS='--experimental-json-modules' node ./scripts/postbuild.mjs",
     "build:export": "cross-env EXPORT=1 yarn build",
     "serve": "next start",
-    "preview:cf": "wrangler pages dev out",
+    "preview:cf": "wrangler dev",
     "analyze": "cross-env ANALYZE=true next build --webpack",
     "lint": "eslint --fix app components layouts scripts",
     "lint:content": "node ./scripts/lint-tags.mjs",

@@ -4,6 +4,7 @@ import '@/css/prism.css'
 import 'remark-github-blockquote-alert/alert.css'
 import 'katex/dist/katex.min.css'
 
+import { ClientRouter } from 'astro:transitions'
 import siteMetadata from '@/data/siteMetadata.mjs'
 import ThemeScript from '@/components/ThemeScript.astro'
 import SectionContainer from '@/components/SectionContainer.astro'
@@ -27,11 +28,16 @@ const props = Astro.props
   <head>
     <ThemeScript />
     <BaseHead {...props} />
+    {/* SPA 風の差分スワップ遷移。リンク先の HTML を fetch し、head の差分適用と
+        body の入れ替えだけを行う（フル再パース・CSS/JS の再取得が起きない）。
+        prefetch（astro.config.mjs）と合わせて Next.js のクライアント遷移に相当する。
+        テーマ class の再適用は ThemeScript の astro:after-swap リスナーが担う */}
+    <ClientRouter />
   </head>
   <body class="bg-bg text-fg antialiased">
     {/* 検索モーダルの器。ボタン(.astro)が飛ばす search:open を受けて
         初めて kbar 一式を読み込む */}
-    <SearchProvider client:idle />
+    <SearchProvider client:load />
     <SectionContainer>
       <div class="flex h-screen flex-col justify-between font-sans">
         <Header />

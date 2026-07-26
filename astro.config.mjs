@@ -45,6 +45,11 @@ const icon = fromHtmlIsomorphic(
 export default defineConfig({
   site: siteMetadata.siteUrl,
   trailingSlash: 'never',
+  // リンクの事前読み込み。viewport 戦略は「画面内に入ったリンクを先読み」で、
+  // Next.js の <Link> の既定挙動に相当する（hover はモバイルで効かないため不採用）。
+  // 全ページ静的 HTML なので先読み対象は数十 KB の HTML のみ。
+  // 実際のページ切り替えは BaseLayout の <ClientRouter /> が差分スワップで行う
+  prefetch: { prefetchAll: true, defaultStrategy: 'viewport' },
   integrations: [mdx(), react()],
   vite: {
     plugins: [tailwindcss()],

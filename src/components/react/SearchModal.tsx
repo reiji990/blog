@@ -1,5 +1,6 @@
 'use client'
 
+import { navigate } from 'astro:transitions/client'
 import { useEffect, useState } from 'react'
 import {
   KBarProvider,
@@ -176,7 +177,8 @@ function SearchController() {
             post.tags?.length ? ' ・ ' + post.tags.join(' / ') : ''
           }`,
           perform: () => {
-            window.location.href = '/' + post.path
+            // ClientRouter の差分スワップ遷移に乗せる（location.href だとフルリロード）
+            navigate('/' + post.path)
           },
         }))
       if (cancelled) return

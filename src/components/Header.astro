@@ -47,8 +47,12 @@ const headerClass =
         ))}
     </div>
     <SearchButton />
-    <ThemeIsland client:idle defaultTheme={siteMetadata.theme} />
+    {/* client:load にする理由: ヘッダーの島は遷移のたびに再 hydration される。
+        client:idle は requestIdleCallback 依存で、バックグラウンドタブでは
+        発火せず、可視タブでも遷移直後の一瞬はボタンが反応しない。
+        どちらも数 KB の小さな島なので即時 hydration のコストは無視できる */}
+    <ThemeIsland client:load defaultTheme={siteMetadata.theme} />
     <SocialIcon kind="rss" href={`${siteMetadata.siteUrl}/feed.xml`} size={6} />
-    <MobileNav client:idle />
+    <MobileNav client:load />
   </div>
 </header>

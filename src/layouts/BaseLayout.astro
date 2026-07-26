@@ -20,11 +20,24 @@ import type { SeoProps } from '@/components/BaseHead.astro'
 type Props = SeoProps
 
 const props = Astro.props
+
+// 【重要】<html> より前にコメントや式を置かないこと。
+// テンプレート先頭に式があると Astro はこれを完全な文書ではなくフラグメントと
+// みなし、<html> / <head> / <body> を出力しなくなる。body の
+// bg-bg / text-fg が消えて配色が既定に戻るため、コメントはここ（frontmatter）に書く。
+//
+// スクロールバー幅の扱いは css/tailwind.css の html ルールに集約している
+// （インラインの style 属性はテーマ切替スクリプトに上書きされるため）。
+//
+// transition:animate="none" で ClientRouter の既定フェードを無効化する。
+// 遷移の速さ（差分スワップ・prefetch）は保ったまま、アニメーションだけ止める。
 ---
 
-{/* スクロールバー幅の扱いは css/tailwind.css の html ルールに集約している
-    （インラインの style 属性はテーマ切替スクリプトに上書きされるため） */}
-<html lang="ja" class={`${siteMetadata.theme === 'dark' ? 'dark' : ''} scroll-smooth`}>
+<html
+  lang="ja"
+  class={`${siteMetadata.theme === 'dark' ? 'dark' : ''} scroll-smooth`}
+  transition:animate="none"
+>
   <head>
     <ThemeScript />
     <BaseHead {...props} />

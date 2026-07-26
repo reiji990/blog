@@ -336,9 +336,18 @@ input:-webkit-autofill:focus {
     transform 0.2s ease;
 }
 
+/* ホバーはアクセント色の枠線 + わずかな浮き上がりで示す。
+ * 従来は枠線を gray-300/600 に変えるだけで、暗い背景ではほぼ判別できず
+ * 影もサイトの背景に埋もれていた。枠線をアクセント色にすると
+ * ライト・ダークどちらでも変化がはっきり分かる。 */
 .remark-link-card-plus__card:hover {
-  border-color: var(--color-gray-300);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+  border-color: var(--accent);
+  box-shadow: 0 4px 14px rgb(0 0 0 / 0.12);
+  transform: translateY(-2px);
+}
+
+.remark-link-card-plus__card:hover .remark-link-card-plus__title {
+  color: var(--accent);
 }
 
 .dark .remark-link-card-plus__card {
@@ -347,8 +356,17 @@ input:-webkit-autofill:focus {
 }
 
 .dark .remark-link-card-plus__card:hover {
-  border-color: var(--color-gray-600);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  border-color: var(--accent);
+  box-shadow: 0 4px 14px rgb(0 0 0 / 0.45);
+}
+
+/* 動きを減らす設定の利用者には浮き上がりを出さない（色の変化だけ残す） */
+@media (prefers-reduced-motion: reduce) {
+  .remark-link-card-plus__card,
+  .remark-link-card-plus__card:hover {
+    transform: none;
+    transition: border-color 0.2s ease;
+  }
 }
 
 .remark-link-card-plus__main {

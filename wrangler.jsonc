@@ -16,7 +16,7 @@
   "$schema": "node_modules/wrangler/config-schema.json",
 
   // ダッシュボードの Worker 名と一致させる
-  "name": "blog",
+  "name": "blog-dev",
 
   // ダッシュボードの Compatibility date と揃える
   "compatibility_date": "2026-07-26",

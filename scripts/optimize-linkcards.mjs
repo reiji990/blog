@@ -45,6 +45,7 @@ import sharp from 'sharp'
 // そのため out/ 側も対象に含める。
 const TARGET_DIRS = [
   path.join(process.cwd(), 'public', 'remark-link-card-plus'),
+  path.join(process.cwd(), 'dist', 'remark-link-card-plus'),
   ...(process.env.EXPORT ? [path.join(process.cwd(), 'out', 'remark-link-card-plus')] : []),
 ]
 const MAX_WIDTH = 640 // 表示幅目安 320px の 2 倍 (詳細は上記コメント参照)

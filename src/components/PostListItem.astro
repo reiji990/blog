@@ -1,0 +1,72 @@
+---
+import formatYMD from '@/lib/formatYMD'
+import Tag from '@/components/Tag.astro'
+import { postPath, firstImage, type BlogEntry } from '@/lib/content'
+
+// app/Main.tsx の記事カード部分の移植。トップと一覧で共有する。
+interface Props {
+  post: BlogEntry
+  /** 先頭カードだけ LCP 対策で eager 読み込みにする */
+  eager?: boolean
+}
+
+const { post, eager = false } = Astro.props
+const { title, subtitle, summary, date, lastmod, tags } = post.data
+const path = postPath(post)
+// images の無い記事は generate-og.mjs が作る OG 画像にフォールバック（Next 版と同じ）
+const displayImage = firstImage(post) ?? `/static/og/${post.id}.png`
+---
+
+<li class="py-12">
+  <article>
+    <div class="grid grid-cols-1 items-start gap-6 xl:grid-cols-5">
+      <div class="relative aspect-[2/1] w-full overflow-hidden rounded-lg shadow xl:col-span-2">
+        <a href={`/${path}`}>
+          <img
+            src={displayImage}
+            alt={title}
+            loading={eager ? 'eager' : 'lazy'}
+            fetchpriority={eager ? 'high' : undefined}
+            class="absolute inset-0 h-full w-full object-cover transition-opacity hover:opacity-80"
+          />
+        </a>
+      </div>
+      <div class="space-y-2 xl:col-span-3">
+        <dl>
+          <dt class="sr-only">公開日</dt>
+          <dd class="text-muted text-base leading-6 font-medium">
+            公開: <time datetime={date.toISOString()}>{formatYMD(date.toISOString())}</time>
+            {
+              lastmod && (
+                <div>
+                  最終更新:{' '}
+                  <time datetime={lastmod.toISOString()}>{formatYMD(lastmod.toISOString())}</time>
+                </div>
+              )
+            }
+          </dd>
+        </dl>
+        <h2 class="text-2xl leading-8 tracking-tight">
+          <a href={`/${path}`} class="text-fg-strong hover:text-accent transition-colors break-words">
+            {title}
+            <br />
+            {subtitle}
+          </a>
+        </h2>
+        <div class="flex flex-wrap">
+          {tags.map((tag) => <Tag text={tag} />)}
+        </div>
+        <div class="prose text-muted max-w-none">{summary}</div>
+        <div class="text-base leading-6 font-medium">
+          <a
+            href={`/${path}`}
+            class="text-primary-500 hover:text-primary-600 dark:hover:text-primary-400 break-words"
+            aria-label={`「${title} ${subtitle ?? ''}」を読む`}
+          >
+            続きを読む &rarr;
+          </a>
+        </div>
+      </div>
+    </div>
+  </article>
+</li>

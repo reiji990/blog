@@ -1,0 +1,84 @@
+---
+import { getCollection, render } from 'astro:content'
+import BaseLayout from '@/layouts/BaseLayout.astro'
+import PostLayout from '@/layouts/PostLayout.astro'
+import { mdxComponents } from '@/components/mdxComponents'
+import { toToc } from '@/lib/toc'
+import {
+  getSortedPosts,
+  layoutName,
+  siblings,
+  structuredData,
+  firstImage,
+  postPath,
+} from '@/lib/content'
+import siteMetadata from '@/data/siteMetadata.mjs'
+
+// 【重要】draft: true の記事を出力しないこと。
+// Next 版は generateStaticParams が下書きも返すため静的ファイル自体は
+// 生成されるが、ページ本体が notFound() を返すので中身は 404 ページだった
+// （200 を返す soft 404）。getSortedPosts は本番ビルドでのみ draft を落とすので、
+// Astro ではファイル自体が生成されず、Cloudflare の not_found_handling に
+// よって正しい 404 ステータスが返る。
+export async function getStaticPaths() {
+  const posts = await getSortedPosts()
+  const authors = await getCollection('authors')
+  return posts.map((post) => ({
+    params: { slug: post.id },
+    props: { post, posts, authors },
+  }))
+}
+
+const { post, posts, authors } = Astro.props
+const { Content, headings } = await render(post)
+const toc = toToc(headings)
+const { prev, next } = siblings(posts, post)
+
+// Next 版と同じく authors 未指定なら 'default' を引く
+const authorList = post.data.authors?.length ? post.data.authors : ['default']
+const authorDetails = authorList
+  .map((id) => authors.find((a) => a.id === id))
+  .filter((a): a is (typeof authors)[number] => Boolean(a))
+
+const seriesPosts = post.data.series
+  ? posts
+      .filter((p) => p.data.series === post.data.series)
+      .map((p) => ({
+        path: postPath(p),
+        title: p.data.title,
+        seriesOrder: p.data.seriesOrder,
+      }))
+  : []
+
+// contentlayer の structuredData に author / publisher を足す（Next 版と同じ）
+const jsonLd = {
+  ...structuredData(post),
+  author: authorDetails.map((a) => ({ '@type': 'Person', name: a.data.name })),
+  publisher: { '@type': 'Organization', name: siteMetadata.title },
+}
+
+const variant = layoutName(post) === 'PostBanner' ? 'banner' : 'default'
+---
+
+<BaseLayout
+  title={post.data.title}
+  description={post.data.summary ?? undefined}
+  image={firstImage(post)}
+  ogType="article"
+  publishedTime={post.data.date.toISOString()}
+  modifiedTime={(post.data.lastmod ?? post.data.date).toISOString()}
+  authors={authorDetails.map((a) => a.data.name)}
+  canonicalUrl={post.data.canonicalUrl ?? undefined}
+  jsonLd={jsonLd}
+>
+  <PostLayout
+    post={post}
+    authors={authorDetails}
+    prev={prev}
+    next={next}
+    seriesPosts={seriesPosts}
+    variant={variant}
+  >
+    <Content components={mdxComponents} toc={toc} />
+  </PostLayout>
+</BaseLayout>

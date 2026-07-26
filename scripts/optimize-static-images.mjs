@@ -28,7 +28,9 @@ import { readdir, readFile, writeFile, stat } from 'node:fs/promises'
 import path from 'node:path'
 import sharp from 'sharp'
 
-const TARGET_DIR = path.join(process.cwd(), 'out', 'static', 'images')
+// Astro の出力先は dist、Next(静的エクスポート)は out。両方に対応させる
+const OUTPUT_DIRS = ['dist', 'out']
+const TARGET_DIRS = OUTPUT_DIRS.map((d) => path.join(process.cwd(), d, 'static', 'images'))
 const MAX_WIDTH = 1600
 const JPEG_QUALITY = 82
 const PNG_COMPRESSION_LEVEL = 9
@@ -94,6 +96,10 @@ async function processFile(filePath) {
 }
 
 async function main() {
+  for (const dir of TARGET_DIRS) await processDirectory(dir)
+}
+
+async function processDirectory(TARGET_DIR) {
   let files
   try {
     files = await walk(TARGET_DIR)

@@ -1,0 +1,63 @@
+---
+import siteMetadata from '@/data/siteMetadata.mjs'
+import headerNavLinks from '@/data/headerNavLinks'
+import SocialIcon from './react/social-icons/index.tsx'
+import SearchButton from './SearchButton.astro'
+import ThemeIsland from './react/ThemeIsland.tsx'
+import MobileNav from './react/MobileNav.tsx'
+
+// components/Header.tsx の移植。
+// 静的な部分（サイト名・ナビリンク・RSS）は JS を出さず、
+// テーマ切替とモバイルメニューだけを島にする。
+const headerClass =
+  'flex items-center w-full justify-between py-10' + (siteMetadata.stickyNav ? ' sticky top-0 z-50' : '')
+---
+
+<header class={headerClass}>
+  {/* shrink-0: サイト名は折り返させない。潰れる余地はスクロール可能なナビ側に持たせる
+      hover は Blog / Tags などのナビ項目と同じ配色にして、押せることを分かるようにする */}
+  <a
+    href="/"
+    aria-label={siteMetadata.title}
+    class="hover:text-primary-500 dark:hover:text-primary-400 text-fg-strong shrink-0 transition-colors"
+  >
+    <div class="flex items-center justify-between">
+      <div class="mr-3"></div>
+      {/* 高さは行高に任せる。text-2xl の行高は 32px なので h-6 (24px) を指定すると
+          1行でも 8px はみ出し、折り返すと本文に被る */}
+      <div class="text-2xl font-semibold whitespace-nowrap">{siteMetadata.title}</div>
+    </div>
+  </a>
+  {/* min-w-0: これが無いと内側の overflow-x-auto が効かず、代わりにサイト名が潰される
+      ml-4: サイト名との間隔。justify-between だけだとナビが伸びた際に密着する */}
+  {/* space-x-* ではなく gap-x-* を使うこと。
+      space-x-* は直下の子に margin-left を付けるが、client:* を付けた島は
+      <astro-island> でラップされ display:contents になる。display:contents の
+      要素に margin は効かないため、島だけ間隔が消えてテーマ切替と RSS の
+      アイコンが重なる。flex の gap はコンテナ側が実際の flex item
+      （display:contents 配下の子）に対して効くので島でも正しく空く */}
+  <div class="ml-4 flex min-w-0 items-center gap-x-4 leading-5 sm:gap-x-6">
+    {/* md: で表示。sm(640px) だと横幅が足りず "About" が見切れる
+        (実測: 必要幅 631px > コンテナ幅 592px)。それ未満は MobileNav が担当する */}
+    <div class="no-scrollbar hidden min-w-0 items-center space-x-4 overflow-x-auto md:flex md:space-x-6">
+      {headerNavLinks
+        .filter((link) => link.href !== '/')
+        .map((link) => (
+          <a
+            href={link.href}
+            class="hover:text-primary-500 dark:hover:text-primary-400 text-fg-strong block font-medium"
+          >
+            {link.title}
+          </a>
+        ))}
+    </div>
+    <SearchButton />
+    {/* client:load にする理由: ヘッダーの島は遷移のたびに再 hydration される。
+        client:idle は requestIdleCallback 依存で、バックグラウンドタブでは
+        発火せず、可視タブでも遷移直後の一瞬はボタンが反応しない。
+        どちらも数 KB の小さな島なので即時 hydration のコストは無視できる */}
+    <ThemeIsland client:load defaultTheme={siteMetadata.theme} />
+    <SocialIcon kind="rss" href={`${siteMetadata.siteUrl}/feed.xml`} size={6} />
+    <MobileNav client:load />
+  </div>
+</header>

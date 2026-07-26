@@ -2,15 +2,13 @@
   // Cloudflare Workers (静的アセット配信) の設定。
   //
   // 【このファイルが必須である理由】
-  // これが無いと `wrangler deploy` はオンボーディング処理に入り、リポジトリを
-  // Next.js プロジェクトとして自動検出したうえで OpenNext (Workers 上で SSR する
-  // 構成) へ移行しようとする。このブログは全ルートが静的なので OpenNext は不要で、
-  // 実際その移行処理は CI 上でクラッシュする。設定を明示して自動検出を止める。
+  // これが無いと `wrangler deploy` はオンボーディング処理に入り、フレームワークを
+  // 自動検出して余計な移行を試みる。設定を明示して自動検出を止める。
   //
-  // Worker スクリプトは持たず out/ を配信するだけなので `main` は指定しない。
+  // Worker スクリプトは持たず dist/ を配信するだけなので `main` は指定しない。
   //
   // ダッシュボードの Build 設定と対応させること:
-  //   Build command  : yarn build:export
+  //   Build command  : yarn build
   //   Deploy command : npx wrangler deploy
   //   Root directory : /
   "$schema": "node_modules/wrangler/config-schema.json",
@@ -23,19 +21,19 @@
 
   // nodejs_compat は付けない。OpenNext の SSR 用であり、静的配信では不要
   "assets": {
-    "directory": "./out",
+    "directory": "./dist",
 
-    // next.config.js の trailingSlash: false に合わせる。
-    // /blog/foo/ は /blog/foo へリダイレクトし out/blog/foo.html を返す
+    // astro.config.mjs の trailingSlash: "never" に合わせる。
+    // /blog/foo/ は /blog/foo へリダイレクトし dist/blog/foo/index.html を返す
     "html_handling": "drop-trailing-slash",
 
-    // 未知のパスは Next が出力する out/404.html を 404 ステータスで返す
+    // 未知のパスは Astro が出力する dist/404.html を 404 ステータスで返す
     "not_found_handling": "404-page"
   },
 
-  // 本番 (main ブランチ) は独自ドメイン www.reiji990.blog のみで配信する。
+  // 本番 (main ブランチ) は独自ドメイン reiji990.blog のみで配信する。
   // 既定の true のままだと blog.<subdomain>.workers.dev でも同じ内容が見え、
-  // 独自ドメインと重複してしまう。canonical は全ページで www.reiji990.blog を
+  // 独自ドメインと重複してしまう。canonical は全ページで reiji990.blog を
   // 指しているので致命的ではないが、索引対象を1つに絞るため無効化する。
   "workers_dev": false,
 
@@ -46,5 +44,45 @@
 
   "observability": {
     "enabled": true
+  },
+
+  // ---------------------------------------------------------------------------
+  // 環境ごとの上書き
+  // ---------------------------------------------------------------------------
+  //
+  // JSON は同じキーを2度書けないので、Worker を増やすときは name をもう1行
+  // 足すのではなく env ブロックで分ける。デプロイ時に --env で選択する:
+  //   本番 (main)  : npx wrangler deploy
+  //   開発 (dev)   : npx wrangler deploy --env dev
+  //
+  // Cloudflare 側は Worker ごとに Git 連携を持つので、blog-dev の
+  // Build 設定を次のようにする:
+  //   Production branch : dev
+  //   Build command     : NOINDEX=1 yarn build
+  //   Deploy command    : npx wrangler deploy --env dev
+  //
+  // NOINDEX=1 は必須。dev は本番と同一の内容を配信するため、これが無いと
+  // ブログ全体が重複コンテンツとして検索索引に載る。付けると robots.txt が
+  // Disallow: / を返し、全ページに noindex,nofollow の meta が入る。
+  //
+  // 継承されるキー（compatibility_date / assets / observability など）は
+  // 省略しても効くが、取りこぼすと配信先が変わる類の設定なので明示しておく。
+  "env": {
+    "dev": {
+      "name": "blog-dev",
+      "compatibility_date": "2026-07-26",
+      "assets": {
+        "directory": "./dist",
+        "html_handling": "drop-trailing-slash",
+        "not_found_handling": "404-page"
+      },
+      // 本番と違い、確認用に workers.dev のサブドメインを有効にしておく。
+      // 独自ドメインを当てる場合はダッシュボードの Domains & Routes から追加する
+      "workers_dev": true,
+      "preview_urls": true,
+      "observability": {
+        "enabled": true
+      }
+    }
   }
 }

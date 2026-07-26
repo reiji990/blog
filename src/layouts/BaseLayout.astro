@@ -1,0 +1,62 @@
+---
+import '@/css/tailwind.css'
+import '@/css/prism.css'
+import 'remark-github-blockquote-alert/alert.css'
+import 'katex/dist/katex.min.css'
+
+import { ClientRouter } from 'astro:transitions'
+import siteMetadata from '@/data/siteMetadata.mjs'
+import ThemeScript from '@/components/ThemeScript.astro'
+import SectionContainer from '@/components/SectionContainer.astro'
+import Header from '@/components/Header.astro'
+import Footer from '@/components/Footer.astro'
+import SearchProvider from '@/components/react/SearchProvider.tsx'
+import BaseHead from '@/components/BaseHead.astro'
+import type { SeoProps } from '@/components/BaseHead.astro'
+
+// app/layout.tsx の移植。
+// Next 版は ThemeProviders と SearchProvider がアプリ全体を包む React ツリー
+// だったが、Astro では両者を独立した島に分け、外側は静的 HTML のままにする。
+type Props = SeoProps
+
+const props = Astro.props
+
+// 【重要】<html> より前にコメントや式を置かないこと。
+// テンプレート先頭に式があると Astro はこれを完全な文書ではなくフラグメントと
+// みなし、<html> / <head> / <body> を出力しなくなる。body の
+// bg-bg / text-fg が消えて配色が既定に戻るため、コメントはここ（frontmatter）に書く。
+//
+// スクロールバー幅の扱いは css/tailwind.css の html ルールに集約している
+// （インラインの style 属性はテーマ切替スクリプトに上書きされるため）。
+//
+// transition:animate="none" で ClientRouter の既定フェードを無効化する。
+// 遷移の速さ（差分スワップ・prefetch）は保ったまま、アニメーションだけ止める。
+---
+
+<html
+  lang="ja"
+  class={`${siteMetadata.theme === 'dark' ? 'dark' : ''} scroll-smooth`}
+  transition:animate="none"
+>
+  <head>
+    <ThemeScript />
+    <BaseHead {...props} />
+    {/* SPA 風の差分スワップ遷移。リンク先の HTML を fetch し、head の差分適用と
+        body の入れ替えだけを行う（フル再パース・CSS/JS の再取得が起きない）。
+        prefetch（astro.config.mjs）と合わせて Next.js のクライアント遷移に相当する。
+        テーマ class の再適用は ThemeScript の astro:after-swap リスナーが担う */}
+    <ClientRouter />
+  </head>
+  <body class="bg-bg text-fg antialiased">
+    {/* 検索モーダルの器。ボタン(.astro)が飛ばす search:open を受けて
+        初めて kbar 一式を読み込む */}
+    <SearchProvider client:load />
+    <SectionContainer>
+      <div class="flex h-screen flex-col justify-between font-sans">
+        <Header />
+        <main class="mb-auto"><slot /></main>
+        <Footer />
+      </div>
+    </SectionContainer>
+  </body>
+</html>

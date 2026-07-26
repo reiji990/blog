@@ -1,0 +1,79 @@
+---
+import TocList from './TocList.astro'
+// pliny/ui/TOCInline + components/TOCInlineJa.tsx の Astro 移植。
+// pliny 版は React だが目次は完全に静的なので island 不要 = JS 0 で出せる。
+// MDX 側の <TOCInline toc={props.toc} asDisclosure /> はそのまま動く。
+interface TocEntry {
+  value: string
+  url: string
+  depth: number
+  children?: TocEntry[]
+}
+
+interface Props {
+  toc: TocEntry[]
+  fromHeading?: number
+  toHeading?: number
+  asDisclosure?: boolean
+  exclude?: string | string[]
+  collapse?: boolean
+  ulClassName?: string
+  liClassName?: string
+}
+
+const {
+  toc,
+  fromHeading = 1,
+  toHeading = 6,
+  asDisclosure = false,
+  exclude = '',
+  collapse = false,
+  ulClassName = '',
+  liClassName = '',
+} = Astro.props
+
+const re = Array.isArray(exclude)
+  ? new RegExp('^(' + exclude.join('|') + ')$', 'i')
+  : new RegExp('^(' + exclude + ')$', 'i')
+
+const filteredToc = (toc ?? []).filter(
+  (heading) => heading.depth >= fromHeading && heading.depth <= toHeading && !re.test(heading.value)
+)
+
+// pliny の createNestedList と同一アルゴリズム
+function createNestedList(items: TocEntry[]): TocEntry[] {
+  const nestedList: TocEntry[] = []
+  const stack: TocEntry[] = []
+  items.forEach((item) => {
+    const newItem = { ...item }
+    while (stack.length > 0 && stack[stack.length - 1].depth >= newItem.depth) {
+      stack.pop()
+    }
+    const parent = stack.length > 0 ? stack[stack.length - 1] : null
+    if (parent) {
+      parent.children = parent.children || []
+      parent.children.push(newItem)
+    } else {
+      nestedList.push(newItem)
+    }
+    stack.push(newItem)
+  })
+  return nestedList
+}
+
+const nestedList = createNestedList(filteredToc)
+---
+
+{
+  asDisclosure ? (
+    <details open={!collapse}>
+      {/* TOCInlineJa.tsx と同じく「目次」に差し替え */}
+      <summary class="ml-6 pt-2 pb-2 text-xl font-bold">目次</summary>
+      <div class="ml-6">
+        <TocList items={nestedList} ulClassName={ulClassName} liClassName={liClassName} />
+      </div>
+    </details>
+  ) : (
+    <TocList items={nestedList} ulClassName={ulClassName} liClassName={liClassName} />
+  )
+}

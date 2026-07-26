@@ -1,0 +1,11 @@
+---
+// components/Link.tsx の移植（サイト内リンク用。MDX 用は mdx/Link.astro）
+const { href, class: incomingClass, ...rest } = Astro.props
+const isInternal = typeof href === 'string' && (href.startsWith('/') || href.startsWith('#'))
+const className = ['break-words', incomingClass].filter(Boolean).join(' ')
+---
+{isInternal ? (
+  <a class={className} href={href} {...rest}><slot /></a>
+) : (
+  <a class={className} href={href} target="_blank" rel="noopener noreferrer" {...rest}><slot /></a>
+)}

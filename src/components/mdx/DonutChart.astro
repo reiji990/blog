@@ -1,0 +1,10 @@
+---
+import DonutChart from '../react/DonutChart.tsx'
+const props = Astro.props
+---
+{/* Next 版 LazyChart (next/dynamic ssr:false + プレースホルダ) 相当。
+    client:visible だと chart.js が SSR され 300x150 の空 canvas が先に出て
+    CLS が悪化するため、client:only + 同寸プレースホルダにする */}
+<div class="border-border bg-bg h-64 w-full rounded-md border">
+  <DonutChart client:only="react" {...props} />
+</div>

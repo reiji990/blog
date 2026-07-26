@@ -1,0 +1,68 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro'
+import formatYMD from '@/lib/formatYMD'
+import seriesData from '@/data/series.json'
+import { getSortedPosts, postPath, firstImage } from '@/lib/content'
+
+// app/series/[slug]/page.tsx の移植
+interface SeriesEntry { name: string; slug: string; description: string }
+
+export async function getStaticPaths() {
+  const allSeries = seriesData as SeriesEntry[]
+  const posts = await getSortedPosts()
+  return allSeries.map((series) => ({ params: { slug: series.slug }, props: { series, posts } }))
+}
+
+const { series, posts } = Astro.props
+const seriesPosts = posts
+  .filter((p) => p.data.series === series.name)
+  .sort((a, b) => (a.data.seriesOrder ?? 0) - (b.data.seriesOrder ?? 0))
+---
+<BaseLayout title={series.name} description={series.description || undefined}>
+  <div class="divide-border divide-y">
+    <div class="space-y-2 pt-6 pb-8 md:space-y-5">
+      <p class="text-muted text-lg tracking-wide">Series</p>
+      <h1 class="text-fg-strong text-3xl leading-9 tracking-tight sm:text-4xl sm:leading-10 md:text-5xl md:leading-14">
+        {series.name}
+      </h1>
+      <p class="text-muted text-lg leading-7">全{seriesPosts.length}回</p>
+      {series.description && <p class="text-fg text-base leading-7">{series.description}</p>}
+    </div>
+    <ol class="divide-border divide-y">
+      {seriesPosts.map((post, i) => {
+        const displayImage = firstImage(post) ?? `/static/og/${post.id}.png`
+        const path = postPath(post)
+        return (
+          <li class="py-6">
+            <article class="grid grid-cols-1 items-start gap-6 xl:grid-cols-5">
+              <div class="relative aspect-[2/1] w-full overflow-hidden rounded-lg shadow xl:col-span-2">
+                <a href={`/${path}`}>
+                  <img src={displayImage} alt={post.data.title} loading="lazy" class="absolute inset-0 h-full w-full object-cover object-center transition-opacity hover:opacity-80" />
+                </a>
+              </div>
+              <div class="space-y-2 xl:col-span-3">
+                <p class="text-muted text-sm">
+                  第{post.data.seriesOrder ?? i + 1}回 ・ 公開:{' '}
+                  <time datetime={post.data.date.toISOString()}>{formatYMD(post.data.date.toISOString())}</time>
+                  {post.data.lastmod && (
+                    <Fragment>
+                      {' ・ '}最終更新:{' '}
+                      <time datetime={post.data.lastmod.toISOString()}>{formatYMD(post.data.lastmod.toISOString())}</time>
+                    </Fragment>
+                  )}
+                </p>
+                <h2 class="text-xl leading-8 tracking-tight">
+                  <a href={`/${path}`} class="text-fg-strong hover:text-accent transition-colors break-words">
+                    {post.data.title}
+                    {post.data.subtitle && <Fragment><br />{post.data.subtitle}</Fragment>}
+                  </a>
+                </h2>
+                {post.data.summary && <p class="text-muted text-base leading-7">{post.data.summary}</p>}
+              </div>
+            </article>
+          </li>
+        )
+      })}
+    </ol>
+  </div>
+</BaseLayout>

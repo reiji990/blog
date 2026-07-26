@@ -1,0 +1,7 @@
+---
+import LineChart from '../react/LineChart.tsx'
+const props = Astro.props
+---
+<div class="border-border bg-bg h-64 w-full rounded-md border">
+  <LineChart client:only="react" {...props} />
+</div>

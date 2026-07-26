@@ -1,0 +1,46 @@
+---
+import siteMetadata from '@/data/siteMetadata.mjs'
+const defaultTheme = siteMetadata.theme ?? 'dark'
+---
+
+{/*
+  初回描画前にテーマ用の class を確定させ、ちらつき（FOUC）を防ぐ。
+
+  Next 版では next-themes の ThemeProvider が SSR 時にこのスクリプトを
+  差し込んでいたが、Astro では ThemeProvider が島の中でしか動かず
+  hydration まで class が付かない。そのため head で同等の処理を行う。
+
+  localStorage のキーと値は next-themes の既定（'theme' に
+  'light' | 'dark' | 'system'）に合わせてあるので、島側の
+  ThemeProvider とそのまま噛み合う。
+
+  is:inline を付けてバンドルさせず、head で同期実行させることが重要。
+
+  【ClientRouter との連携】差分スワップは新ページのサーバー出力の
+  <html class="dark"> で属性を上書きするため、light を選んでいるユーザーの
+  画面が遷移のたびに暗転してしまう。document は遷移をまたいで生き残るので、
+  astro:after-swap で毎回テーマを当て直す（リスナー登録は初回の1度だけ）。
+*/}
+<script is:inline define:vars={{ defaultTheme }}>
+  ;(() => {
+    const applyTheme = () => {
+      try {
+        const stored = localStorage.getItem('theme')
+        const theme = stored || defaultTheme
+        const resolved =
+          theme === 'system'
+            ? window.matchMedia('(prefers-color-scheme: dark)').matches
+              ? 'dark'
+              : 'light'
+            : theme
+        document.documentElement.classList.toggle('dark', resolved === 'dark')
+        document.documentElement.classList.toggle('light', resolved === 'light')
+        document.documentElement.style.colorScheme = resolved
+      } catch {
+        // localStorage が使えない環境では既定テーマのままにする
+      }
+    }
+    applyTheme()
+    document.addEventListener('astro:after-swap', applyTheme)
+  })()
+</script>

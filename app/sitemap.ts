@@ -21,13 +21,25 @@ function latestDate(posts: { date: string; lastmod?: string | null }[]): string 
   return new Date(latestMs).toISOString().split('T')[0]
 }
 
+// サイトマップに載せる URL はパーセントエンコードした最終形でなければならない。
+// タグ名は日本語がそのまま slug になるため、素で出すと配信側が
+// エンコード済み URL へ 307 リダイレクトし、Search Console で
+// 「リダイレクトあり」として弾かれる。Next.js の Metadata API は canonical を
+// 自動でエンコードするので、そちらと表記を揃える意味もある。
+//
+// encodeURI と encodeURIComponent の使い分け:
+//   - パス全体 (例 "blog/watanare02") は区切りの / を保持したいので encodeURI
+//   - 単一セグメント (タグ名・シリーズ slug) は encodeURIComponent
+const encodePath = (path: string) => encodeURI(path)
+const encodeSegment = (segment: string) => encodeURIComponent(segment)
+
 export default function sitemap(): MetadataRoute.Sitemap {
   const siteUrl = siteMetadata.siteUrl
   const today = new Date().toISOString().split('T')[0]
   const publishedBlogs = allBlogs.filter((post) => !post.draft)
 
   const blogRoutes = publishedBlogs.map((post) => ({
-    url: `${siteUrl}/${post.path}`,
+    url: `${siteUrl}/${encodePath(post.path)}`,
     lastModified: post.lastmod || post.date,
   }))
 
@@ -39,7 +51,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const tagRoutes = Object.keys(tagData as Record<string, number>).map((tag) => {
     const posts = publishedBlogs.filter((post) => post.tags?.map((t) => slug(t)).includes(tag))
     return {
-      url: `${siteUrl}/tags/${tag}`,
+      url: `${siteUrl}/tags/${encodeSegment(tag)}`,
       lastModified: latestDate(posts),
     }
   })
@@ -47,7 +59,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const seriesRoutes = (seriesData as SeriesEntry[]).map((series) => {
     const posts = publishedBlogs.filter((post) => post.series === series.name)
     return {
-      url: `${siteUrl}/series/${series.slug}`,
+      url: `${siteUrl}/series/${encodeSegment(series.slug)}`,
       lastModified: latestDate(posts),
     }
   })

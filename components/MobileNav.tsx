@@ -28,7 +28,9 @@ const MobileNav = () => {
 
   return (
     <>
-      <button aria-label="Toggle Menu" onClick={onToggleNav} className="sm:hidden">
+      {/* 横並びナビは 768px 未満では収まらない (実測: 必要幅 631px + サイト名との間隔 >
+          640px 時のコンテナ幅 592px)。Header 側の md:flex と対にすること */}
+      <button aria-label="Toggle Menu" onClick={onToggleNav} className="md:hidden">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 20 20"

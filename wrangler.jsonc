@@ -1,0 +1,39 @@
+{
+  // Cloudflare Workers (静的アセット配信) の設定。
+  //
+  // 【このファイルが必須である理由】
+  // これが無いと `wrangler deploy` はオンボーディング処理に入り、リポジトリを
+  // Next.js プロジェクトとして自動検出したうえで OpenNext (Workers 上で SSR する
+  // 構成) へ移行しようとする。このブログは全ルートが静的なので OpenNext は不要で、
+  // 実際その移行処理は CI 上でクラッシュする。設定を明示して自動検出を止める。
+  //
+  // Worker スクリプトは持たず out/ を配信するだけなので `main` は指定しない。
+  //
+  // ダッシュボードの Build 設定と対応させること:
+  //   Build command  : yarn build:export
+  //   Deploy command : npx wrangler deploy
+  //   Root directory : /
+  "$schema": "node_modules/wrangler/config-schema.json",
+
+  // ダッシュボードの Worker 名と一致させる
+  "name": "blog",
+
+  // ダッシュボードの Compatibility date と揃える
+  "compatibility_date": "2026-07-26",
+
+  // nodejs_compat は付けない。OpenNext の SSR 用であり、静的配信では不要
+  "assets": {
+    "directory": "./out",
+
+    // next.config.js の trailingSlash: false に合わせる。
+    // /blog/foo/ は /blog/foo へリダイレクトし out/blog/foo.html を返す
+    "html_handling": "drop-trailing-slash",
+
+    // 未知のパスは Next が出力する out/404.html を 404 ステータスで返す
+    "not_found_handling": "404-page"
+  },
+
+  "observability": {
+    "enabled": true
+  }
+}

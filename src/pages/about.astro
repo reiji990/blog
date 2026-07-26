@@ -1,0 +1,35 @@
+---
+import { getCollection, render } from 'astro:content'
+import BaseLayout from '@/layouts/BaseLayout.astro'
+import AuthorLayout from '@/layouts/AuthorLayout.astro'
+import { mdxComponents } from '@/components/mdxComponents'
+import siteMetadata from '@/data/siteMetadata.mjs'
+
+// app/about/page.tsx の移植
+const authors = await getCollection('authors')
+const author = authors.find((a) => a.id === 'default')
+if (!author) throw new Error('data/authors/default.mdx が見つかりません')
+const { Content } = await render(author)
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: author.data.name,
+  url: `${siteMetadata.siteUrl}/about`,
+  ...(author.data.avatar
+    ? { image: new URL(author.data.avatar, siteMetadata.siteUrl).toString() }
+    : {}),
+  sameAs: [
+    siteMetadata.github,
+    siteMetadata.twitter,
+    siteMetadata.instagram,
+    siteMetadata.youtube,
+    siteMetadata.bluesky,
+  ].filter(Boolean),
+}
+---
+<BaseLayout title="About" jsonLd={jsonLd}>
+  <AuthorLayout author={author}>
+    <Content components={mdxComponents} />
+  </AuthorLayout>
+</BaseLayout>

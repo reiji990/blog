@@ -57,3 +57,7 @@ yarn-error.log*
 
 # remark-link-card-plus cache
 /public/remark-link-card-plus
+
+# astro
+/.astro/
+/dist/

@@ -1,0 +1,95 @@
+---
+import { slug } from 'github-slugger'
+import PostListItem from '@/components/PostListItem.astro'
+import Pagination from '@/components/Pagination.astro'
+import { getSortedTags } from '@/lib/tags'
+import { displayTag } from '@/lib/tags'
+import { getSortedPosts, type BlogEntry } from '@/lib/content'
+
+// layouts/ListLayoutWithTags.tsx の移植。
+// Next 版は usePathname で現在地を判定していたが、Astro では Astro.url で足りる
+// （＝この一覧はクライアント JS を一切必要としない）。
+interface Props {
+  posts: BlogEntry[]
+  title: string
+  subtitle?: string
+  pagination?: { currentPage: number; totalPages: number; basePath: string }
+}
+
+const { posts, title, subtitle, pagination } = Astro.props
+const pathname = Astro.url.pathname
+const sortedTags = await getSortedTags()
+const allPosts = await getSortedPosts()
+const currentTag = pathname.startsWith('/tags/')
+  ? decodeURIComponent(pathname.split('/tags/')[1].split('/')[0])
+  : null
+---
+
+<div>
+  <div class="pt-6 pb-6">
+    <h1
+      class="text-fg-strong text-3xl leading-9 tracking-tight sm:hidden sm:text-4xl sm:leading-10 md:text-6xl md:leading-14"
+    >
+      {title}
+      <br />
+      {subtitle}
+    </h1>
+  </div>
+  <div class="flex sm:space-x-24">
+    <div
+      class="border-border hidden h-full max-h-screen max-w-[280px] min-w-[280px] flex-wrap overflow-auto rounded-sm border pt-5 sm:flex"
+    >
+      <div class="px-6 py-4">
+        {
+          pathname.startsWith('/blog') ? (
+            <h3 class="text-primary-500 uppercase">記事一覧</h3>
+          ) : (
+            <a
+              href="/blog"
+              class="hover:text-primary-500 dark:hover:text-primary-500 text-fg uppercase"
+            >
+              記事一覧
+            </a>
+          )
+        }
+        <ul>
+          {
+            sortedTags.map(([tagSlug, count]) => {
+              const label = `${displayTag(allPosts, tagSlug)} (${count})`
+              return (
+                <li class="my-3">
+                  {currentTag === tagSlug ? (
+                    <h3 class="text-primary-500 x-3 inline py-2 text-sm uppercase">{label}</h3>
+                  ) : (
+                    <a
+                      href={`/tags/${encodeURIComponent(tagSlug)}`}
+                      class="hover:text-primary-500 dark:hover:text-primary-500 text-muted px-3 py-2 text-sm font-medium uppercase"
+                      aria-label={`View posts tagged ${tagSlug}`}
+                    >
+                      {label}
+                    </a>
+                  )}
+                </li>
+              )
+            })
+          }
+        </ul>
+      </div>
+    </div>
+    <div>
+      <ul class="divide-border divide-y">
+        {!posts.length && '記事がありません。'}
+        {posts.map((post, i) => <PostListItem post={post} eager={i === 0} />)}
+      </ul>
+      {
+        pagination && pagination.totalPages > 1 && (
+          <Pagination
+            currentPage={pagination.currentPage}
+            totalPages={pagination.totalPages}
+            basePath={pagination.basePath}
+          />
+        )
+      }
+    </div>
+  </div>
+</div>

@@ -1,0 +1,41 @@
+---
+import '@/css/tailwind.css'
+import '@/css/prism.css'
+import 'remark-github-blockquote-alert/alert.css'
+import 'katex/dist/katex.min.css'
+
+import siteMetadata from '@/data/siteMetadata.mjs'
+import ThemeScript from '@/components/ThemeScript.astro'
+import SectionContainer from '@/components/SectionContainer.astro'
+import Header from '@/components/Header.astro'
+import Footer from '@/components/Footer.astro'
+import SearchProvider from '@/components/react/SearchProvider.tsx'
+import BaseHead from '@/components/BaseHead.astro'
+import type { SeoProps } from '@/components/BaseHead.astro'
+
+// app/layout.tsx の移植。
+// Next 版は ThemeProviders と SearchProvider がアプリ全体を包む React ツリー
+// だったが、Astro では両者を独立した島に分け、外側は静的 HTML のままにする。
+type Props = SeoProps
+
+const props = Astro.props
+---
+
+<html lang="ja" class={`${siteMetadata.theme === 'dark' ? 'dark' : ''} scroll-smooth`}>
+  <head>
+    <ThemeScript />
+    <BaseHead {...props} />
+  </head>
+  <body class="bg-bg text-fg pl-[calc(100vw-100%)] antialiased">
+    {/* 検索モーダルの器。ボタン(.astro)が飛ばす search:open を受けて
+        初めて kbar 一式を読み込む */}
+    <SearchProvider client:idle />
+    <SectionContainer>
+      <div class="flex h-screen flex-col justify-between font-sans">
+        <Header />
+        <main class="mb-auto"><slot /></main>
+        <Footer />
+      </div>
+    </SectionContainer>
+  </body>
+</html>

@@ -1,0 +1,29 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro'
+import ListLayoutWithTags from '@/layouts/ListLayoutWithTags.astro'
+import { getSortedPosts, POSTS_PER_PAGE } from '@/lib/content'
+import { getTagCounts, postsWithTag, displayTag } from '@/lib/tags'
+
+// app/tags/[tag]/page.tsx の移植
+
+export async function getStaticPaths() {
+  const posts = await getSortedPosts()
+  const counts = await getTagCounts()
+  return Object.keys(counts).map((tag) => ({
+    params: { tag },
+    props: { tag, posts },
+  }))
+}
+
+const { tag, posts } = Astro.props
+const filtered = postsWithTag(posts, tag)
+const totalPages = Math.max(1, Math.ceil(filtered.length / POSTS_PER_PAGE))
+const label = displayTag(posts, tag)
+---
+<BaseLayout title={label} description={`${label} タグの記事`}>
+  <ListLayoutWithTags
+    posts={filtered.slice(0, POSTS_PER_PAGE)}
+    title={label}
+    pagination={{ currentPage: 1, totalPages, basePath: `tags/${encodeURIComponent(tag)}` }}
+  />
+</BaseLayout>

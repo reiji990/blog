@@ -1,0 +1,26 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro'
+import ListLayoutWithTags from '@/layouts/ListLayoutWithTags.astro'
+import { getSortedPosts, POSTS_PER_PAGE } from '@/lib/content'
+
+// app/blog/page/[page]/page.tsx の移植
+
+export async function getStaticPaths() {
+  const posts = await getSortedPosts()
+  const totalPages = Math.max(1, Math.ceil(posts.length / POSTS_PER_PAGE))
+  return Array.from({ length: totalPages }, (_, i) => ({
+    params: { page: String(i + 1) },
+    props: { page: i + 1, posts, totalPages },
+  }))
+}
+
+const { page, posts, totalPages } = Astro.props
+const start = POSTS_PER_PAGE * (page - 1)
+---
+<BaseLayout title="Blog">
+  <ListLayoutWithTags
+    posts={posts.slice(start, start + POSTS_PER_PAGE)}
+    title="記事一覧"
+    pagination={{ currentPage: page, totalPages, basePath: 'blog' }}
+  />
+</BaseLayout>

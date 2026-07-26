@@ -1,10 +1,9 @@
 import { writeFileSync } from 'fs'
-import siteMetadata from '../data/siteMetadata.js'
-import { allBlogs } from '../.contentlayer/generated/index.mjs'
-import { sortPosts } from 'pliny/utils/contentlayer.js'
+import siteMetadata from '../data/siteMetadata.mjs'
+import { getAllPosts, sortPosts } from './lib/posts.mjs'
 import { excerpt } from './lib/plain-text.mjs'
 
-const outputFolder = process.env.EXPORT ? 'out' : 'public'
+const outputFolder = 'dist'
 const siteUrl = siteMetadata.siteUrl
 
 // サイトの簡潔な説明。data/authors/default.mdx の本文 (著者による紹介文) を踏襲する。
@@ -57,6 +56,7 @@ function generateLlmsFullTxt(posts) {
 }
 
 async function llms() {
+  const allBlogs = getAllPosts()
   const publishPosts = allBlogs.filter((post) => post.draft !== true)
   if (publishPosts.length === 0) return
 

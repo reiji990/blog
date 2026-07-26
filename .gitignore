@@ -19,6 +19,9 @@
 public/sitemap.xml
 .vercel
 
+# cloudflare (wrangler)
+.wrangler/
+
 # production
 /build
 *.xml

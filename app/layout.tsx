@@ -11,8 +11,9 @@ import Footer from '@/components/Footer'
 import siteMetadata from '@/data/siteMetadata'
 import { ThemeProviders } from './theme-providers'
 import { Metadata } from 'next'
-import { Analytics } from '@vercel/analytics/react'
-import { SpeedInsights } from '@vercel/speed-insights/next'
+// @vercel/analytics と @vercel/speed-insights は Vercel 上でしか動作しない
+// (/_vercel/insights/script.js を読みに行き、Cloudflare ではコンソールエラーになる)。
+// Cloudflare 移行に伴い削除。アクセス解析は siteMetadata.analytics の Umami が担う
 
 const space_grotesk = Space_Grotesk({
   subsets: ['latin'],
@@ -98,8 +99,6 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       <link rel="alternate" type="application/rss+xml" href={`${basePath}/feed.xml`} />
       <body className="bg-bg text-fg pl-[calc(100vw-100%)] antialiased">
         <ThemeProviders>
-          <Analytics />
-          <SpeedInsights />
           <SectionContainer>
             <SearchProvider>
               <Header />

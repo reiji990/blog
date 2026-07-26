@@ -1,0 +1,106 @@
+# =============================================================================
+# Cloudflare Pages / Workers Static Assets 用のレスポンスヘッダ定義
+# =============================================================================
+#
+# 【重要】next.config.js の headers() は output:'export' では警告も出さずに無視される。
+# Cloudflare 移行後はこのファイルが CSP・HSTS 等の唯一の供給源になる。
+# 移行完了時に next.config.js の securityHeaders / headers() を削除し、
+# 二重管理にならないようにすること。
+#
+# public/ 配下なので Next (out/) でも Astro (dist/) でも出力ルートに配置される。
+# Vercel では単なる静的ファイルとして無視されるため、移行前にコミットしても無害。
+#
+# 構文: 行頭 / が経路、インデント行がヘッダ、行頭 # がコメント。
+#       1ヘッダは1行に収める（継続行は使えない）。
+
+# -----------------------------------------------------------------------------
+# 全経路
+# -----------------------------------------------------------------------------
+#
+# CSP の現行 next.config.js からの変更点:
+#   - 'unsafe-eval' を削除。.next/static/chunks に eval( が無いことを確認済み
+#   - connect-src を * から実際の宛先のみに限定（XSS 時の情報持ち出し経路を塞ぐ）
+#   - media-src *.s3.amazonaws.com を削除。S3 の音声/動画は未使用
+#   - child-src を削除。frame-src が上位互換で、worker は未使用
+#   - frame-ancestors / base-uri / form-action / object-src を追加（現行に欠落）
+# default-src / style-src / img-src / font-src / frame-src は現行と完全に同一。
+#
+# script-src の 'unsafe-inline' は Next.js が RSC ペイロードをインライン script で
+# 流し込むため Phase 1 では外せない（watanare04.html で56個を確認）。
+# Astro 移行後は experimental.csp の自動ハッシュで外せる。末尾の Phase 2 版を参照。
+#
+# img-src はあえて * のまま残す。記事が参照する外部画像ホストは著者が随時増やす
+# ものであり（現状 cdn-ak.f.st-hatena.com が55件、他に i.ytimg.com 等）、
+# 列挙すると新規記事で静かに画像が消える。画像はスクリプトを実行しないため
+# 実効リスクは低く、保守性を優先する。
+
+/*
+  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' giscus.app analytics.umami.is https://twitter.com https://*.twitter.com https://syndication.twitter.com https://www.nicovideo.jp https://open.spotify.com https://pbs.twimg.com https://cdn.syndication.twimg.com https://embed.music.apple.com; style-src 'self' 'unsafe-inline' https://www.youtube.com https://twitter.com https://*.twitter.com https://syndication.twitter.com https://www.nicovideo.jp https://open.spotify.com https://pbs.twimg.com https://cdn.syndication.twimg.com https://embed.music.apple.com; img-src * blob: data:; font-src 'self'; connect-src 'self' https://analytics.umami.is https://cloud.umami.is https://giscus.app https://cdn.syndication.twimg.com; frame-src giscus.app https://www.youtube.com https://www.youtube-nocookie.com https://twitter.com https://*.twitter.com https://syndication.twitter.com https://www.nicovideo.jp https://embed.nicovideo.jp https://open.spotify.com https://pbs.twimg.com https://cdn.syndication.twimg.com https://bsky.app https://embed.bsky.app https://embed.music.apple.com; frame-ancestors 'none'; base-uri 'self'; form-action 'self'; object-src 'none'
+  Referrer-Policy: strict-origin-when-cross-origin
+  X-Frame-Options: DENY
+  X-Content-Type-Options: nosniff
+  X-DNS-Prefetch-Control: on
+  Strict-Transport-Security: max-age=31536000; includeSubDomains
+  Permissions-Policy: camera=(), microphone=(), geolocation=()
+
+# -----------------------------------------------------------------------------
+# リンクカードが再ホストする外部由来の画像
+# -----------------------------------------------------------------------------
+#
+# remark-link-card-plus は記事中の裸 URL ごとに外部を fetch し、OG 画像と
+# ファビコンを検証せずそのままこのディレクトリに書き出す（現在46件、うち SVG が2件）。
+# <img> 経由ならスクリプトは走らないが、この URL を直接開かれるとブラウザは
+# SVG を文書として描画し、埋め込まれた <script> が自オリジンで実行される
+# （保存型 XSS 相当）。リンク先が将来ファビコンを差し替えれば次のビルドで取り込む。
+#
+# sandbox を値なしで指定すると最大限に制限され、直接開かれても一意の不透明
+# オリジンになるためスクリプトは自サイトに触れない。Content-Disposition や
+# CSP は <img> のサブリソース読み込みには影響しないので、カード表示は壊れない。
+#
+# 【Cloudflare の挙動】_headers のルールは上書きではなく**累積**する。wrangler で
+# 実測したところ、この経路では上の /* の CSP と下の CSP がカンマ結合されて
+# 1つのヘッダとして返る。CSP 仕様ではカンマ区切りは「複数ポリシーの同時適用」=
+# 積集合として評価されるため、結果は sandbox かつ default-src 'none' となり
+# 意図通りに最も厳しくなる。X-Content-Type-Options は /* から継承されるので
+# ここで再指定しない（指定すると "nosniff, nosniff" と重複して返る）。
+
+/remark-link-card-plus/*
+  Content-Security-Policy: sandbox; default-src 'none'
+  Cache-Control: public, max-age=604800
+
+# -----------------------------------------------------------------------------
+# 内容ハッシュ付きアセットの長期キャッシュ
+# -----------------------------------------------------------------------------
+#
+# ファイル名にハッシュが入るため不変。Vercel が自動で付けていた分を明示する。
+
+/_next/static/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/_astro/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/static/fonts/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# =============================================================================
+# Phase 2 (Astro 移行後) に上の Content-Security-Policy と差し替える版
+# =============================================================================
+#
+# astro.config.mjs で experimental: { csp: true } を有効にすると、Astro が
+# インライン script / style を SHA-256 でハッシュ化した CSP を <meta> に出力する
+# （PoC で生成を確認済み）。meta では frame-ancestors と report-uri が効かないため、
+# script-src / style-src は meta 側、残りはこのファイル、という二重構成になる。
+#
+# その際 astro.config.mjs 側で第三者オリジンを追記すること:
+#   experimental: { csp: { directives: [
+#     "script-src 'self' giscus.app analytics.umami.is https://cdn.syndication.twimg.com ...",
+#   ] } }
+#
+# 【前提条件】script-src から 'unsafe-inline' を外すのは Astro のハッシュで足りるが、
+# style-src から外すには追加作業が要る。components/Source.tsx・Dots.tsx・Caption.tsx が
+# style={{...}} でインライン style 属性を出しており、これは <style> ブロックと違って
+# ハッシュ化できない。Tailwind クラスに置き換える（3ファイル・約30行）か、
+# style-src-attr 'unsafe-inline' で属性だけ許可する必要がある。
+#
+# Content-Security-Policy: default-src 'self'; img-src * blob: data:; font-src 'self'; connect-src 'self' https://analytics.umami.is https://cloud.umami.is https://giscus.app https://cdn.syndication.twimg.com; frame-src giscus.app https://www.youtube.com https://www.youtube-nocookie.com https://twitter.com https://*.twitter.com https://syndication.twitter.com https://www.nicovideo.jp https://embed.nicovideo.jp https://open.spotify.com https://pbs.twimg.com https://cdn.syndication.twimg.com https://bsky.app https://embed.bsky.app https://embed.music.apple.com; frame-ancestors 'none'; base-uri 'self'; form-action 'self'; object-src 'none'

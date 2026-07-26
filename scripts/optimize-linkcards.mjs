@@ -35,7 +35,18 @@ import { readdir, readFile, writeFile, rename, unlink } from 'node:fs/promises'
 import path from 'node:path'
 import sharp from 'sharp'
 
-const TARGET_DIR = path.join(process.cwd(), 'public', 'remark-link-card-plus')
+// 処理対象ディレクトリ。
+//
+// EXPORT=1 (output:'export') のとき、`next build` は public/ を out/ へコピーしてから
+// 終了する。一方このスクリプトは build スクリプトの並びで `next build` の**後**に走るため、
+// public/ だけを対象にすると out/ 側には最適化前のコピーが残ったまま配信されてしまう。
+// public/remark-link-card-plus は gitignore 対象でビルドごとに再ダウンロードされるので、
+// CI の新規ビルドでは毎回この取りこぼしが起きる（ローカルはキャッシュが残るため露見しない）。
+// そのため out/ 側も対象に含める。
+const TARGET_DIRS = [
+  path.join(process.cwd(), 'public', 'remark-link-card-plus'),
+  ...(process.env.EXPORT ? [path.join(process.cwd(), 'out', 'remark-link-card-plus')] : []),
+]
 const MAX_WIDTH = 640 // 表示幅目安 320px の 2 倍 (詳細は上記コメント参照)
 const JPEG_QUALITY = 80
 const PNG_COMPRESSION_LEVEL = 9
@@ -140,6 +151,12 @@ async function processFile(filePath) {
 }
 
 async function main() {
+  for (const dir of TARGET_DIRS) {
+    await processDirectory(dir)
+  }
+}
+
+async function processDirectory(TARGET_DIR) {
   let entries
   try {
     entries = await readdir(TARGET_DIR, { withFileTypes: true })
@@ -181,8 +198,9 @@ async function main() {
   const saved = totalBefore - totalAfter
   const savedPct = totalBefore > 0 ? ((saved / totalBefore) * 100).toFixed(1) : '0.0'
 
+  const label = path.relative(process.cwd(), TARGET_DIR)
   console.log(
-    `[optimize-linkcards] 完了: ${files.length}件中 optimized=${optimized} skipped=${skipped} errors=${errors}`
+    `[optimize-linkcards] 完了 (${label}): ${files.length}件中 optimized=${optimized} skipped=${skipped} errors=${errors}`
   )
   console.log(
     `[optimize-linkcards] サイズ (optimized対象のみ): ${totalBefore}B -> ${totalAfter}B (削減 ${saved}B, ${savedPct}%)`

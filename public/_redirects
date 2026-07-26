@@ -1,0 +1,22 @@
+# =============================================================================
+# Cloudflare Pages / Workers Static Assets 用のリダイレクト定義
+# =============================================================================
+#
+# 【重要】next.config.js の redirects() は output:'export' では警告も出さずに無視される。
+# 実際に EXPORT=1 ビルドの out/ を確認したところ、旧スラッグに対する成果物は
+# 一切生成されていなかった。Cloudflare 移行後はこのファイルが 301 の唯一の供給源になる。
+# 移行完了時に next.config.js の redirects() は削除すること。
+#
+# 構文: <from> <to> <status>   先に書いたルールが優先される。
+#
+# 旧スラッグ Vilhelm-Hammershøi の恒久リダイレクト。
+#
+# 【Next.js との差異】next.config.js では非ASCIIの生表記とパーセントエンコード表記の
+# 両方を登録する必要があったが、Cloudflare は逆に**生表記のルールを invalid として
+# 拒否する**（wrangler で "Found 1 invalid redirect rule" を確認）。
+# ブラウザは非ASCIIパスを必ずパーセントエンコードして送出するため、
+# %C3%B8 形式のみで実用上は十分。生表記を残すとデプロイ時に警告が出るだけなので登録しない。
+#
+# wrangler pages dev で 301 と Location の実挙動を検証済み。
+
+/blog/Vilhelm-Hammersh%C3%B8i  /blog/vilhelm-hammershoi  301

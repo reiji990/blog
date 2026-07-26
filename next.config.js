@@ -4,60 +4,14 @@ const withBundleAnalyzer = require('@next/bundle-analyzer')({
   enabled: process.env.ANALYZE === 'true',
 })
 
-// You might need to insert additional domains in script-src if you are using external services
-const ContentSecurityPolicy = `
-  default-src 'self';
-  script-src 'self' 'unsafe-eval' 'unsafe-inline' giscus.app analytics.umami.is https://twitter.com https://*.twitter.com https://syndication.twitter.com https://www.nicovideo.jp https://open.spotify.com https://pbs.twimg.com https://cdn.syndication.twimg.com https://embed.music.apple.com;
-  style-src 'self' 'unsafe-inline' https://www.youtube.com https://twitter.com https://*.twitter.com https://syndication.twitter.com https://www.nicovideo.jp https://open.spotify.com https://pbs.twimg.com https://cdn.syndication.twimg.com https://embed.music.apple.com;
-  img-src * blob: data:;
-  media-src *.s3.amazonaws.com;
-  connect-src *;
-  font-src 'self';
-  frame-src giscus.app https://www.youtube.com https://www.youtube-nocookie.com https://twitter.com https://*.twitter.com https://syndication.twitter.com https://www.nicovideo.jp https://embed.nicovideo.jp https://open.spotify.com https://pbs.twimg.com https://cdn.syndication.twimg.com https://bsky.app https://embed.bsky.app https://embed.music.apple.com;
-  child-src https://www.youtube.com https://www.youtube-nocookie.com https://twitter.com https://*.twitter.com https://syndication.twitter.com https://www.nicovideo.jp https://embed.nicovideo.jp https://open.spotify.com https://pbs.twimg.com https://cdn.syndication.twimg.com https://embed.music.apple.com
-`
-
-const securityHeaders = [
-  // https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP
-  {
-    key: 'Content-Security-Policy',
-    value: ContentSecurityPolicy.replace(/\n/g, ''),
-  },
-  // https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Referrer-Policy
-  {
-    key: 'Referrer-Policy',
-    value: 'strict-origin-when-cross-origin',
-  },
-  // https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Frame-Options
-  {
-    key: 'X-Frame-Options',
-    value: 'DENY',
-  },
-  // https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Content-Type-Options
-  {
-    key: 'X-Content-Type-Options',
-    value: 'nosniff',
-  },
-  // https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-DNS-Prefetch-Control
-  {
-    key: 'X-DNS-Prefetch-Control',
-    value: 'on',
-  },
-  // https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Strict-Transport-Security
-  {
-    key: 'Strict-Transport-Security',
-    value: 'max-age=31536000; includeSubDomains',
-  },
-  // https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Feature-Policy
-  {
-    key: 'Permissions-Policy',
-    value: 'camera=(), microphone=(), geolocation=()',
-  },
-]
-
+// セキュリティヘッダ (CSP 等) と 301 リダイレクトは public/_headers と
+// public/_redirects に移管済み。output:'export' では next.config の headers()/redirects()
+// は警告も出さずに無視されるため、ここに書くと動かない定義が残るだけになる。
 const output = process.env.EXPORT ? 'export' : undefined
 const basePath = process.env.BASE_PATH || undefined
-const unoptimized = process.env.UNOPTIMIZED ? true : undefined
+// output:'export' では next/image の最適化エンドポイントが存在しないため
+// unoptimized が必須。EXPORT だけ指定して UNOPTIMIZED を忘れるとビルドが落ちるので連動させる
+const unoptimized = process.env.UNOPTIMIZED || process.env.EXPORT ? true : undefined
 
 /**
  * @type {import('next/dist/next-server/server/config').NextConfig}
@@ -90,31 +44,6 @@ module.exports = () => {
         },
       ],
       unoptimized,
-    },
-    async headers() {
-      return [
-        {
-          source: '/(.*)',
-          headers: securityHeaders,
-        },
-      ]
-    },
-    async redirects() {
-      return [
-        // 旧スラッグ Vilhelm-Hammershøi の恒久リダイレクト。
-        // Next.js は source の非ASCIIをパーセントエンコード表記で照合する既知の挙動が
-        // あるため、エンコード済みと素の表記の両方を登録する
-        {
-          source: '/blog/Vilhelm-Hammersh%C3%B8i',
-          destination: '/blog/vilhelm-hammershoi',
-          permanent: true,
-        },
-        {
-          source: '/blog/Vilhelm-Hammershøi',
-          destination: '/blog/vilhelm-hammershoi',
-          permanent: true,
-        },
-      ]
     },
   })
 }

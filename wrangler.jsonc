@@ -44,5 +44,45 @@
 
   "observability": {
     "enabled": true
+  },
+
+  // ---------------------------------------------------------------------------
+  // 環境ごとの上書き
+  // ---------------------------------------------------------------------------
+  //
+  // JSON は同じキーを2度書けないので、Worker を増やすときは name をもう1行
+  // 足すのではなく env ブロックで分ける。デプロイ時に --env で選択する:
+  //   本番 (main)  : npx wrangler deploy
+  //   開発 (dev)   : npx wrangler deploy --env dev
+  //
+  // Cloudflare 側は Worker ごとに Git 連携を持つので、blog-dev の
+  // Build 設定を次のようにする:
+  //   Production branch : dev
+  //   Build command     : NOINDEX=1 yarn build
+  //   Deploy command    : npx wrangler deploy --env dev
+  //
+  // NOINDEX=1 は必須。dev は本番と同一の内容を配信するため、これが無いと
+  // ブログ全体が重複コンテンツとして検索索引に載る。付けると robots.txt が
+  // Disallow: / を返し、全ページに noindex,nofollow の meta が入る。
+  //
+  // 継承されるキー（compatibility_date / assets / observability など）は
+  // 省略しても効くが、取りこぼすと配信先が変わる類の設定なので明示しておく。
+  "env": {
+    "dev": {
+      "name": "blog-dev",
+      "compatibility_date": "2026-07-26",
+      "assets": {
+        "directory": "./dist",
+        "html_handling": "drop-trailing-slash",
+        "not_found_handling": "404-page"
+      },
+      // 本番と違い、確認用に workers.dev のサブドメインを有効にしておく。
+      // 独自ドメインを当てる場合はダッシュボードの Domains & Routes から追加する
+      "workers_dev": true,
+      "preview_urls": true,
+      "observability": {
+        "enabled": true
+      }
+    }
   }
 }

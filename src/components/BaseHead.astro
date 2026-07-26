@@ -1,5 +1,6 @@
 ---
 import siteMetadata from '@/data/siteMetadata.mjs'
+import { isNoindexBuild } from '@/lib/deploy'
 
 // app/layout.tsx の metadata と app/seo.tsx の genPageMetadata を合わせた移植。
 // Next の Metadata API は canonical を自動でパーセントエンコードしていたので、
@@ -46,11 +47,23 @@ const ogImage = new URL(image ?? siteMetadata.socialBanner, siteMetadata.siteUrl
 <meta name="description" content={description} />
 <link rel="canonical" href={canonical} />
 
-<meta name="robots" content="index, follow" />
-<meta
-  name="googlebot"
-  content="index, follow, max-video-preview:-1, max-image-preview:large, max-snippet:-1"
-/>
+{
+  /* dev 用 Worker は本番と同一内容を配信するため索引させない。
+     robots.txt の Disallow と併せて二重に止める */
+}
+{
+  isNoindexBuild ? (
+    <meta name="robots" content="noindex, nofollow" />
+  ) : (
+    <Fragment>
+      <meta name="robots" content="index, follow" />
+      <meta
+        name="googlebot"
+        content="index, follow, max-video-preview:-1, max-image-preview:large, max-snippet:-1"
+      />
+    </Fragment>
+  )
+}
 
 <meta property="og:title" content={fullTitle} />
 <meta property="og:description" content={description} />

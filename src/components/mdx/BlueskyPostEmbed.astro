@@ -1,0 +1,8 @@
+---
+import Bluesky from '../react/Bluesky.tsx'
+// Next 版は next/navigation の usePathname で参照元 URL を組み立てていたが、
+// 静的生成では現在の URL がビルド時に確定するのでここで渡す
+const pageUrl = new URL(Astro.url.pathname, Astro.site ?? Astro.url).toString()
+const props = Astro.props
+---
+<Bluesky client:visible pageUrl={pageUrl} {...props} />

@@ -1,0 +1,7 @@
+---
+import { Tweet } from 'react-tweet'
+const props = Astro.props
+---
+{/* react-tweet はクライアント側で syndication API を叩くため island 必須。
+    CSP は connect-src に cdn.syndication.twimg.com を許可済み */}
+<Tweet client:visible {...props} />

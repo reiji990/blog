@@ -1,0 +1,9 @@
+---
+// components/Image.tsx (next/image ラッパ) の置き換え。
+// 画像は public/ からそのまま配信し、ビルド後に
+// scripts/optimize-static-images.mjs が dist/ 側を再圧縮する。
+// next/image と違い配信時のリサイズは行わないが、Cloudflare 移行時点で
+// 既に unoptimized 配信になっているため挙動は変わらない。
+const { src, alt = '', ...rest } = Astro.props
+---
+<img src={src} alt={alt} {...rest} />

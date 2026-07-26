@@ -1,0 +1,34 @@
+---
+// components/Link.tsx (CustomLink) の Astro 移植。
+// next/link は不要（Astro は素の <a> でよい）。
+//
+// 【Astro 固有の落とし穴】React の JSX は後勝ちで属性をマージするが、Astro は
+// `<a class="x" {...rest}>` の rest に class があっても**マージせず両方出力**する。
+// HTML の重複属性はブラウザが先勝ちで解決するため、そのままだと
+// remark-link-card-plus が付けた class="remark-link-card-plus__card" が
+// 無視されカードの体裁が崩れる。ここで明示的にマージする。
+// class だけでなく target / rel も重複しうる。remark-link-card-plus は
+// 生成する <a> に自前で target="_blank" rel="noopener noreferrer" を付けるため、
+// 外部リンク用の値を無条件に足すと同じ属性が二重に出力される。
+const { href, class: incomingClass, target, rel, ...rest } = Astro.props
+const isInternalLink = href && href.startsWith('/')
+const isAnchorLink = href && href.startsWith('#')
+const external = !isInternalLink && !isAnchorLink
+
+// Next 版では rehype プラグインが生成した <a>（リンクカード・脚注の戻りリンク）は
+// MDX の components マップを通らず、CustomLink の break-words も付いていなかった。
+// Astro の components マップは生成要素にも適用されるため、そのままだと差分が出る。
+// 見た目への影響は無いが、以後の差分検証をノイズなく行うため挙動を揃える。
+const isPluginGenerated =
+  typeof incomingClass === 'string' &&
+  /remark-link-card-plus|data-footnote-backref|data-footnote-ref/.test(incomingClass)
+
+const className = isPluginGenerated
+  ? incomingClass
+  : ['break-words', incomingClass].filter(Boolean).join(' ')
+// 呼び出し側が明示した値を優先し、無ければ外部リンクの既定を当てる
+const resolvedTarget = target ?? (external ? '_blank' : undefined)
+const resolvedRel = rel ?? (external ? 'noopener noreferrer' : undefined)
+---
+
+<a class={className} href={href} target={resolvedTarget} rel={resolvedRel} {...rest}><slot /></a>

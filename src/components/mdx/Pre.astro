@@ -1,0 +1,47 @@
+---
+// pliny/ui/Pre の Astro 移植。
+// pliny 版は hover 状態を useState で持つ React クライアントコンポーネントだが、
+// Astro ではマークアップを静的に出し、コピー機能だけをページ単位の
+// インラインスクリプト1つで賄う（コードブロック数によらず JS は定数）。
+//
+// ボタンの表示制御は CSS の group-hover に委ねるため、親に group が必須。
+// これが無いと group-hover:opacity-100 が効かず、opacity-0 のまま
+// ボタンが永久に見えなくなる。
+---
+
+<div class="group relative" data-code-block>
+  <button
+    aria-label="Copy code"
+    class="absolute top-2 right-2 h-8 w-8 rounded border-2 border-gray-300 bg-gray-700 p-1 opacity-0 transition-opacity group-hover:opacity-100 dark:bg-gray-800"
+    data-copy-button
+  >
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      stroke="currentColor"
+      fill="none"
+      class="text-gray-300"
+    >
+      <path
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="2"
+        d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"
+      ></path>
+    </svg>
+  </button>
+  <pre><slot /></pre>
+</div>
+
+<script>
+  // ページ内の全コードブロックを1つのリスナーで賄う
+  document.addEventListener('click', (event) => {
+    const button = (event.target as HTMLElement).closest('[data-copy-button]')
+    if (!button) return
+    const block = button.closest('[data-code-block]')
+    const code = block?.querySelector('pre')?.textContent ?? ''
+    navigator.clipboard.writeText(code)
+    button.classList.add('border-green-400')
+    setTimeout(() => button.classList.remove('border-green-400'), 2000)
+  })
+</script>

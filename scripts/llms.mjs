@@ -1,5 +1,5 @@
 import { writeFileSync } from 'fs'
-import siteMetadata from '../data/siteMetadata.js'
+import siteMetadata from '../data/siteMetadata.mjs'
 import { allBlogs } from '../.contentlayer/generated/index.mjs'
 import { sortPosts } from 'pliny/utils/contentlayer.js'
 import { excerpt } from './lib/plain-text.mjs'

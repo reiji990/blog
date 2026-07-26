@@ -1,0 +1,28 @@
+---
+// pliny の createList 相当の再帰リスト
+interface TocEntry {
+  value: string
+  url: string
+  depth: number
+  children?: TocEntry[]
+}
+interface Props {
+  items?: TocEntry[]
+  ulClassName?: string
+  liClassName?: string
+}
+const { items, ulClassName = '', liClassName = '' } = Astro.props
+---
+
+{
+  items && items.length > 0 && (
+    <ul class={ulClassName}>
+      {items.map((item) => (
+        <li class={liClassName}>
+          <a href={item.url}>{item.value}</a>
+          <Astro.self items={item.children} ulClassName={ulClassName} liClassName={liClassName} />
+        </li>
+      ))}
+    </ul>
+  )
+}

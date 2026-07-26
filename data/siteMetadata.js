@@ -24,13 +24,16 @@ const siteMetadata = {
   bluesky: 'https://bsky.app/profile/reiji990.blog',
   locale: 'ja-JP',
   analytics: {
-    // If you want to use an analytics provider you have to add it to the
-    // content security policy in the `next.config.js` file.
+    // アクセス解析は Cloudflare Web Analytics を使う。beacon は Cloudflare が
+    // エッジで自動注入するため、ここ (pliny の <Analytics />) では何も設定しない。
+    // 許可オリジンは public/_headers の CSP 側に記載している。
+    //
+    // umamiAnalytics はここに設定が残っていたが、app/layout.tsx の <Analytics />
+    // がコメントアウトされたままで一度も配信されていなかったため削除した。
+    // pliny 経由で解析を入れ直す場合は、この設定と app/layout.tsx の
+    // import / <Analytics analyticsConfig={...} /> の両方を有効にする必要がある。
+    //
     // supports Plausible, Simple Analytics, Umami, Posthog or Google Analytics.
-    umamiAnalytics: {
-      // We use an env variable for this site to avoid other users cloning our analytics ID
-      umamiWebsiteId: process.env.NEXT_UMAMI_ID, // e.g. 123e4567-e89b-12d3-a456-426614174000
-    },
     // plausibleAnalytics: {
     //   plausibleDataDomain: '', // e.g. tailwind-nextjs-starter-blog.vercel.app
     // },

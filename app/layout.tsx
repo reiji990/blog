@@ -3,6 +3,9 @@ import 'remark-github-blockquote-alert/alert.css'
 
 import { ReactNode } from 'react'
 import { Space_Grotesk } from 'next/font/google'
+// pliny の <Analytics /> は元から無効 (このコメントアウトのまま <Analytics /> も
+// 置かれていなかった) なので、siteMetadata.analytics の設定は配信に反映されない。
+// アクセス解析は Cloudflare Web Analytics 側で行う。
 // import { Analytics, AnalyticsConfig } from 'pliny/analytics'
 import SearchProvider from '@/components/SearchProvider'
 import Header from '@/components/Header'
@@ -12,8 +15,8 @@ import siteMetadata from '@/data/siteMetadata'
 import { ThemeProviders } from './theme-providers'
 import { Metadata } from 'next'
 // @vercel/analytics と @vercel/speed-insights は Vercel 上でしか動作しない
-// (/_vercel/insights/script.js を読みに行き、Cloudflare ではコンソールエラーになる)。
-// Cloudflare 移行に伴い削除。アクセス解析は siteMetadata.analytics の Umami が担う
+// (/_vercel/insights/script.js を読みに行き、Cloudflare ではコンソールエラーになる)
+// ため Cloudflare 移行に伴い削除した
 
 const space_grotesk = Space_Grotesk({
   subsets: ['latin'],

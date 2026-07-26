@@ -29,13 +29,22 @@
 # 流し込むため Phase 1 では外せない（watanare04.html で56個を確認）。
 # Astro 移行後は experimental.csp の自動ハッシュで外せる。末尾の Phase 2 版を参照。
 #
+# アクセス解析は Cloudflare Web Analytics を使う。カスタムドメインが Cloudflare を
+# 経由するため beacon はエッジで自動注入されるが、注入されたスクリプトも CSP の
+# 対象になるので script-src に static.cloudflareinsights.com、connect-src に
+# cloudflareinsights.com を許可する必要がある。これが無いと計測されない。
+#
+# 旧構成の analytics.umami.is は削除した。pliny の <Analytics /> が
+# app/layout.tsx でコメントアウトされたままで、umami スクリプトは
+# 一度も配信されていなかったため (ビルド出力を grep して確認済み)。
+#
 # img-src はあえて * のまま残す。記事が参照する外部画像ホストは著者が随時増やす
 # ものであり（現状 cdn-ak.f.st-hatena.com が55件、他に i.ytimg.com 等）、
 # 列挙すると新規記事で静かに画像が消える。画像はスクリプトを実行しないため
 # 実効リスクは低く、保守性を優先する。
 
 /*
-  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' giscus.app analytics.umami.is https://twitter.com https://*.twitter.com https://syndication.twitter.com https://www.nicovideo.jp https://open.spotify.com https://pbs.twimg.com https://cdn.syndication.twimg.com https://embed.music.apple.com; style-src 'self' 'unsafe-inline' https://www.youtube.com https://twitter.com https://*.twitter.com https://syndication.twitter.com https://www.nicovideo.jp https://open.spotify.com https://pbs.twimg.com https://cdn.syndication.twimg.com https://embed.music.apple.com; img-src * blob: data:; font-src 'self'; connect-src 'self' https://analytics.umami.is https://cloud.umami.is https://giscus.app https://cdn.syndication.twimg.com; frame-src giscus.app https://www.youtube.com https://www.youtube-nocookie.com https://twitter.com https://*.twitter.com https://syndication.twitter.com https://www.nicovideo.jp https://embed.nicovideo.jp https://open.spotify.com https://pbs.twimg.com https://cdn.syndication.twimg.com https://bsky.app https://embed.bsky.app https://embed.music.apple.com; frame-ancestors 'none'; base-uri 'self'; form-action 'self'; object-src 'none'
+  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' giscus.app https://static.cloudflareinsights.com https://twitter.com https://*.twitter.com https://syndication.twitter.com https://www.nicovideo.jp https://open.spotify.com https://pbs.twimg.com https://cdn.syndication.twimg.com https://embed.music.apple.com; style-src 'self' 'unsafe-inline' https://www.youtube.com https://twitter.com https://*.twitter.com https://syndication.twitter.com https://www.nicovideo.jp https://open.spotify.com https://pbs.twimg.com https://cdn.syndication.twimg.com https://embed.music.apple.com; img-src * blob: data:; font-src 'self'; connect-src 'self' https://cloudflareinsights.com https://giscus.app https://cdn.syndication.twimg.com; frame-src giscus.app https://www.youtube.com https://www.youtube-nocookie.com https://twitter.com https://*.twitter.com https://syndication.twitter.com https://www.nicovideo.jp https://embed.nicovideo.jp https://open.spotify.com https://pbs.twimg.com https://cdn.syndication.twimg.com https://bsky.app https://embed.bsky.app https://embed.music.apple.com; frame-ancestors 'none'; base-uri 'self'; form-action 'self'; object-src 'none'
   Referrer-Policy: strict-origin-when-cross-origin
   X-Frame-Options: DENY
   X-Content-Type-Options: nosniff
@@ -103,4 +112,4 @@
 # ハッシュ化できない。Tailwind クラスに置き換える（3ファイル・約30行）か、
 # style-src-attr 'unsafe-inline' で属性だけ許可する必要がある。
 #
-# Content-Security-Policy: default-src 'self'; img-src * blob: data:; font-src 'self'; connect-src 'self' https://analytics.umami.is https://cloud.umami.is https://giscus.app https://cdn.syndication.twimg.com; frame-src giscus.app https://www.youtube.com https://www.youtube-nocookie.com https://twitter.com https://*.twitter.com https://syndication.twitter.com https://www.nicovideo.jp https://embed.nicovideo.jp https://open.spotify.com https://pbs.twimg.com https://cdn.syndication.twimg.com https://bsky.app https://embed.bsky.app https://embed.music.apple.com; frame-ancestors 'none'; base-uri 'self'; form-action 'self'; object-src 'none'
+# Content-Security-Policy: default-src 'self'; img-src * blob: data:; font-src 'self'; connect-src 'self' https://cloudflareinsights.com https://giscus.app https://cdn.syndication.twimg.com; frame-src giscus.app https://www.youtube.com https://www.youtube-nocookie.com https://twitter.com https://*.twitter.com https://syndication.twitter.com https://www.nicovideo.jp https://embed.nicovideo.jp https://open.spotify.com https://pbs.twimg.com https://cdn.syndication.twimg.com https://bsky.app https://embed.bsky.app https://embed.music.apple.com; frame-ancestors 'none'; base-uri 'self'; form-action 'self'; object-src 'none'

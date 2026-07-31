@@ -17,7 +17,10 @@ import {
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend)
 
 const LineChart = ({ data, options }) => {
-  return <Line data={data} options={options} />
+  // ラッパ (LineChart.astro の h-64) の高さいっぱいに描く。既定の
+  // maintainAspectRatio: true だと幅から高さを決めてラッパをはみ出し、
+  // 高さ固定の親との間でリサイズが収束しない
+  return <Line data={data} options={{ maintainAspectRatio: false, ...options }} />
 }
 
 export default LineChart

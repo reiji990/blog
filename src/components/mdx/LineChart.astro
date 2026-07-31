@@ -2,6 +2,16 @@
 import LineChart from '../react/LineChart.tsx'
 const props = Astro.props
 ---
-<div class="border-border bg-bg h-64 w-full rounded-md border">
+<div class="chart-box border-border bg-bg h-64 w-full rounded-md border">
   <LineChart client:only="react" {...props} />
 </div>
+
+<style>
+  /* astro-island は display:contents で箱を持たないため、canvas の親が
+     0x0 になり Chart.js の responsive 計算が潰れる。島にラッパと同じ
+     高さの箱を持たせて chart.js に伝える */
+  .chart-box > :global(astro-island) {
+    display: block;
+    height: 100%;
+  }
+</style>

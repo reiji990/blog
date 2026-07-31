@@ -5,6 +5,16 @@ const props = Astro.props
 {/* Next 版 LazyChart (next/dynamic ssr:false + プレースホルダ) 相当。
     client:visible だと chart.js が SSR され 300x150 の空 canvas が先に出て
     CLS が悪化するため、client:only + 同寸プレースホルダにする */}
-<div class="border-border bg-bg h-64 w-full rounded-md border">
+<div class="chart-box border-border bg-bg h-64 w-full rounded-md border">
   <DonutChart client:only="react" {...props} />
 </div>
+
+<style>
+  /* astro-island は display:contents で箱を持たないため、canvas の親が
+     0x0 になり Chart.js の responsive 計算が潰れる。島にラッパと同じ
+     高さの箱を持たせて chart.js に伝える */
+  .chart-box > :global(astro-island) {
+    display: block;
+    height: 100%;
+  }
+</style>
